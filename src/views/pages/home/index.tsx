@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -41,16 +41,24 @@ import CustomSelect from 'src/components/custom-select'
 import CardSkeleton from 'src/views/pages/product/components/CardSkeleton'
 import ChatBotAI from 'src/components/chat-bot-ai'
 import { useRouter } from 'next/navigation'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
-
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+}
 interface TOptions {
   label: string
   value: string
 }
 
-
 type TProps = {
-  products: TProduct[],
+  products: TProduct[]
   totalCount: number
   productTypesServer: TOptions[]
   paramsServer: {
@@ -62,7 +70,7 @@ type TProps = {
 }
 
 interface TProductPublicState {
-  data: TProduct[],
+  data: TProduct[]
   total: number
 }
 
@@ -72,7 +80,7 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   }
 }))
 
-const HomePage: NextPage<TProps> = (props) => {
+const HomePage: NextPage<TProps> = props => {
   // ** Translate
   const { t } = useTranslation()
 
@@ -89,7 +97,7 @@ const HomePage: NextPage<TProps> = (props) => {
   const [optionCities, setOptionCities] = useState<{ label: string; value: string }[]>([])
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    if(!firstRender.current) {
+    if (!firstRender.current) {
       firstRender.current = true
     }
     setProductTypeSelected(newValue)
@@ -146,7 +154,7 @@ const HomePage: NextPage<TProps> = (props) => {
   const handleOnchangePagination = (page: number, pageSize: number) => {
     setPage(page)
     setPageSize(pageSize)
-    if(!firstRender.current) {
+    if (!firstRender.current) {
       firstRender.current = true
     }
   }
@@ -155,14 +163,14 @@ const HomePage: NextPage<TProps> = (props) => {
     switch (type) {
       case 'review': {
         setReviewSelected(value)
-        if(!firstRender.current) {
+        if (!firstRender.current) {
           firstRender.current = true
         }
         break
       }
       case 'location': {
         setLocationSelected(value)
-        if(!firstRender.current) {
+        if (!firstRender.current) {
           firstRender.current = true
         }
         break
@@ -201,7 +209,7 @@ const HomePage: NextPage<TProps> = (props) => {
       setPage(paramsServer.page)
       setPageSize(paramsServer.limit)
       setSortBy(paramsServer.order)
-      if(paramsServer.productType) {
+      if (paramsServer.productType) {
         setProductTypeSelected(paramsServer.productType)
       }
       setProductsPublic({
@@ -222,7 +230,7 @@ const HomePage: NextPage<TProps> = (props) => {
 
   useEffect(() => {
     if (isServerRendered.current && firstRender.current) {
-        setFilterBy({ productType: productTypeSelected, minStar: reviewSelected, productLocation: locationSelected })
+      setFilterBy({ productType: productTypeSelected, minStar: reviewSelected, productLocation: locationSelected })
     }
   }, [productTypeSelected, reviewSelected, locationSelected])
 
@@ -276,12 +284,12 @@ const HomePage: NextPage<TProps> = (props) => {
           })}
         </StyledTabs>
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
-          <Box sx={{ display: "flex", gap: "20px" }}>
+          <Box sx={{ display: 'flex', gap: '20px' }}>
             <Box sx={{ width: '300px' }}>
               <CustomSelect
                 fullWidth
-                onChange={(e) => {
-                  if(!firstRender.current) {
+                onChange={e => {
+                  if (!firstRender.current) {
                     firstRender.current = true
                   }
                   setSortBy(e.target.value as string)
@@ -289,20 +297,20 @@ const HomePage: NextPage<TProps> = (props) => {
                 value={sortBy}
                 options={[
                   {
-                    label: t("Sort_best_sold"),
-                    value: "sold desc"
+                    label: t('Sort_best_sold'),
+                    value: 'sold desc'
                   },
                   {
-                    label: t("Sort_new_create"),
-                    value: "createdAt desc"
+                    label: t('Sort_new_create'),
+                    value: 'createdAt desc'
                   },
                   {
-                    label: t("Sort_high_view"),
-                    value: "views desc"
+                    label: t('Sort_high_view'),
+                    value: 'views desc'
                   },
                   {
-                    label: t("Sort_high_like"),
-                    value: "totalLikes desc"
+                    label: t('Sort_high_like'),
+                    value: 'totalLikes desc'
                   }
                 ]}
                 placeholder={t('Sort_by')}
@@ -313,7 +321,7 @@ const HomePage: NextPage<TProps> = (props) => {
                 placeholder={t('Search_name_product')}
                 value={searchBy}
                 onChange={(value: string) => {
-                  if(!firstRender.current) {
+                  if (!firstRender.current) {
                     firstRender.current = true
                   }
                   setSearchBy(value)
@@ -322,7 +330,6 @@ const HomePage: NextPage<TProps> = (props) => {
             </Box>
           </Box>
         </Box>
-
         <Box
           sx={{
             height: '100%',
@@ -404,8 +411,6 @@ const HomePage: NextPage<TProps> = (props) => {
             </Grid>
           </Grid>
         </Box>
-
-
       </Box>
     </>
   )

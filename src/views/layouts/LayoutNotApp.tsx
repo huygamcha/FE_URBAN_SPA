@@ -18,8 +18,27 @@ import VerticalLayout from 'src/views/layouts/VerticalLayout'
 import { useTheme } from '@mui/material'
 import Image from 'next/image'
 
+// ** React slick
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import CustomCarousel from 'src/components/custom-carousel'
+import { bannerHome } from 'src/app/data/bannerHome'
+import { IBannerHome } from 'src/types/bannerHome'
+
 type TProps = {
   children: React.ReactNode
+}
+const settings = {
+  dots: false,
+  infinite: true,
+  autoplay: true,
+  speed: 2000,
+  autoplaySpeed: 2000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrow: false,
+  fade: true
 }
 
 const LayoutNotApp: NextPage<TProps> = ({ children }) => {
@@ -32,21 +51,28 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
         // component='main'
         sx={{
           backgroundColor: theme => theme.palette.customBackground.secondary,
-          flexGrow: 1
+          flexGrow: 1,
           // bỏ phần này để ko có scrollBar
           // height: '100vh',
-          // overflow: 'auto'
+          overflow: 'auto'
         }}
       >
         <HorizontalLayout toggleDrawer={() => {}} open={false} isHideMenu />
         <Toolbar />
-        <Image
-          src='https://urbanoasisspa.vn/wp-content/uploads/2022/07/urban_oasis_spa_8-scaled.jpg'
-          alt='Responsive Image'
-          layout='responsive'
-          width={16}
-          height={9} // Tỉ lệ khung hình 16:9
-        />
+
+        <Box
+          // đặt giới hạn chiều dài để sử dụng được slider
+          sx={{
+            width: 'calc(100vw - 0px)',
+            maxWidth: 'unset !important'
+          }}
+        >
+          <Slider {...settings}>
+            {bannerHome?.map((item: IBannerHome, index: number) => (
+              <Image key={index} src={item.image} alt='Responsive Image' layout='responsive' width={16} height={9} />
+            ))}
+          </Slider>
+        </Box>
         <Container
           sx={{
             m: 4,
