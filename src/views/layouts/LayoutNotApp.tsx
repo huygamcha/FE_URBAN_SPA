@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import * as React from 'react'
@@ -16,6 +16,7 @@ import Container from '@mui/material/Container'
 import HorizontalLayout from 'src/views/layouts/HorizontalLayout'
 import VerticalLayout from 'src/views/layouts/VerticalLayout'
 import { useTheme } from '@mui/material'
+import Image from 'next/image'
 
 type TProps = {
   children: React.ReactNode
@@ -27,18 +28,25 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <HorizontalLayout toggleDrawer={() => {}} open={false} isHideMenu />
       <Box
-        component='main'
+        // component='main'
         sx={{
-          backgroundColor: theme =>
-            theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-          flexGrow: 1,
-          height: '100vh',
-          overflow: 'auto'
+          backgroundColor: theme => theme.palette.customBackground.secondary,
+          flexGrow: 1
+          // bỏ phần này để ko có scrollBar
+          // height: '100vh',
+          // overflow: 'auto'
         }}
       >
+        <HorizontalLayout toggleDrawer={() => {}} open={false} isHideMenu />
         <Toolbar />
+        <Image
+          src='https://urbanoasisspa.vn/wp-content/uploads/2022/07/urban_oasis_spa_8-scaled.jpg'
+          alt='Responsive Image'
+          layout='responsive'
+          width={16}
+          height={9} // Tỉ lệ khung hình 16:9
+        />
         <Container
           sx={{
             m: 4,
@@ -46,8 +54,8 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             maxWidth: 'unset !important',
             overflow: 'auto',
             maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight} - 32px)`,
-            padding: "0 !important",
-            borderRadius: "15px"
+            padding: '0 !important',
+            borderRadius: '15px'
           }}
         >
           {children}

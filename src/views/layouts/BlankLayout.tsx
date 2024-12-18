@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import * as React from 'react'
 import { NextPage } from 'next'
 import { Box, BoxProps, styled } from '@mui/material'
@@ -14,7 +14,7 @@ const BlankLayoutWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 const BlankLayout: NextPage<TProps> = ({ children }) => {
   return (
     <BlankLayoutWrapper>
-      <Box sx={{ overflow: 'hidden', minHegiht: '100vh' }}>{children}</Box>
+      <Box sx={{ overflow: 'hidden', minHeight: '100vh' }}>{children}</Box>
     </BlankLayoutWrapper>
   )
 }

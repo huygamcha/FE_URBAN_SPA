@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { useSession } from 'next-auth/react'
@@ -28,7 +28,6 @@ const GuestGuard = (props: GuestGuardProps) => {
   const pathName = usePathname()
 
   useEffect(() => {
- 
     if (window.localStorage.getItem(ACCESS_TOKEN) && window.localStorage.getItem(USER_DATA)) {
       router.replace('/')
     }

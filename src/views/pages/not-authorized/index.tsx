@@ -1,4 +1,4 @@
-"use client"
+'use client'
 // ** React Imports
 import { ReactNode } from 'react'
 
@@ -48,13 +48,13 @@ const Error500 = () => {
       <Box sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
         <BoxWrapper>
           <Typography variant='h2' sx={{ mb: 1.5 }}>
-            {t("Oops, something went wrong!")}
+            {t('Oops, something went wrong!')}
           </Typography>
           <Typography sx={{ mb: 6, color: 'text.secondary' }}>
-            {t("There was an error with the internal server. Please contact your site administrator.")}
+            {t('There was an error with the internal server. Please contact your site administrator.')}
           </Typography>
           <Button href={ROUTE_CONFIG.HOME} component={Link} variant='contained'>
-            {t("Back to Home")}
+            {t('Back to Home')}
           </Button>
         </BoxWrapper>
         <Img height='500' alt='error-illustration' src='/images/404.png' />

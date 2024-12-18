@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Type Imports
 import { Palette } from '@mui/material'
@@ -7,10 +7,19 @@ import { Skin } from 'src/types/layouts'
 const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
   // ** Vars
   const whiteColor = '#FFF'
-  const lightColor = '47, 43, 61'
+  const blackColor = '#000'
+  const lightColor = '#ffd5a9'
   const darkColor = '208, 212, 241'
   const darkPaperBgColor = '#2F3349'
   const mainColor = mode === 'light' ? lightColor : darkColor
+
+  const headerText = '#6c4241'
+  // const titleText = '#6c4241'
+  // const descriptionText = '#6c4241'
+
+  const backgroundMain = '#ffd5a9'
+  const backgroundSecondary = '#5e8172'
+  const backgroundThird = '#ae572c'
 
   const defaultBgColor = () => {
     if (skin === 'bordered' && mode === 'light') {
@@ -34,6 +43,12 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       avatarBg: mode === 'light' ? '#DBDADE' : '#4A5072',
       tableHeaderBg: mode === 'light' ? '#F6F6F7' : '#4A5072',
       borderColor: `rgba(${mainColor}, 0.16)`
+    },
+
+    customBackground: {
+      main: backgroundSecondary,
+      secondary: backgroundMain,
+      hover: backgroundThird
     },
     mode: mode,
     common: {
@@ -72,7 +87,8 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
     },
     success: {
       light: '#42CE80',
-      main: '#28C76F',
+      // main: '#28C76F',
+      main: backgroundSecondary,
       dark: '#23AF62',
       contrastText: whiteColor
     },
@@ -93,9 +109,12 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       A700: '#616161'
     },
     text: {
-      primary: `rgba(${mainColor}, 0.78)`,
-      secondary: `rgba(${mainColor}, 0.68)`,
-      disabled: `rgba(${mainColor}, 0.42)`
+      // primary: `rgba(${mainColor}, 0.78)`,
+      // secondary: `rgba(${mainColor}, 0.68)`,
+      // disabled: `rgba(${mainColor}, 0.42)`
+      primary: `${blackColor}`,
+      secondary: `${blackColor}`,
+      disabled: `${blackColor} `
     },
     divider: `rgba(${mainColor}, 0.16)`,
     background: {

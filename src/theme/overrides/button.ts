@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Type Import
 import { OwnerStateThemeType } from '.'
@@ -211,8 +211,10 @@ const Button = () => {
         contained: ({ theme }: OwnerStateThemeType) => ({
           boxShadow: theme.shadows[2],
           padding: theme.spacing(2.5, 5),
+          background: theme.palette.customBackground.main,
           '&:hover': {
-            boxShadow: theme.shadows[2]
+            boxShadow: theme.palette.customBackground.hover,
+            background: theme.palette.customBackground.hover
           }
         }),
         tonal: ({ theme }: OwnerStateThemeType) => ({

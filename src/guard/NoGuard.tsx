@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React Imports
 import { useSession } from 'next-auth/react'
@@ -7,7 +7,6 @@ import { clearLocalRememberLoginAuthSocial, clearTemporaryToken } from 'src/help
 
 // ** Types
 import { useAuth } from 'src/hooks/useAuth'
-
 
 interface NoGuardProps {
   children: ReactNode
@@ -23,7 +22,7 @@ const NoGuard = (props: NoGuardProps) => {
 
   useEffect(() => {
     const handleUnload = () => {
-      if (status !== "loading") {
+      if (status !== 'loading') {
         clearTemporaryToken()
         clearLocalRememberLoginAuthSocial()
       }

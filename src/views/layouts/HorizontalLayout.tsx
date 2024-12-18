@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import * as React from 'react'
@@ -24,7 +24,7 @@ import NotificationDropdown from 'src/views/layouts/components/notification-drop
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
-import { Button } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { usePathname, useRouter } from 'next/navigation'
 
 // config
@@ -32,6 +32,7 @@ import { ROUTE_CONFIG } from 'src/configs/route'
 import { createUrlQuery } from 'src/utils'
 import { useTranslation } from 'react-i18next'
 import i18nConfig from 'src/app/i18nConfig'
+import Image from 'next/image'
 
 const drawerWidth: number = 240
 
@@ -49,8 +50,9 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open'
 })<AppBarProps>(({ theme, open }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  backgroundColor:
-    theme.palette.mode === 'light' ? theme.palette.customColors.lightPaperBg : theme.palette.customColors.darkPaperBg,
+  background: theme.palette.customBackground.secondary,
+  // backgroundColor:
+  //   theme.palette.mode === 'light' ? theme.palette.customColors.lightPaperBg : theme.palette.customColors.darkPaperBg,
   color: theme.palette.text.primary,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
@@ -66,17 +68,30 @@ const AppBar = styled(MuiAppBar, {
   })
 }))
 
+const CustomLayout = styled('div')(({ theme }) => ({
+  // 1188
+  // maxWidth: '74.25rem',
+  // width: '100%',
+  // margin: '0 auto',
+  zIndex: 1111,
+  padding: '0px 5%'
+  // Cấu hình marginTop cho các breakpoints khác nhau
+  // [theme.breakpoints.up('lg')]: {
+  //   padding: '0px'
+  // }
+  // padding: '0 0.5rem'
+}))
+
 const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) => {
   const { user } = useAuth()
   const router = useRouter()
   const pathName = usePathname()
-  const {i18n} = useTranslation()
+  const { i18n } = useTranslation()
   const currentLang = i18n.language
   const urlDefault = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
   const urlLogin = currentLang === i18nConfig.defaultLocale ? '/login' : `/${currentLang}/login`
 
   const handleNavigateLogin = () => {
-    
     if (pathName !== urlDefault) {
       router.replace('/login' + '?' + createUrlQuery('returnUrl', pathName))
     } else {
@@ -85,14 +100,27 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   }
 
   return (
-    <AppBar position='absolute' open={open}>
-      <Toolbar
+    // <AppBar position='absolute' open={open}>
+    <CustomLayout
+      sx={{
+        position: 'fixed',
+        background: theme => theme.palette.customBackground.secondary,
+        left: '0',
+        right: '0'
+      }}
+    >
+      <Box
         sx={{
-          pr: '30px', // keep right padding when drawer closed,
-          margin: '0 20px'
+          maxWidth: '80rem',
+          width: '100%',
+          minHeight: '64px',
+          display: 'flex',
+          alignItems: 'center',
+          margin: '0 auto',
+          justifyContent: 'space-between'
         }}
       >
-        {!isHideMenu && (
+        {/* {!isHideMenu && (
           <IconButton
             edge='start'
             color='inherit'
@@ -105,33 +133,43 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           >
             <Icon icon='ic:round-menu' />
           </IconButton>
-        )}
-        <Typography
-          component='h1'
-          variant='h6'
-          color='primary'
-          noWrap
-          sx={{ flexGrow: 1, fontWeight: '600', cursor: 'pointer' }}
-        >
-          <Link style={{ color: 'inherit' }} href={ROUTE_CONFIG.HOME}>
-            LTTD
-          </Link>
-        </Typography>
-        <LanguageDropdown />
-        <ModeToggle />
-        <CartProduct />
-        {user ? (
-          <>
-            <NotificationDropdown />
+        )} */}
+        <Box>
+          <Typography component='h1' variant='h6' color='primary' noWrap sx={{ flexGrow: 1, fontWeight: '600' }}>
+            <Link style={{ color: 'inherit' }} href={ROUTE_CONFIG.HOME}>
+              <Image alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
+            </Link>
+          </Typography>
+        </Box>
+        <Box display='flex' alignItems='center'>
+          <Box gap={10} display='flex' alignItems='center'>
+            <Link href={''}>
+              <Typography variant='subtitle1'>Home</Typography>
+            </Link>
+            <Link href={''}>
+              <Typography variant='subtitle1'>About us</Typography>
+            </Link>
+            <Link href={''}>
+              <Typography variant='subtitle1'>Service</Typography>
+            </Link>
+            <Link href={''}>
+              <Typography variant='subtitle1'>Promotions</Typography>
+            </Link>
+          </Box>
+          <Box pl='2rem'>
+            <LanguageDropdown />
+          </Box>
+          {user ? (
             <UserDropdown />
-          </>
-        ) : (
-          <Button variant='contained' sx={{ ml: 2, width: 'auto' }} onClick={handleNavigateLogin}>
-            Sign In
-          </Button>
-        )}
-      </Toolbar>
-    </AppBar>
+          ) : (
+            <Button variant='contained' sx={{ ml: 2, width: 'auto' }} onClick={handleNavigateLogin}>
+              Sign In
+            </Button>
+          )}
+        </Box>
+      </Box>
+    </CustomLayout>
+    // </AppBar>
   )
 }
 

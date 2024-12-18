@@ -1,4 +1,4 @@
-"use client"
+'use client'
 // ** React Imports
 import { ReactNode, useEffect } from 'react'
 
@@ -35,16 +35,16 @@ const AclGuard = (props: AclGuardProps) => {
     : []
   const router = useRouter()
   const pathName = usePathname()
-  const {i18n} = useTranslation()
+  const { i18n } = useTranslation()
   const currentLang = i18n.language
   const url = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
 
-  useEffect(() => {
-    const url = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
-    if(pathName === url) {
-      router.push(ROUTE_CONFIG.HOME)
-    }
-  }, [pathName])
+  // useEffect(() => {
+  //   const url = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
+  //   if (pathName === url) {
+  //     router.push(ROUTE_CONFIG.HOME)
+  //   }
+  // }, [pathName])
 
   let ability: AppAbility
 
@@ -52,9 +52,9 @@ const AclGuard = (props: AclGuardProps) => {
     ability = buildAbilityFor(permissionUser, permission)
   }
   const url500 = currentLang === i18nConfig.defaultLocale ? '/500' : `/${currentLang}/500`
-    const url404 = currentLang === i18nConfig.defaultLocale ? '/404' : `/${currentLang}/404`
+  const url404 = currentLang === i18nConfig.defaultLocale ? '/404' : `/${currentLang}/404`
   // if guest guard or no guard is tru or any error page
-  if (guestGuard || pathName === url500 || pathName=== url404 || !authGuard) {
+  if (guestGuard || pathName === url500 || pathName === url404 || !authGuard) {
     if (auth.user && ability) {
       return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>
     } else {

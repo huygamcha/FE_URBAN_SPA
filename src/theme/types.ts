@@ -12,6 +12,12 @@ declare module '@mui/material/styles' {
       tableHeaderBg: string
       borderColor: string
     }
+
+    customBackground: {
+      main: string
+      secondary: string
+      hover: string
+    }
   }
 
   interface PaletteOptions {
