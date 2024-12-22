@@ -31,13 +31,13 @@ type TProps = {
 }
 const settings = {
   dots: false,
+  arrows: false,
   infinite: true,
   autoplay: true,
   speed: 2000,
   autoplaySpeed: 2000,
   slidesToShow: 1,
   slidesToScroll: 1,
-  arrow: false,
   fade: true
 }
 
@@ -63,7 +63,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
         <Box
           // đặt giới hạn chiều dài để sử dụng được slider
           sx={{
-            width: 'calc(100vw - 0px)',
+            // width: 'calc(100vw - 0px)',
             maxWidth: 'unset !important'
           }}
         >
@@ -75,13 +75,13 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
         </Box>
         <Container
           sx={{
-            m: 4,
-            width: 'calc(100vw - 32px)',
+            // m: 4,
+            // width: 'calc(100vw - 32px)',
             maxWidth: 'unset !important',
             overflow: 'auto',
             maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight} - 32px)`,
-            padding: '0 !important',
-            borderRadius: '15px'
+            padding: '0 !important'
+            // borderRadius: '0.5rem'
           }}
         >
           {children}

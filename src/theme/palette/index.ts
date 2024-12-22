@@ -1,5 +1,6 @@
 'use client'
 
+// bảng màu
 // ** Type Imports
 import { Palette } from '@mui/material'
 import { Skin } from 'src/types/layouts'
