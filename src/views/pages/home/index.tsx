@@ -44,6 +44,8 @@ import { useRouter } from 'next/navigation'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import AboutSpa from 'src/views/layouts/components/HOME/about'
+import Gallery from 'src/views/layouts/components/HOME/gallery'
 
 const settings = {
   dots: true,
@@ -271,146 +273,13 @@ const HomePage: NextPage<TProps> = props => {
   return (
     <>
       {loading && <Spinner />}
-      <ChatBotAI />
-      <Box
-        sx={{
-          height: '100%',
-          width: '100%'
-        }}
-      >
-        <StyledTabs value={productTypeSelected} onChange={handleChange} aria-label='wrapped label tabs example'>
-          {optionTypes.map(opt => {
-            return <Tab key={opt.value} value={opt.value} label={opt.label} />
-          })}
-        </StyledTabs>
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
-          <Box sx={{ display: 'flex', gap: '20px' }}>
-            <Box sx={{ width: '300px' }}>
-              <CustomSelect
-                fullWidth
-                onChange={e => {
-                  if (!firstRender.current) {
-                    firstRender.current = true
-                  }
-                  setSortBy(e.target.value as string)
-                }}
-                value={sortBy}
-                options={[
-                  {
-                    label: t('Sort_best_sold'),
-                    value: 'sold desc'
-                  },
-                  {
-                    label: t('Sort_new_create'),
-                    value: 'createdAt desc'
-                  },
-                  {
-                    label: t('Sort_high_view'),
-                    value: 'views desc'
-                  },
-                  {
-                    label: t('Sort_high_like'),
-                    value: 'totalLikes desc'
-                  }
-                ]}
-                placeholder={t('Sort_by')}
-              />
-            </Box>
-            <Box sx={{ width: '300px' }}>
-              <InputSearch
-                placeholder={t('Search_name_product')}
-                value={searchBy}
-                onChange={(value: string) => {
-                  if (!firstRender.current) {
-                    firstRender.current = true
-                  }
-                  setSearchBy(value)
-                }}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            height: '100%',
-            width: '100%',
-            mt: 4,
-            mb: 8
-          }}
-        >
-          <Grid
-            container
-            spacing={{
-              md: 6,
-              xs: 4
-            }}
-          >
-            <Grid item md={3} display={{ md: 'flex', xs: 'none' }}>
-              <Box sx={{ width: '100%' }}>
-                <FilterProduct
-                  locationSelected={locationSelected}
-                  reviewSelected={reviewSelected}
-                  handleReset={handleResetFilter}
-                  optionCities={optionCities}
-                  handleFilterProduct={handleFilterProduct}
-                />
-              </Box>
-            </Grid>
-            <Grid item md={9} xs={12}>
-              {loading ? (
-                <Grid
-                  container
-                  spacing={{
-                    md: 6,
-                    xs: 4
-                  }}
-                >
-                  {Array.from({ length: 6 }).map((_, index) => {
-                    return (
-                      <Grid item key={index} md={4} sm={6} xs={12}>
-                        <CardSkeleton />
-                      </Grid>
-                    )
-                  })}
-                </Grid>
-              ) : (
-                <Grid
-                  container
-                  spacing={{
-                    md: 6,
-                    xs: 4
-                  }}
-                >
-                  {productsPublic?.data?.length > 0 ? (
-                    <>
-                      {productsPublic?.data?.map((item: TProduct) => {
-                        return (
-                          <Grid item key={item._id} md={4} sm={6} xs={12}>
-                            <CardProduct item={item} />
-                          </Grid>
-                        )
-                      })}
-                    </>
-                  ) : (
-                    <Box sx={{ width: '100%', mt: 10 }}>
-                      <NoData widthImage='60px' heightImage='60px' textNodata={t('No_product')} />
-                    </Box>
-                  )}
-                </Grid>
-              )}
-              <Box mt={6}>
-                <CustomPagination
-                  onChangePagination={handleOnchangePagination}
-                  pageSizeOptions={PAGE_SIZE_OPTION}
-                  pageSize={pageSize}
-                  page={page}
-                  rowLength={productsPublic.total}
-                  isHideShowed
-                />
-              </Box>
-            </Grid>
-          </Grid>
-        </Box>
+      {/* <ChatBotAI /> */}
+
+      <Box>
+        <Gallery /> 
+      </Box>
+      <Box sx={{ padding: '5%' }}>
+        <AboutSpa />
       </Box>
     </>
   )

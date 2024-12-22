@@ -16,6 +16,28 @@ interface TOptions {
   value: string
 }
 
+// const getBanners = async () => {
+//   try {
+//     const banners: TOptions[] = []
+//     await getAllBanners({ params: { limit: -1, page: -1 } }).then(res => {
+//       const data = res?.data.banners
+//       if (data) {
+//         data?.map((item: { link: string; type: string; image: string; language: string }) => {
+//           banners.push({ link: item.link, type: item.type, image: item.image, language: item.language })
+//         })
+//       }
+//     })
+
+//     return {
+//       banners
+//     }
+//   } catch (error) {
+//     return {
+//       banners: []
+//     }
+//   }
+// }
+
 const getProductData = async () => {
   const limit = 10
   const page = 1
