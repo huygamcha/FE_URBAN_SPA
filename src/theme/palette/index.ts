@@ -51,6 +51,11 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       secondary: backgroundMain,
       hover: backgroundThird
     },
+
+    title: {
+      light: '#ffe3c6'
+    },
+    
     mode: mode,
     common: {
       black: '#071021',
@@ -117,6 +122,7 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       secondary: `${blackColor}`,
       disabled: `${blackColor} `
     },
+
     divider: `rgba(${mainColor}, 0.16)`,
     background: {
       paper: mode === 'light' ? whiteColor : darkPaperBgColor,

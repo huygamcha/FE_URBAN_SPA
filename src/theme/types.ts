@@ -18,6 +18,9 @@ declare module '@mui/material/styles' {
       secondary: string
       hover: string
     }
+    title: {
+      light: string
+    }
   }
 
   interface PaletteOptions {

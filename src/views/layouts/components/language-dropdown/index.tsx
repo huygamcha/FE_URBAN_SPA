@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import React, { useState } from 'react'
@@ -17,7 +17,7 @@ import Icon from 'src/components/Icon'
 import { Box, Menu, MenuItem } from '@mui/material'
 
 // ** Third party
-import ReactCountryFlag from "react-country-flag"
+import ReactCountryFlag from 'react-country-flag'
 
 // ** config
 import { LANGUAGE_OPTIONS } from 'src/configs/i18n'
@@ -29,6 +29,8 @@ type TProps = {}
 const countryCode = {
   en: 'GB',
   vi: 'VN',
+  ko: 'KR',
+  jp: 'JP'
 }
 
 const LanguageDropdown = (props: TProps) => {

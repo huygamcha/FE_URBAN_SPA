@@ -17,6 +17,9 @@ export const API_ENDPOINT = {
     CITY: {
       INDEX: `${BASE_URL}/city`
     },
+    PACKAGE: {
+      INDEX: `${BASE_URL}/packages`
+    },
     DELIVERY_TYPE: {
       INDEX: `${BASE_URL}/delivery-type`
     },
