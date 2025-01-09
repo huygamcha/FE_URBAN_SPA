@@ -4,4 +4,7 @@ export const queryKeys = {
       create_role: 'role_create',
       update_role: 'role_update',
       delete_role: 'role_delete',
+
+      // spa
+      package_list: 'package_list'
 }

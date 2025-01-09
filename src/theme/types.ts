@@ -17,6 +17,7 @@ declare module '@mui/material/styles' {
       main: string
       secondary: string
       hover: string
+      tabs: string
     }
     title: {
       light: string

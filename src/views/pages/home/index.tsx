@@ -85,7 +85,6 @@ const HomePage: NextPage<TProps> = props => {
 
   // fetch api
   // ** fetch api
-  console.log('««««« i18n.language »»»»»', i18n.language)
 
   return (
     <>

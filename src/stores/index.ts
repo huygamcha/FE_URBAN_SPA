@@ -15,6 +15,11 @@ import reviews from 'src/stores/reviews'
 import comments from 'src/stores/comments'
 import notification from 'src/stores/notification'
 
+// spa
+import packages from 'src/stores/package'
+import orderSpa from 'src/stores/order-spa'
+import services from 'src/stores/service'
+
 export const store = configureStore({
   reducer: {
     user,
@@ -29,6 +34,11 @@ export const store = configureStore({
     comments,
     notification,
     orderProduct,
+
+    // spa
+    packages,
+    orderSpa,
+    services
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

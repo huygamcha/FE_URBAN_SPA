@@ -214,3 +214,10 @@ export const displayValueByLanguage = ({ language, value, field }: IDisplayTextB
 
   return value && value[`${finalField}`]
 }
+
+export const formatCurrency = (value: string | number) => {
+  return `${Number(value).toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: `VND`
+  })}`
+}

@@ -2,6 +2,7 @@
 @import '@fontsource/roboto/400.css';
 @import '@fontsource/roboto/500.css';
 @import '@fontsource/roboto/700.css';
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -12,7 +13,7 @@
 html,
 body {
   min-height: 100%;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Playfair Display', 'Roboto', sans-serif;
 }
 
 #__next {

@@ -1,11 +1,15 @@
 import React from 'react'
 import { Container, Box, Grid, Typography, Link, Divider } from '@mui/material'
+import Contact from './components/Contact'
 // import FacebookIcon from '@mui/icons-material/Facebook'
 // import InstagramIcon from '@mui/icons-material/Instagram'
 
 const Footer = () => {
   return (
     <>
+      <Container>
+        <Contact />
+      </Container>
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
         <path
           fill='#5e8172'

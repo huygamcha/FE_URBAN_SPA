@@ -12,6 +12,15 @@ export type TParamsCreatePackage = {
 export type TParamsEditPackage = {
   id: string
   name: string
+  nameKo: string,
+  nameEn: string,
+  nameJp: string,
+  description: string,
+  descriptionKo: string,
+  descriptionEn: string,
+  descriptionJp: string,
+  image: string,
+  slug: string
 }
 
 export type TParamsDeletePackage = {
@@ -34,4 +43,5 @@ export type TPackage = {
   descriptionKo: string
   descriptionJp: string
   descriptionEn: string
+  services: any[]
 }

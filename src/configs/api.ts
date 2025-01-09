@@ -20,6 +20,9 @@ export const API_ENDPOINT = {
     PACKAGE: {
       INDEX: `${BASE_URL}/packages`
     },
+    SERVICE: {
+      INDEX: `${BASE_URL}/services`
+    },
     DELIVERY_TYPE: {
       INDEX: `${BASE_URL}/delivery-type`
     },
@@ -56,5 +59,8 @@ export const API_ENDPOINT = {
   },
   NOTIFICATION: {
     INDEX: `${BASE_URL}/notifications`
+  },
+  APPOINTMENT: {
+    INDEX: `${BASE_URL}/appointments`
   }
 }

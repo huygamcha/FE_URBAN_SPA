@@ -54,7 +54,7 @@ const Error404 = () => {
               Back to Home
             </Button>
           </BoxWrapper>
-          <Img height='500' alt='error-illustration' src='/images/404.png' />
+          {/* <Img height='500' alt='error-illustration' src='/images/404.png' /> */}
         </Box>
       </Box>
     </AuthLayoutWrapper>

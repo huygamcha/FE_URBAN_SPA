@@ -1,15 +1,15 @@
 export const ROUTE_CONFIG = {
   MY_PROFILE: '/my-profile',
-  HOME: '/home',
+  HOME: '/',
   PRODUCT: '/product',
   LOGIN: '/login',
   CHANGE_PASSWORD: '/change-password',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
-  REGISTER: "/register",
+  REGISTER: '/register',
   MY_CART: '/my-cart',
   MY_PRODUCT: '/my-product',
-  MY_ORDER: "/my-order",
+  MY_ORDER: '/my-order',
   CHECKOUT_PRODUCT: '/checkout-product',
   SYSTEM: {
     ROLE: '/system/role',
@@ -26,8 +26,11 @@ export const ROUTE_CONFIG = {
   },
   SETTINGS: {
     CITY: '/settings/city',
+    SERVICE: '/settings/service',
+    PACKAGE: '/settings/package',
     PAYMENT_TYPE: '/settings/payment-type',
     DELIVERY_TYPE: '/settings/delivery-type'
   },
-  DASHBOARD: '/dashboard'
+  DASHBOARD: '/dashboard',
+  PACKAGE: '/packages'
 }

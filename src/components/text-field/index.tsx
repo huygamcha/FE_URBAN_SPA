@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Mui Imports
 import { TextFieldProps, TextField, styled } from '@mui/material'
@@ -14,15 +14,15 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
     },
     '& .MuiInputBase-root': {
       borderRadius: 8,
-      backgroundColor: 'transparent !important',
+      backgroundColor: '#fff !important',
       borderColor: `rgba(${theme.palette.customColors?.main}, 0.2)`,
       borderStyle: 'solid',
       borderWidth: '1px',
       transition: theme.transitions.create(['border-color', 'box-shadow'], {
         duration: theme.transitions.duration.shorter
       }),
-      "& .MuiInputBase-inputAdornedEnd": {
-        borderRadius: 8,
+      '& .MuiInputBase-inputAdornedEnd': {
+        borderRadius: 8
       },
       '&:before, &:after': {
         display: 'none'
@@ -77,6 +77,12 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       fontSize: theme.typography.body2.fontSize,
       '&.Mui-error,.MuiInputBase-colorError': {
         color: theme.palette.error.main
+      }
+    },
+    '& .MuiSelect-select': {
+      '&:focus': {
+        backgroundColor: '#fff',
+        borderRadius: '0.5rem'
       }
     }
   }

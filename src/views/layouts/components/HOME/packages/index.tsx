@@ -3,6 +3,8 @@ import { TPackage } from 'src/types/package'
 import { Grid, Typography, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
+import { useRouter } from 'next/navigation'
+import { ROUTE_CONFIG } from 'src/configs/route'
 
 type TProps = {
   packages: TPackage[]
@@ -12,16 +14,25 @@ const Packages = (props: TProps) => {
   const { i18n } = useTranslation()
   const { packages } = props
 
+  // ** Hooks
+  const router = useRouter()
+
   const allRefs = useRef<Array<HTMLDivElement | null>>([])
 
   // Khởi tạo refs cho cả Typography và packages
   allRefs.current = Array(packages.length + 1).fill(null)
 
+  const handleDetail = (item: TPackage) => {
+    const slug = item.slug
+    // const params = new URLSearchParams(slug)
+    router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)
+  }
+
   useEffect(() => {
     const observerOptions = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.1
+      threshold: 0.2 // 10% thì xuất hiện item
     }
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
@@ -57,7 +68,7 @@ const Packages = (props: TProps) => {
               background: theme => theme.palette.customBackground.main,
               margin: 'auto',
               width: '0%', // Ban đầu dòng có chiều rộng bằng 0
-              transition: 'width 0.5s cubic-bezier(0.17, 0.55, 0.55, 1)',
+              transition: 'width 0.8s cubic-bezier(0.17, 0.55, 0.55, 1)',
               '&.show': {
                 width: '5.33333rem' // Mở rộng chiều dài khi xuất hiện
               }
@@ -85,6 +96,7 @@ const Packages = (props: TProps) => {
           {packages.map((item: TPackage, index: number) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Box
+                onClick={() => handleDetail(item)}
                 ref={(el: HTMLDivElement | null) => {
                   allRefs.current[index + 1] = el // Packages refs bắt đầu từ vị trí thứ 2
                 }}

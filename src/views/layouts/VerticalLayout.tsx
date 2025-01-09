@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import * as React from 'react'
 
@@ -51,7 +51,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })
 
 const VerticalLayout: NextPage<TProps> = ({ open, toggleDrawer }) => {
   return (
-    <Drawer variant='permanent' open={open}>
+    <Drawer
+      sx={{
+        zIndex: 1102
+      }}
+      variant='permanent'
+      open={open}
+    >
       <Toolbar
         sx={{
           display: 'flex',

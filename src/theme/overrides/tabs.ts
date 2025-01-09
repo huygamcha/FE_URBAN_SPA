@@ -26,7 +26,11 @@ const Tabs = () => {
         root: ({ theme }: OwnerStateThemeType) => ({
           minHeight: 38,
           textTransform: 'none',
-          padding: theme.spacing(1.75, 5)
+          padding: theme.spacing(1.75, 5),
+          '&.Mui-selected': {
+            backgroundColor: theme.palette.customBackground.main,
+            color: theme.palette.common.white
+          }
         }),
         textColorSecondary: ({ theme }: OwnerStateThemeType) => ({
           '&.Mui-selected': {
