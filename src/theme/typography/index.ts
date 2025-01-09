@@ -1,5 +1,7 @@
 const typography = {
   fontFamily: [
+    'Inter',
+    'Playfair Display',
     'Public Sans',
     'sans-serif',
     '-apple-system',
@@ -9,7 +11,7 @@ const typography = {
     '"Helvetica Neue"',
     'Arial',
     'sans-serif',
-    '"Apple Color Emoji"',
+    '"Apple Color Emoji"',  
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"'
   ].join(','),
@@ -48,9 +50,9 @@ const typography = {
     letterSpacing: '0.15px'
   },
   subtitle2: {
-    lineHeight: 1.32,
-    fontSize: '0.875rem',
-    letterSpacing: '0.1px'
+    fontSize: '1rem',
+    letterSpacing: '0.15px',
+    fontWeight: 700
   },
   body1: {
     lineHeight: 1.467,

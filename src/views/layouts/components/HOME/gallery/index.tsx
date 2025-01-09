@@ -1,86 +1,120 @@
-'use client'
-
-// ** React
 import * as React from 'react'
-
-// ** Next
-import { NextPage } from 'next'
-import Link from 'next/link'
-
-// ** Mui
-import { styled } from '@mui/material/styles'
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-
-// components
-import Icon from 'src/components/Icon'
-import UserDropdown from 'src/views/layouts/components/user-dropdown'
-import ModeToggle from 'src/views/layouts/components/mode-toggle'
-import LanguageDropdown from 'src/views/layouts/components/language-dropdown'
-import CartProduct from 'src/views/layouts/components/cart-product'
-import NotificationDropdown from 'src/views/layouts/components/notification-dropdown'
-
-// ** Hooks
-import { Box, Button } from '@mui/material'
-
-// config
 import Image from 'next/image'
 import { bannerHome } from 'src/app/data/bannerHome'
-import { IBannerHome } from 'src/types/bannerHome'
-
-// ** React slick
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
 
 const Gallery = () => {
   const galleryRef = React.useRef<HTMLDivElement | null>(null)
+  const [isDragging, setIsDragging] = React.useState(false)
+  const [startX, setStartX] = React.useState(0)
+  const [scrollLeft, setScrollLeft] = React.useState(0)
 
-  // Handle the wheel event for horizontal scrolling
   const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault() // Prevent default vertical scrolling behavior
+    e.preventDefault()
     if (galleryRef.current) {
-      galleryRef.current.scrollLeft += e.deltaY // Scroll horizontally
+      const scrollSpeed = 2.5
+      galleryRef.current.scrollLeft += e.deltaY * scrollSpeed
+    }
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true)
+    if (galleryRef.current) {
+      setStartX(e.pageX - galleryRef.current.offsetLeft)
+      setScrollLeft(galleryRef.current.scrollLeft)
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  const handleMouseLeave = () => {
+    setIsDragging(false)
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    e.preventDefault()
+    if (galleryRef.current) {
+      const x = e.pageX - galleryRef.current.offsetLeft
+      const distance = (x - startX) * 2
+      galleryRef.current.scrollLeft = scrollLeft - distance
     }
   }
 
   return (
-    <div
-      ref={galleryRef}
-      onWheel={handleWheel}
-      style={{
-        display: 'flex',
-        overflowX: 'hidden', // Allow horizontal scrolling
-        gap: '0.5rem',
-        // height: '300px',
-        // padding: '16px',
-        cursor: 'grab'
-      }}
-    >
-      {bannerHome.map((src, index) => (
-        <div
-          key={index}
-          style={{
-            flex: '0 0 auto', // Prevent shrinking or growing
-            width: '600px',
-            height: '100%'
-          }}
-        >
-          <Image
-            src={src.image}
-            alt={`Gallery ${index}`}
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Overlay Text */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 10,
+          color: 'white',
+          fontSize: '3rem',
+          fontWeight: 'bold',
+          pointerEvents: 'none'
+        }}
+      >
+        Be Beauty - Be You
+      </div>
+
+      {/* Gallery */}
+      <div
+        ref={galleryRef}
+        onWheel={handleWheel}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        style={{
+          display: 'flex',
+          overflowX: 'scroll',
+          gap: '0.5rem',
+          cursor: isDragging ? 'grabbing' : 'grab',
+          scrollBehavior: 'smooth',
+          WebkitOverflowScrolling: 'touch',
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
+          position: 'relative',
+          paddingBottom: '5px'
+        }}
+      >
+        {bannerHome.map((src, index) => (
+          <div
+            key={index}
             style={{
-              objectFit: 'cover', // Maintain aspect ratio
-              borderRadius: '1rem'
+              flex: '0 0 auto',
+              width: '600px',
+              height: '100%',
+              transition: 'transform 0.2s ease',
+              transform: isDragging ? 'scale(0.98)' : 'scale(1)'
             }}
-            layout='responsive'
-            width={16}
-            height={9}
-          />
-        </div>
-      ))}
+          >
+            <Image
+              src={src.image}
+              alt={`Gallery ${index}`}
+              style={{
+                objectFit: 'cover',
+                borderRadius: '1rem',
+                userSelect: 'none',
+                pointerEvents: isDragging ? 'none' : 'auto'
+              }}
+              layout='responsive'
+              width={16}
+              height={9}
+              priority={index < 2}
+            />
+          </div>
+        ))}
+        <style jsx global>{`
+          div::-webkit-scrollbar {
+            display: none;
+          }
+        `}</style>
+      </div>
     </div>
   )
 }

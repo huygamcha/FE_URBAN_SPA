@@ -54,6 +54,21 @@ const GlobalStyles = (theme: Theme) => {
         position: 'fixed',
         backgroundColor: theme.palette.primary.main
       }
+    },
+    // Tùy chỉnh scrollbar bằng cách sử dụng các pseudo-element CSS
+    '&::-webkit-scrollbar': {
+      width: '3px',
+      height: '6px'
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1' // Màu nền của track scrollbar
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: '#888', // Màu của thumb scrollbar
+      borderRadius: '0.25rem' // Góc bo tròn của thumb scrollbar
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555' // Màu của thumb scrollbar khi hover
     }
   }
 }

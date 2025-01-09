@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** MUI Imports
 import { ThemeOptions } from '@mui/material'
@@ -94,7 +94,7 @@ const UserThemeOptions = (): ThemeOptions => {
       borderRadius: 10
     },
     typography: {
-      fontFamily: '"Myriad Pro", sans-serif'
+      // fontFamily: '"Myriad Pro", sans-serif'
     },
     zIndex: {
       appBar: 1200,

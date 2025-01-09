@@ -60,6 +60,11 @@ export const PERMISSIONS = {
       CREATE: 'CITY.CREATE',
       UPDATE: 'CITY.UPDATE',
       DELETE: 'CITY.DELETE'
+    },
+    PACKAGE: {
+      CREATE: 'PACKAGE.CREATE',
+      UPDATE: 'PACKAGE.UPDATE',
+      DELETE: 'PACKAGE.DELETE'
     }
   }
 }
@@ -140,6 +145,14 @@ export const LIST_DATA_PERMISSIONS: any = [
     isParent: false,
     isHideView: true,
     value: 'CITY',
+    parentValue: 'SETTING'
+  },
+  {
+    id: 16,
+    name: 'Package',
+    isParent: false,
+    isHideView: true,
+    value: 'PACKAGE',
     parentValue: 'SETTING'
   },
   {

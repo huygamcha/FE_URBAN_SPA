@@ -2,62 +2,28 @@ import { Metadata } from 'next'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
+import { getAllPackages } from 'src/services/packages'
 import { getAllProductsPublic } from 'src/services/product'
 import { getAllProductTypes } from 'src/services/product-type'
+import { TPackage } from 'src/types/package'
 
 // layouts
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
-
-// ** Pages
 import HomePage from 'src/views/pages/home'
 
-interface TOptions {
-  label: string
-  value: string
-}
-
-const getProductData = async () => {
-  const limit = 10
-  const page = 1
-  const order = 'createdAt desc'
+const getPackages = async () => {
   try {
-    const productTypes: TOptions[] = []
-    await getAllProductTypes({ params: { limit: -1, page: -1 } }).then(res => {
-      const data = res?.data.productTypes
-      if (data) {
-        data?.map((item: { name: string; _id: string }) => {
-          productTypes.push({ label: item.name, value: item._id })
-        })
-      }
+    let packages: TPackage[] = []
+    await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
+      packages = res?.data.packages
     })
-    const res = await getAllProductsPublic({
-      params: { limit: limit, page: page, order, productType: productTypes?.[0]?.value }
-    })
-
-    const data = res.data
 
     return {
-      products: data?.products,
-      totalCount: data?.totalCount,
-      productTypes: productTypes || [],
-      params: {
-        limit,
-        page,
-        order,
-        productType: productTypes?.[0]?.value || ''
-      }
+      packages
     }
   } catch (error) {
     return {
-      products: [],
-      totalCount: 0,
-      productTypes: [],
-      params: {
-        limit,
-        page,
-        order,
-        productType: ''
-      }
+      packages: []
     }
   }
 }
@@ -82,7 +48,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const { products, totalCount, params, productTypes } = await getProductData()
+  const { packages } = await getPackages()
 
   return (
     <AuthLayoutWrapper
@@ -90,12 +56,12 @@ export default async function Home() {
       authGuard={false}
       getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}
     >
-      <HomePage products={products} totalCount={totalCount} paramsServer={params} productTypesServer={productTypes} />
+      <HomePage packages={packages} />
     </AuthLayoutWrapper>
   )
 }
 
 // Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
-export const dynamic = 'force-static'
-export const revalidate = 10
-export const maxDuration = 60
+export const dynamic = 'force-dynamic'
+// export const revalidate = 10
+// export const maxDuration = 60

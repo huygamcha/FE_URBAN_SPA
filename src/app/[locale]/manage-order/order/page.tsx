@@ -7,13 +7,14 @@ import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
 
 // ** views
 import OrderProductListPage from 'src/views/pages/manage-order/order-product/OrderProductList'
+import OrderSpaListPage from 'src/views/pages/manage-order/order-spa/OrderSpaList'
 
 type TProps = {}
 
 const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper permission={[PERMISSIONS.MANAGE_ORDER.ORDER.VIEW]}>
-      <OrderProductListPage />
+      <OrderSpaListPage />
     </AuthLayoutWrapper>
   )
 }

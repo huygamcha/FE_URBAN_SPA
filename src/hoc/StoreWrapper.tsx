@@ -13,6 +13,7 @@ import ThemeComponent from 'src/theme/ThemeComponent'
 import ReactHotToast from 'src/components/react-hot-toast'
 import { Toaster } from 'react-hot-toast'
 import { useTheme } from '@mui/material'
+import { DrawerProvider } from 'src/contexts/DrawerContext'
 
 export const StoreWrapper = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient())
@@ -41,20 +42,22 @@ export const StoreWrapper = ({ children }: { children: ReactNode }) => {
         <AuthProvider>
           <AxiosInterceptor>
             <SessionProvider>
-              <SettingsProvider>
-                <SettingsConsumer>
-                  {({ settings }) => {
-                    return (
-                      <ThemeComponent settings={settings}>
-                        {children}
-                        <ReactHotToast>
-                          <Toaster position={settings.toastPosition} toastOptions={toastOptions} />
-                        </ReactHotToast>
-                      </ThemeComponent>
-                    )
-                  }}
-                </SettingsConsumer>
-              </SettingsProvider>
+              <DrawerProvider>
+                <SettingsProvider>
+                  <SettingsConsumer>
+                    {({ settings }) => {
+                      return (
+                        <ThemeComponent settings={settings}>
+                          {children}
+                          <ReactHotToast>
+                            <Toaster position={settings.toastPosition} toastOptions={toastOptions} />
+                          </ReactHotToast>
+                        </ThemeComponent>
+                      )
+                    }}
+                  </SettingsConsumer>
+                </SettingsProvider>
+              </DrawerProvider>
             </SessionProvider>
           </AxiosInterceptor>
         </AuthProvider>

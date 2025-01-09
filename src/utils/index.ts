@@ -197,3 +197,27 @@ export const createUrlQuery = (name: string, value: any) => {
 
   return params.toString()
 }
+
+interface IDisplayTextByLanguage {
+  language: string
+  value: any
+  field: string
+}
+export const displayValueByLanguage = ({ language, value, field }: IDisplayTextByLanguage) => {
+  let finalField
+  if (language === 'vi') {
+    finalField = field
+  } else {
+    const suffix = language.charAt(0).toUpperCase() + language.slice(1)
+    finalField = `${field}${suffix}`
+  }
+
+  return value && value[`${finalField}`]
+}
+
+export const formatCurrency = (value: string | number) => {
+  return `${Number(value).toLocaleString('vi-VN', {
+    style: 'currency',
+    currency: `VND`
+  })}`
+}

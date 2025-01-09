@@ -25,6 +25,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import CustomCarousel from 'src/components/custom-carousel'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
+import Footer from './components/footer'
 
 type TProps = {
   children: React.ReactNode
@@ -78,14 +79,16 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             // m: 4,
             // width: 'calc(100vw - 32px)',
             maxWidth: 'unset !important',
-            overflow: 'auto',
+            // overflow: 'auto',
             maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight} - 32px)`,
-            padding: '0 !important'
+            padding: '0 !important',
+            overflow: 'hidden'
             // borderRadius: '0.5rem'
           }}
         >
           {children}
         </Container>
+        <Footer />
       </Box>
     </Box>
   )

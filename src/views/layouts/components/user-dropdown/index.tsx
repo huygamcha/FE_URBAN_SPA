@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import React, { useEffect } from 'react'
@@ -214,7 +214,8 @@ const UserDropdown = (props: TProps) => {
           </StyledBadge>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography component='span'>
-              {toFullName(user?.lastName || '', user?.middleName || '', user?.firstName || '', i18n.language) || user?.email}
+              {toFullName(user?.lastName || '', user?.middleName || '', user?.firstName || '', i18n.language) ||
+                user?.email}
             </Typography>
             <Typography component='span'>{user?.role?.name}</Typography>
           </Box>
@@ -228,7 +229,7 @@ const UserDropdown = (props: TProps) => {
             {t('Manage_system')}
           </MenuItem>
         )}
-        <MenuItem onClick={handleNavigateMyProfile}>
+        {/* <MenuItem onClick={handleNavigateMyProfile}>
           <Avatar>
             <Icon icon='ph:user-thin' />
           </Avatar>{' '}
@@ -251,7 +252,7 @@ const UserDropdown = (props: TProps) => {
             <Icon icon='arcticons:password' />
           </Avatar>
           {t('Change_password')}
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={logout}>
           <Avatar sx={{ backgroundColor: 'transparent' }}>
             <Icon icon='material-symbols-light:logout' />
