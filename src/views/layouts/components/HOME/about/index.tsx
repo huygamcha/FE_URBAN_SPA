@@ -1,7 +1,26 @@
 import React from 'react'
 import { Box, Typography, Container, Grid, Button, IconButton } from '@mui/material'
-import Slider from 'react-slick'
 import ReactPlayer from 'react-player/lazy'
+import Image from 'next/image'
+
+// ** React Slider
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import { bannerHome } from 'src/app/data/bannerHome'
+import { IBannerHome } from 'src/types/bannerHome'
+
+const settings = {
+  dots: false,
+  arrows: false,
+  infinite: true,
+  autoplay: true,
+  speed: 2000,
+  autoplaySpeed: 2000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  fade: true
+}
 
 const AboutSpa = () => {
   return (
@@ -25,6 +44,19 @@ const AboutSpa = () => {
               padding: '1rem'
             }}
           >
+            <Typography
+              sx={{
+                color: '#6c4241',
+                marginTop: '0',
+                marginBottom: '0',
+                fontFamily: 'Playfair Display,sans-serif',
+                fontSize: '3rem',
+                fontWeight: '700',
+                lineHeight: '1.2'
+              }}
+            >
+              About Urban Spa
+            </Typography>
             <Typography>Relax - Renew - Revitalize</Typography>
             <Typography variant='body1' mt={2}>
               Inspired by the nature and our modern <strong>BOHEMIAN life style</strong>,<strong> LABOHO Spa </strong>
@@ -40,12 +72,17 @@ const AboutSpa = () => {
         </Grid>
         <Grid item xs={6}>
           <Box
-            style={{
+            sx={{
               borderRadius: '1rem',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              fontSize: '0px'
             }}
           >
-            <ReactPlayer width='100%' url='https://www.youtube.com/watch?v=GQjEjprY0WE&t=2s&ab_channel=KampaVietNam' />
+            <Slider {...settings}>
+              {bannerHome?.map((item: IBannerHome, index: number) => (
+                <Image key={index} src={item.image} alt='about us' layout='responsive' width={596} height={795} />
+              ))}
+            </Slider>
           </Box>
         </Grid>
       </Grid>

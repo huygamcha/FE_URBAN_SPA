@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { bannerHome } from 'src/app/data/bannerHome'
+import { Box } from '@mui/material'
 
 const Gallery = () => {
   const galleryRef = React.useRef<HTMLDivElement | null>(null)
@@ -43,79 +44,81 @@ const Gallery = () => {
   }
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden' }}>
-      {/* Overlay Text */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 10,
-          color: 'white',
-          fontSize: '3rem',
-          fontWeight: 'bold',
-          pointerEvents: 'none'
-        }}
-      >
-        Be Beauty - Be You
-      </div>
+    <Box sx={{ padding: '4% 0%', backgroundColor: '#ffe3c7' }}>
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
+        {/* Overlay Text */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 10,
+            color: 'white',
+            fontSize: '3rem',
+            fontWeight: 'bold',
+            pointerEvents: 'none',
+            fontFamily: 'Playfair Display,sans-serif'
+          }}
+        >
+          BE BEAUTY - BE YOU
+        </div>
 
-      {/* Gallery */}
-      <div
-        ref={galleryRef}
-        onWheel={handleWheel}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        style={{
-          display: 'flex',
-          overflowX: 'scroll',
-          gap: '0.5rem',
-          cursor: isDragging ? 'grabbing' : 'grab',
-          scrollBehavior: 'smooth',
-          WebkitOverflowScrolling: 'touch',
-          msOverflowStyle: 'none',
-          scrollbarWidth: 'none',
-          position: 'relative',
-          paddingBottom: '5px'
-        }}
-      >
-        {bannerHome.map((src, index) => (
-          <div
-            key={index}
-            style={{
-              flex: '0 0 auto',
-              width: '600px',
-              height: '100%',
-              transition: 'transform 0.2s ease',
-              transform: isDragging ? 'scale(0.98)' : 'scale(1)'
-            }}
-          >
-            <Image
-              src={src.image}
-              alt={`Gallery ${index}`}
+        {/* Gallery */}
+        <div
+          ref={galleryRef}
+          onWheel={handleWheel}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseLeave}
+          onMouseMove={handleMouseMove}
+          style={{
+            display: 'flex',
+            overflowX: 'scroll',
+            gap: '0.5rem',
+            cursor: isDragging ? 'grabbing' : 'grab',
+            scrollBehavior: 'smooth',
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            position: 'relative',
+            paddingBottom: '5px'
+          }}
+        >
+          {bannerHome.map((src, index) => (
+            <div
+              key={index}
               style={{
-                objectFit: 'cover',
-                borderRadius: '1rem',
-                userSelect: 'none',
-                pointerEvents: isDragging ? 'none' : 'auto'
+                flex: '0 0 auto',
+                height: '80vh', // Set height to 80% of viewport height
+                width: '35vw', // Set width to 40% of viewport width
+                position: 'relative', // Required for the image to fill the container
+                transition: 'transform 0.2s ease',
+                transform: isDragging ? 'scale(0.98)' : 'scale(1)'
               }}
-              layout='responsive'
-              width={16}
-              height={9}
-              priority={index < 2}
-            />
-          </div>
-        ))}
-        <style jsx global>{`
-          div::-webkit-scrollbar {
-            display: none;
-          }
-        `}</style>
+            >
+              <Image
+                src={src.image}
+                alt={`Gallery ${index}`}
+                style={{
+                  objectFit: 'cover', // Ensures the image covers the container while maintaining its aspect ratio
+                  borderRadius: '1.5rem',
+                  userSelect: 'none',
+                  pointerEvents: isDragging ? 'none' : 'auto'
+                }}
+                layout='fill' // This makes the image fill the container
+                priority={index < 2}
+              />
+            </div>
+          ))}
+          <style jsx global>{`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
+        </div>
       </div>
-    </div>
+    </Box>
   )
 }
 

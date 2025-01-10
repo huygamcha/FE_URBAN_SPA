@@ -68,11 +68,57 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             maxWidth: 'unset !important'
           }}
         >
-          <Slider {...settings}>
-            {bannerHome?.map((item: IBannerHome, index: number) => (
-              <Image key={index} src={item.image} alt='Responsive Image' layout='responsive' width={16} height={9} />
-            ))}
-          </Slider>
+          <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 64px)' }}>
+            <div
+              style={{
+                position: 'absolute',
+                top: '40%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 10,
+                color: 'white',
+                fontSize: '6rem', // Adjusted font size for the title
+                textTransform: 'uppercase', // Making the text uppercase
+                pointerEvents: 'none',
+                fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
+                letterSpacing: '3px', // Add spacing to mimic the image style
+                width: '100%',
+                textAlign: 'center' // Center the text
+              }}
+            >
+              URBAN SPA
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                top: '60%', // Adjusting position of subtitle
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 10,
+                color: 'white',
+                fontSize: '1.5rem', // Subtitle font size
+                fontWeight: 'normal',
+                textTransform: 'uppercase',
+                letterSpacing: '2px',
+                fontFamily: 'Arial, sans-serif' // Different font for subtitle
+              }}
+            >
+              PREMIUM SPA & WELLNESS CENTER
+            </div>
+            <Slider {...settings}>
+              {bannerHome?.map((item: IBannerHome, index: number) => (
+                <Image
+                  style={{ height: 'calc(100vh - 64px)' }}
+                  key={index}
+                  src={item.image}
+                  alt='Responsive Image'
+                  layout='responsive'
+                  width={16}
+                  height={9}
+                />
+              ))}
+            </Slider>
+          </div>
         </Box>
         <Container
           sx={{

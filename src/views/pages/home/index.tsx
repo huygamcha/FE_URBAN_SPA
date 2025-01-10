@@ -91,12 +91,14 @@ const HomePage: NextPage<TProps> = props => {
       {/* {loading && <Spinner />} */}
       {/* <ChatBotAI /> */}
 
+      <div id='about'></div>
       <Box sx={{ padding: '5%' }}>
         <AboutSpa />
       </Box>
       <Box>
         <Gallery />
       </Box>
+      <div id='package'></div>
       <Box sx={{ padding: '5%' }}>
         <Packages packages={packages} />
       </Box>

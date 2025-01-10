@@ -85,7 +85,8 @@ const Packages = (props: TProps) => {
             fontWeight: '700',
             lineHeight: '1.2',
             textAlign: 'center',
-            color: '#6b4241'
+            color: '#6b4241',
+            fontFamily: 'Playfair Display,sans-serif'
           }}
         >
           SPA PACKAGE

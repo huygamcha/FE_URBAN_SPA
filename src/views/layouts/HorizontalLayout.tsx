@@ -34,6 +34,8 @@ import { useTranslation } from 'react-i18next'
 import i18nConfig from 'src/app/i18nConfig'
 import Image from 'next/image'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
+import BookingForm from './components/booking-form/BookingForm'
+import { useDrawer } from 'src/hooks/useDrawer'
 
 const drawerWidth: number = 240
 
@@ -94,6 +96,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
 
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
+  const { openBookingForm, setOpenBookingForm } = useDrawer()
   // State for mobile menu toggle
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
@@ -155,27 +158,35 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           </Box>
           <Box display='flex' alignItems='center'>
             {isLg && (
-              <Box gap={10} display='flex' alignItems='center'>
-                <Link href={''}>
+              <Box
+                gap={10}
+                display='flex'
+                alignItems='center'
+                sx={{
+                  '& a:hover .MuiTypography-root': {
+                    color: '#325658',
+                    opacity: 0.67
+                  }
+                }}
+              >
+                <Link href='#home'>
                   <Typography variant='subtitle2' fontWeight='500'>
                     Home
                   </Typography>
                 </Link>
-                <Link href={''}>
+                <Link href='#about'>
                   <Typography variant='subtitle2' fontWeight='500'>
                     About us
                   </Typography>
                 </Link>
-                <Link href={''}>
+                <Link href='#package'>
                   <Typography variant='subtitle2' fontWeight='500'>
-                    Service
+                    Package
                   </Typography>
                 </Link>
-                <Link href={''}>
-                  <Typography variant='subtitle2' fontWeight='500'>
-                    Promotions
-                  </Typography>
-                </Link>
+                <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
+                  Booking Now
+                </Button>
               </Box>
             )}
 
@@ -226,7 +237,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           <List>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href=''>
+                <Link href='#home'>
                   <Typography color='title.light' variant='subtitle1'>
                     Home
                   </Typography>
@@ -235,7 +246,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href=''>
+                <Link href='#about'>
                   <Typography color='title.light' variant='subtitle1'>
                     About us
                   </Typography>
@@ -244,25 +255,24 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href=''>
+                <Link href='#package'>
                   <Typography color='title.light' variant='subtitle1'>
-                    Service
+                    Package
                   </Typography>
                 </Link>
               </ListItemText>
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href=''>
-                  <Typography color='title.light' variant='subtitle1'>
-                    Promotions
-                  </Typography>
-                </Link>
+                <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
+                  Booking Now
+                </Button>
               </ListItemText>
             </ListItem>
           </List>
         </Box>
       </Drawer>
+      <BookingForm />
     </>
     // </AppBar>
   )

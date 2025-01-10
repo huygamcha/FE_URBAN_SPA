@@ -14,13 +14,13 @@ const Footer = () => {
         <path
           fill='#5e8172'
           fill-opacity='1'
-          d='M0,128L48,144C96,160,192,192,288,192C384,192,480,160,576,149.3C672,139,768,149,864,165.3C960,181,1056,203,1152,202.7C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'
+          d='M0,96L48,90.7C96,85,192,75,288,64C384,53,480,43,576,48C672,53,768,75,864,85.3C960,96,1056,96,1152,96C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'
         ></path>
       </svg>
       <Box
         mt={{
           xs: '-1rem',
-          lg: '-5rem'
+          lg: '-10rem'
         }}
         sx={{ backgroundColor: theme => theme.palette.customBackground.main }}
       >
@@ -56,7 +56,7 @@ const Footer = () => {
             <Grid item>
               <Link href='/promotions' color='title.light' underline='hover'>
                 <Typography color='title.light' variant='subtitle2'>
-                  Promotions
+                  Booking Now
                 </Typography>
               </Link>
             </Grid>
@@ -113,57 +113,11 @@ const Footer = () => {
           {/* <Divider sx={{ marginBottom: '2rem' }} /> */}
 
           {/* Footer Bottom */}
-          <Box textAlign='center' sx={{ marginBottom: '1rem' }}>
+          <Box textAlign='center' sx={{ paddingBottom: '1rem' }}>
             <Typography variant='body2' color='title.light'>
               © 2016 Urban Oasis Spa.Allright resserved.
             </Typography>
           </Box>
-
-          {/* Social Links */}
-          <Box textAlign='center'>
-            <Typography variant='body2' color='title.light' gutterBottom>
-              Follow Us:
-            </Typography>
-            <Box display='flex' justifyContent='center' gap={2}>
-              <Link
-                href='https://www.facebook.com/laboho.spa'
-                target='_blank'
-                rel='noopener noreferrer'
-                sx={{ color: 'inherit' }}
-              >
-                {/* <FacebookIcon />  */}
-              </Link>
-              <Link
-                href='https://www.instagram.com/laboho.spa'
-                target='_blank'
-                rel='noopener noreferrer'
-                sx={{ color: 'inherit' }}
-              >
-                {/* <InstagramIcon /> */}
-              </Link>
-            </Box>
-          </Box>
-
-          {/* Legal Links */}
-          {/* <Box textAlign='center' sx={{ marginTop: '2rem' }}>
-          <Grid container spacing={2} justifyContent='center'>
-            <Grid item>
-              <Link href='/legal-policies/privacy-policy' color='title.light' underline='hover'>
-                Privacy Policy
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href='/legal-policies/terms-of-service' color='title.light' underline='hover'>
-                Terms of Use
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href='/legal-policies/cookies-policy' color='title.light' underline='hover'>
-                Cookies Regulations
-              </Link>
-            </Grid>
-          </Grid>
-        </Box> */}
         </Container>
       </Box>
     </>

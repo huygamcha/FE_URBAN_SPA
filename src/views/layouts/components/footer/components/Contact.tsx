@@ -11,62 +11,87 @@ const Contact = () => {
 
   return (
     <Box sx={{ flexGrow: 1, padding: 2 }}>
+      <Box>
+        <Typography
+          sx={{
+            height: '6px',
+            background: theme => theme.palette.customBackground.main,
+            width: '5.33333rem' // Ban đầu dòng có chiều rộng bằng 0
+          }}
+        ></Typography>
+      </Box>
+
       <Grid container spacing={2}>
         {/* Left Grid: Social Media Icons */}
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
-              Contact Us
+          <Typography
+            sx={{
+              marginTop: '1rem',
+              marginBottom: '0.5rem',
+              fontSize: '2.5rem',
+              fontWeight: '700',
+              lineHeight: '1.2',
+              color: '#6b4241',
+              fontFamily: 'Playfair Display,sans-serif'
+            }}
+          >
+            CONTACT US
+          </Typography>
+          <Box>
+            <Typography>
+              If you're looking for a relaxing and rejuvenating experience, our spa is the perfect place for you,
             </Typography>
+            <Typography>We are committed to providing the best quality service,</Typography>
+            <Typography>Please contact us for your appointment.</Typography>
+          </Box>
+          <Box pt='0.5rem' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
             <Box>
               <Box mt='0.375rem'>
                 <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
                   <Image
                     src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
-                    width={50}
-                    height={50}
+                    width={25}
+                    height={25}
                     alt='Picture of the author'
                   />
                 </Link>
                 <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
                   <Image
                     src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_cafe.svg'
-                    width={50}
-                    height={50}
+                    width={25}
+                    height={25}
                     alt='Picture of the author'
                   />
                 </Link>
                 <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
                   <Image
                     src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
-                    width={50}
-                    height={50}
+                    width={25}
+                    height={25}
                     alt='Picture of the author'
                   />
                 </Link>
-              </Box>
-              <Box mt='0.375rem'>
                 <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
                   <Image
                     src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
-                    width={50}
-                    height={50}
+                    width={25}
+                    height={25}
                     alt='Picture of the author'
                   />
                 </Link>
                 <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
                   <Image
                     src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
-                    width={64}
-                    height={44}
+                    width={32}
+                    height={22}
                     alt='Picture of the author'
                   />
                 </Link>
                 <Link target='_blank' href='https://zalo.me/1579840813471644356'>
                   <Image
                     src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
-                    width={50}
-                    height={50}
+                    width={25}
+                    height={25}
                     alt='zalo'
                   />
                 </Link>
@@ -77,10 +102,7 @@ const Contact = () => {
 
         {/* Right Grid: Google Maps */}
         <Grid item xs={12} md={6}>
-          <Box display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
-            <Typography variant='h6' sx={{ marginBottom: 2 }}>
-              Visit Us
-            </Typography>
+          <Box mt='1rem' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
             <a
               style={{
                 color: '#020b27',
