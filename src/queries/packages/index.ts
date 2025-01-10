@@ -1,4 +1,3 @@
-import { UseMutationOptions } from './../../../node_modules/@tanstack/react-query/src/types'
 import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { queryKeys } from 'src/configs/queryKey'
 import { getAllPackages } from 'src/services/packages'
