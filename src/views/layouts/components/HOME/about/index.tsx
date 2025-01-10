@@ -19,6 +19,7 @@ const AboutSpa = () => {
       <Grid container spacing={8}>
         <Grid item xs={6}>
           <Box
+            borderRadius='1rem'
             sx={{
               background: theme => theme.palette.common.white,
               padding: '1rem'
@@ -38,10 +39,14 @@ const AboutSpa = () => {
           </Box>
         </Grid>
         <Grid item xs={6}>
-          <ReactPlayer
-            width='100%'
-            url='https://www.youtube.com/watch?v=EkHTsc9PU2A&list=RDGMEMQ1dJ7wXfLlqCjwV0xfSNbA&index=7&ab_channel=JasonMraz'
-          />
+          <Box
+            style={{
+              borderRadius: '1rem',
+              overflow: 'hidden'
+            }}
+          >
+            <ReactPlayer width='100%' url='https://www.youtube.com/watch?v=GQjEjprY0WE&t=2s&ab_channel=KampaVietNam' />
+          </Box>
         </Grid>
       </Grid>
     </Box>

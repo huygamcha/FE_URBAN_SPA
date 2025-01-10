@@ -7,9 +7,9 @@ import Contact from './components/Contact'
 const Footer = () => {
   return (
     <>
-      <Container>
+      <Box padding='2% 5%'>
         <Contact />
-      </Container>
+      </Box>
       <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
         <path
           fill='#5e8172'

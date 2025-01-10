@@ -153,9 +153,25 @@ const Packages = (props: TProps) => {
                     <Typography variant='subtitle2' color='#fff'>
                       {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
                     </Typography>
-                    <Typography color='#fff'>
+
+                    <Box
+                      // pb='1rem'
+                      // sx={{
+                      //   fontSize: '1rem',
+                      //   fontWeight: 600
+                      // }}
+                      color='#fff'
+                      dangerouslySetInnerHTML={{
+                        __html: displayValueByLanguage({
+                          language: i18n.language,
+                          value: item,
+                          field: 'description'
+                        })
+                      }}
+                    ></Box>
+                    {/* <Typography color='#fff'>
                       {displayValueByLanguage({ language: i18n.language, value: item, field: 'description' })}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Box>
               </Box>
