@@ -11,7 +11,7 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 // ** Mui
-import { Box, Button, Grid, IconButton, Typography, useTheme } from '@mui/material'
+import { Box, Button, FormHelperText, Grid, IconButton, Typography, useTheme } from '@mui/material'
 
 // ** Component
 import Icon from 'src/components/Icon'
@@ -27,7 +27,9 @@ import { getDetailsPackage } from 'src/services/packages'
 import { convertToRaw, EditorState } from 'draft-js'
 import draftToHtml from 'draftjs-to-html'
 import CustomEditor from 'src/components/custom-editor'
-import { convertHTMLToDraft, stringToSlug } from 'src/utils'
+import { convertHTMLToDraft, stringToSlug, uploadMultipleImage } from 'src/utils'
+import WrapperFileUpload from 'src/components/wrapper-file-upload'
+import Image from 'next/image'
 
 interface TCreateEditPackage {
   open: boolean
@@ -58,7 +60,6 @@ const fields: FieldConfig[] = [
   { name: 'nameKo', label: 'Name (Korean)' },
   { name: 'nameEn', label: 'Name (English)' },
   { name: 'nameJp', label: 'Name (Japanese)' },
-  { name: 'image', label: 'Image URL' },
   { name: 'slug', label: 'Slug' }
 ]
 
@@ -72,6 +73,7 @@ const descriptionFields: FieldConfig[] = [
 const CreateEditPackage = (props: TCreateEditPackage) => {
   // State
   const [loading, setLoading] = useState(false)
+  const [imageCloudflare, setImageCloudflare] = useState<{ image: any }>({ image: '' })
 
   // ** Props
   const { open, onClose, idPackage } = props
@@ -92,7 +94,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     descriptionKo: yup.object().required(t('Required_field')),
     descriptionEn: yup.object().required(t('Required_field')),
     descriptionJp: yup.object().required(t('Required_field')),
-    image: yup.string().url(t('Invalid_URL')).required(t('Required_field')),
+    image: yup.string().required(t('Required_field')),
     slug: yup.string().required(t('Required_field'))
   })
 
@@ -114,7 +116,8 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     control,
     getValues,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm({
     defaultValues,
     mode: 'onBlur',
@@ -122,7 +125,9 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
   })
 
   // handle
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    const result = await uploadMultipleImage(imageCloudflare)
+
     if (!Object.keys(errors).length) {
       if (idPackage) {
         // update
@@ -133,6 +138,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
             descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
             descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
             descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : '',
+            image: result.image ? result.image : data?.image,
             id: idPackage
           })
         )
@@ -143,7 +149,8 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
             description: data.description ? draftToHtml(convertToRaw(data.description.getCurrentContent())) : '',
             descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
             descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
-            descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : ''
+            descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : '',
+            image: result.image ? result.image : data?.image
           })
         )
       }
@@ -175,6 +182,25 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
       .catch(() => {
         setLoading(false)
       })
+  }
+
+  // handleImage huygamcha
+  const handleUploadAvatar = async (pics: File, field: string) => {
+    const data = new FormData()
+    data.append('file', pics)
+    setImageCloudflare(prev => ({
+      ...prev,
+      [field]: data
+    }))
+
+    // hiển thị ảnh để preview
+    // Use FileReader to read the file and display it
+    const reader = new FileReader()
+    reader.onload = (e: any) => {
+      setValue(field as keyof TDefaultValue, e.target.result)
+    }
+    reader.readAsDataURL(pics)
+    // setImageURL(null)
   }
 
   useEffect(() => {
@@ -209,6 +235,78 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
             <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
               <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  {' '}
+                  <Controller
+                    name='image'
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <>
+                        {/* Phần hiển thị ảnh */}
+                        <Box sx={{ position: 'relative' }}>
+                          {value && (
+                            <Box>
+                              <Image src={value} layout='responsive' width={16} height={9} alt='image' />
+                            </Box>
+                          )}
+                        </Box>
+
+                        {/* Phần tải ảnh lên */}
+                        <Box display='flex' alignItems='center' justifyContent='space-between'>
+                          <WrapperFileUpload
+                            uploadFunc={async file => {
+                              const uploadedImageUrl = await handleUploadAvatar(file, 'image') // Hàm xử lý upload
+                            }}
+                            objectAcceptFile={{
+                              'image/jpeg': ['.jpg', '.jpeg'],
+                              'image/webp': ['.webp'],
+                              'image/png': ['.png'],
+                              'image/svg': ['.svg']
+                            }}
+                          >
+                            <Button
+                              variant='outlined'
+                              sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
+                            >
+                              <Icon icon='ph:camera-thin' />
+                              {value ? t('Change__image') : t('Upload__image')}
+                            </Button>
+                          </WrapperFileUpload>
+                          {value && (
+                            <IconButton
+                              onClick={() => {
+                                onChange('')
+                                setImageCloudflare(prev => ({
+                                  ...prev,
+                                  image: ''
+                                }))
+                              }} // Xóa ảnh
+                            >
+                              <Icon icon='material-symbols-light:delete-outline' />
+                            </IconButton>
+                          )}
+                        </Box>
+
+                        {errors?.image?.message && (
+                          <FormHelperText
+                            sx={{
+                              color: errors?.image
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '1rem'
+                            }}
+                          >
+                            {errors?.image?.message}
+                          </FormHelperText>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+
                 {fields.map(({ name, label }) => (
                   <Grid item md={12} xs={12} key={name}>
                     <Controller

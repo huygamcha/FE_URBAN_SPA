@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React from 'react'
 import { useDropzone } from 'react-dropzone'
@@ -20,7 +20,7 @@ const WrapperFileUpload = (props: TProps) => {
   })
 
   return (
-    <div {...getRootProps({ className: 'dropzone' })}>
+    <div style={{ width: 'max-content' }} {...getRootProps({ className: 'dropzone' })}>
       <input {...getInputProps()} />
       {children}
     </div>

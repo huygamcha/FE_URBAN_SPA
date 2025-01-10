@@ -4,6 +4,7 @@ import { TItemOrderProduct } from 'src/types/order-product'
 // ** Libraries
 import { ContentState, EditorState } from 'draft-js'
 import htmlToDraft from 'html-to-draftjs'
+import { API_ENDPOINT } from 'src/configs/api'
 
 export const toFullName = (lastName: string, middleName: string, firstName: string, language: string) => {
   if (language === 'vi') {
@@ -220,4 +221,34 @@ export const formatCurrency = (value: string | number) => {
     style: 'currency',
     currency: `VND`
   })}`
+}
+
+type TUploadMultipleImage = {
+  image: string
+}
+export const uploadMultipleImage = async (imageCloudflare: TUploadMultipleImage) => {
+  try {
+    const promiseUploads = Object.keys(imageCloudflare).map(async (key: string) => {
+      const itemImage = imageCloudflare[key as keyof TUploadMultipleImage]
+
+      // Gọi API upload
+      const response = await fetch(`${API_ENDPOINT.UPLOAD.IMAGE}`, {
+        method: 'POST',
+        body: itemImage
+      })
+      const result = await response.json()
+
+      return { [key]: result.data }
+    })
+
+    const results = await Promise.all(promiseUploads)
+
+    const final = results.reduce((acc, item) => {
+      return { ...acc, ...item }
+    }, {})
+
+    return final
+  } catch (error) {
+    throw error
+  }
 }

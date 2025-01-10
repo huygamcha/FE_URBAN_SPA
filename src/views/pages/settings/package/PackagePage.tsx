@@ -42,6 +42,7 @@ import { PAGE_SIZE_OPTION } from 'src/configs/gridConfig'
 // ** Utils
 import { formatDate } from 'src/utils/date'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
+import Image from 'next/image'
 
 type TProps = {}
 
@@ -196,50 +197,50 @@ const PackageListPage: NextPage<TProps> = () => {
         return <Typography>{row?.nameJp}</Typography>
       }
     },
-    {
-      field: 'description',
-      headerName: t('Description'),
-      flex: 2,
-      minWidth: 300,
-      renderCell: params => {
-        const { row } = params
+    // {
+    //   field: 'description',
+    //   headerName: t('Description'),
+    //   flex: 2,
+    //   minWidth: 300,
+    //   renderCell: params => {
+    //     const { row } = params
 
-        return <Typography>{row?.description}</Typography>
-      }
-    },
-    {
-      field: 'descriptionKo',
-      headerName: t('Description (Korean)'),
-      flex: 2,
-      minWidth: 300,
-      renderCell: params => {
-        const { row } = params
+    //     return <Typography>{row?.description}</Typography>
+    //   }
+    // },
+    // {
+    //   field: 'descriptionKo',
+    //   headerName: t('Description (Korean)'),
+    //   flex: 2,
+    //   minWidth: 300,
+    //   renderCell: params => {
+    //     const { row } = params
 
-        return <Typography>{row?.descriptionKo}</Typography>
-      }
-    },
-    {
-      field: 'descriptionEn',
-      headerName: t('Description (English)'),
-      flex: 2,
-      minWidth: 300,
-      renderCell: params => {
-        const { row } = params
+    //     return <Typography>{row?.descriptionKo}</Typography>
+    //   }
+    // },
+    // {
+    //   field: 'descriptionEn',
+    //   headerName: t('Description (English)'),
+    //   flex: 2,
+    //   minWidth: 300,
+    //   renderCell: params => {
+    //     const { row } = params
 
-        return <Typography>{row?.descriptionEn}</Typography>
-      }
-    },
-    {
-      field: 'descriptionJp',
-      headerName: t('Description (Japanese)'),
-      flex: 2,
-      minWidth: 300,
-      renderCell: params => {
-        const { row } = params
+    //     return <Typography>{row?.descriptionEn}</Typography>
+    //   }
+    // },
+    // {
+    //   field: 'descriptionJp',
+    //   headerName: t('Description (Japanese)'),
+    //   flex: 2,
+    //   minWidth: 300,
+    //   renderCell: params => {
+    //     const { row } = params
 
-        return <Typography>{row?.descriptionJp}</Typography>
-      }
-    },
+    //     return <Typography>{row?.descriptionJp}</Typography>
+    //   }
+    // },
     {
       field: 'image',
       headerName: t('Image'),
@@ -248,7 +249,8 @@ const PackageListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{row?.image}</Typography>
+        // return <Typography>{row?.image}</Typography>
+        return <Image src={row?.image} layout='responsive' width={16} height={9} alt='image' />
       }
     },
     {
