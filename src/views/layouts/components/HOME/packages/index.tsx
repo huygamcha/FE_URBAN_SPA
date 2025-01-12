@@ -27,6 +27,7 @@ const Packages = (props: TProps) => {
     router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)
   }
 
+  console.log('««««« packages »»»»»', packages)
   useEffect(() => {
     const observerOptions = {
       root: null,
