@@ -15,7 +15,7 @@ const getPackages = async () => {
   try {
     let packages: TPackage[] = []
     await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
-      packages = res?.data.packages
+      packages = res?.data?.packages
     })
 
     return {
@@ -50,6 +50,8 @@ export const metadata: Metadata = {
 export default async function Home() {
   const { packages } = await getPackages()
 
+  console.log('««««« packages »»»»»', packages);
+
   return (
     <AuthLayoutWrapper
       guestGuard={false}
@@ -62,6 +64,6 @@ export default async function Home() {
 }
 
 // Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 // export const revalidate = 10
 // export const maxDuration = 60

@@ -28,6 +28,7 @@ const Packages = (props: TProps) => {
   }
 
   console.log('««««« packages »»»»»', packages)
+  
   useEffect(() => {
     const observerOptions = {
       root: null,
