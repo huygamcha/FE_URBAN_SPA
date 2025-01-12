@@ -86,10 +86,11 @@ const CustomLayout = styled('div')(({ theme }) => ({
 }))
 
 const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) => {
+  // ** Hooks
   const { user } = useAuth()
   const router = useRouter()
   const pathName = usePathname()
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const currentLang = i18n.language
   const urlDefault = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
   const urlLogin = currentLang === i18nConfig.defaultLocale ? '/login' : `/${currentLang}/login`
@@ -171,21 +172,21 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
               >
                 <Link href='#home'>
                   <Typography variant='subtitle2' fontWeight='500'>
-                    Home
+                    {t('Home')}
                   </Typography>
                 </Link>
                 <Link href='#about'>
                   <Typography variant='subtitle2' fontWeight='500'>
-                    About us
+                    {t('About_Us')}
                   </Typography>
                 </Link>
                 <Link href='#package'>
                   <Typography variant='subtitle2' fontWeight='500'>
-                    Package
+                    {t('Package')}
                   </Typography>
                 </Link>
                 <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
-                  Booking Now
+                  {t('Booking_now')}
                 </Button>
               </Box>
             )}
@@ -239,7 +240,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
               <ListItemText>
                 <Link href='#home'>
                   <Typography color='title.light' variant='subtitle1'>
-                    Home
+                    {t('Home')}
                   </Typography>
                 </Link>
               </ListItemText>
@@ -248,7 +249,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
               <ListItemText>
                 <Link href='#about'>
                   <Typography color='title.light' variant='subtitle1'>
-                    About us
+                    {t('About_Us')}
                   </Typography>
                 </Link>
               </ListItemText>
@@ -257,15 +258,15 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
               <ListItemText>
                 <Link href='#package'>
                   <Typography color='title.light' variant='subtitle1'>
-                    Package
+                    {t('Package')}
                   </Typography>
                 </Link>
               </ListItemText>
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
-                  Booking Now
+                <Button onClick={() => setOpenBookingForm(true)} variant='outlined'>
+                  {t('Booking_now')}
                 </Button>
               </ListItemText>
             </ListItem>

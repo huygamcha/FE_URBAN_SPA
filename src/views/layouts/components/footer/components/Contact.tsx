@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Grid, Box, IconButton, Typography, Link } from '@mui/material'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
@@ -9,14 +9,49 @@ const Contact = () => {
   // ** Hooks
   const { t } = useTranslation()
 
+  const allRefs = useRef<Array<HTMLDivElement | null>>([])
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2 // 10% thì xuất hiện item
+    }
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show')
+        } else {
+          entry.target.classList.remove('show')
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    allRefs.current.forEach(ref => {
+      if (ref) observer.observe(ref)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <Box sx={{ flexGrow: 1, padding: 2 }}>
+    <Box sx={{ flexGrow: 1, padding: 2, zIndex: 2, position: 'relative' }}>
       <Box>
         <Typography
+          ref={(el: HTMLDivElement | null) => {
+            allRefs.current[0] = el
+          }}
           sx={{
             height: '6px',
             background: theme => theme.palette.customBackground.main,
-            width: '5.33333rem' // Ban đầu dòng có chiều rộng bằng 0
+            width: '0%',
+            transition: 'width 0.8s cubic-bezier(0.17, 0.55, 0.55, 1)',
+            '&.show': {
+              width: '5.33333rem'
+            }
           }}
         ></Typography>
       </Box>
@@ -24,77 +59,120 @@ const Contact = () => {
       <Grid container spacing={2}>
         {/* Left Grid: Social Media Icons */}
         <Grid item xs={12} md={6}>
-          <Typography
+          <Box
             sx={{
-              marginTop: '1rem',
-              marginBottom: '0.5rem',
-              fontSize: '2.5rem',
-              fontWeight: '700',
-              lineHeight: '1.2',
-              color: '#6b4241',
-              fontFamily: 'Playfair Display,sans-serif'
+              opacity: 0.05,
+              transition: 'opacity 0.8s ease-in-out',
+              '&.show': {
+                opacity: 1
+              }
+            }}
+            ref={(el: HTMLDivElement | null) => {
+              allRefs.current[1] = el
             }}
           >
-            CONTACT US
-          </Typography>
-          <Box>
-            <Typography>
-              If you're looking for a relaxing and rejuvenating experience, our spa is the perfect place for you,
+            <Typography
+              sx={{
+                marginTop: '1rem',
+                marginBottom: '0.5rem',
+                fontSize: '2.5rem',
+                fontWeight: '700',
+                lineHeight: '1.2',
+                color: '#6b4241',
+                fontFamily: 'Playfair Display,sans-serif'
+              }}
+            >
+              {t('Contact_Us')}
             </Typography>
-            <Typography>We are committed to providing the best quality service,</Typography>
-            <Typography>Please contact us for your appointment.</Typography>
           </Box>
-          <Box pt='0.5rem' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
-            <Box>
-              <Box mt='0.375rem'>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
-                    width={25}
-                    height={25}
-                    alt='Picture of the author'
-                  />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_cafe.svg'
-                    width={25}
-                    height={25}
-                    alt='Picture of the author'
-                  />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
-                    width={25}
-                    height={25}
-                    alt='Picture of the author'
-                  />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
-                    width={25}
-                    height={25}
-                    alt='Picture of the author'
-                  />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
-                  <Image
-                    src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
-                    width={32}
-                    height={22}
-                    alt='Picture of the author'
-                  />
-                </Link>
-                <Link target='_blank' href='https://zalo.me/1579840813471644356'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
-                    width={25}
-                    height={25}
-                    alt='zalo'
-                  />
-                </Link>
+
+          <Box>
+            <Box
+              sx={{
+                opacity: 0.05,
+                transition: 'opacity 0.8s ease-in-out',
+                '&.show': {
+                  opacity: 1
+                }
+              }}
+              ref={(el: HTMLDivElement | null) => {
+                allRefs.current[2] = el
+              }}
+            >
+              <Typography>{t('contact_1')}</Typography>
+              <Typography>{t('contact_2')}</Typography>
+              <Typography>{t('contact_3')}</Typography>
+            </Box>
+            <Box
+              sx={{
+                opacity: 0, // Ban đầu ẩn
+                transform: 'translateY(-30px)', // Ban đầu ở trên
+                transition: 'opacity 2s ease-in-out, transform 0.8s ease-in-out', // Hiệu ứng mượt mà
+                '&.show': {
+                  opacity: 1, // Hiện nội dung
+                  transform: 'translateY(0)' // Trả về vị trí ban đầu
+                }
+              }}
+              ref={(el: HTMLDivElement | null) => {
+                allRefs.current[3] = el
+              }}
+              pt='0.5rem'
+              display='flex'
+              flexDirection='column'
+              alignItems='flex-start'
+              justifyContent='center'
+            >
+              <Box sx={{ cursor: 'pointer' }}>
+                <Box mt='0.375rem'>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
+                    <Image
+                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
+                      width={25}
+                      height={25}
+                      alt='Picture of the author'
+                    />
+                  </Link>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                    <Image
+                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_cafe.svg'
+                      width={25}
+                      height={25}
+                      alt='Picture of the author'
+                    />
+                  </Link>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
+                    <Image
+                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
+                      width={25}
+                      height={25}
+                      alt='Picture of the author'
+                    />
+                  </Link>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
+                    <Image
+                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
+                      width={25}
+                      height={25}
+                      alt='Picture of the author'
+                    />
+                  </Link>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                    <Image
+                      src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
+                      width={32}
+                      height={22}
+                      alt='Picture of the author'
+                    />
+                  </Link>
+                  <Link target='_blank' href='https://zalo.me/1579840813471644356'>
+                    <Image
+                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
+                      width={25}
+                      height={25}
+                      alt='zalo'
+                    />
+                  </Link>
+                </Box>
               </Box>
             </Box>
           </Box>

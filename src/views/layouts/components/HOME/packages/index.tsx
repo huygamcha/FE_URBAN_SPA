@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
 import { useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
+import Image from 'next/image'
 
 type TProps = {
   packages: TPackage[]
 }
 
 const Packages = (props: TProps) => {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const { packages } = props
 
   // ** Hooks
@@ -23,8 +24,6 @@ const Packages = (props: TProps) => {
   allRefs.current = Array(packages.length + 1).fill(null)
 
   const handleDetail = (item: TPackage) => {
-    const slug = item.slug
-    // const params = new URLSearchParams(slug)
     router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)
   }
 
@@ -56,7 +55,7 @@ const Packages = (props: TProps) => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, position: 'relative', zIndex: 2 }}>
         {/* Dòng ngang với hiệu ứng mở rộng */}
         <Box>
           <Typography
@@ -70,7 +69,7 @@ const Packages = (props: TProps) => {
               width: '0%', // Ban đầu dòng có chiều rộng bằng 0
               transition: 'width 0.8s cubic-bezier(0.17, 0.55, 0.55, 1)',
               '&.show': {
-                width: '5.33333rem' // Mở rộng chiều dài khi xuất hiện
+                width: '6rem' // Mở rộng chiều dài khi xuất hiện
               }
             }}
           ></Typography>
@@ -80,7 +79,7 @@ const Packages = (props: TProps) => {
         <Typography
           sx={{
             marginTop: '1rem',
-            marginBottom: '0.5rem',
+            marginBottom: '1.5rem',
             fontSize: '2.5rem',
             fontWeight: '700',
             lineHeight: '1.2',
@@ -89,7 +88,7 @@ const Packages = (props: TProps) => {
             fontFamily: 'Playfair Display,sans-serif'
           }}
         >
-          SPA PACKAGE
+          {t('Spa_Package')}
         </Typography>
 
         {/* Danh sách packages */}
@@ -104,6 +103,9 @@ const Packages = (props: TProps) => {
                 sx={{
                   opacity: 0,
                   transform: 'translateY(50px)',
+                  borderRadius: '0.75rem',
+                  cursor: 'pointer',
+                  background: theme => theme.palette.customBackground.main,
                   transition: 'all 1s cubic-bezier(0.17, 0.55, 0.55, 1)',
                   '&.show': {
                     opacity: 1,
@@ -112,21 +114,17 @@ const Packages = (props: TProps) => {
                 }}
               >
                 <Box
-                  p='1rem'
                   sx={{
-                    background: theme => theme.palette.customBackground.main,
-                    borderRadius: '0.75rem',
-                    cursor: 'pointer',
-                    overflow: 'hidden',
-                    transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
-                    transformStyle: 'preserve-3d',
+                    position: 'relative',
+                    zIndex: 1,
                     borderColor: 'rgba(192, 192, 211, 0.2)',
                     '&:hover': {
                       transform: `scale(1.02)`,
-                      transition: 'transform 1s ease',
+                      transition: 'transform 2s ease',
                       backgroundColor: 'rgb(211, 146, 80)',
+                      borderRadius: '0.75rem',
                       borderColor: 'rgba(192, 192, 211, 0)',
-                      '& img': {
+                      '& > .MuiBox-root > .MuiBox-root > img': {
                         transform: 'scale(1.1)',
                         transition: 'transform 1s ease'
                       }
@@ -134,45 +132,74 @@ const Packages = (props: TProps) => {
                   }}
                 >
                   <Box
+                    p='1rem'
                     sx={{
+                      top: 0,
                       overflow: 'hidden',
-                      borderRadius: 'inherit',
-                      fontSize: '0px'
+                      transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
+                      transformStyle: 'preserve-3d',
+                      position: 'relative',
+                      zIndex: 2 // Nội dung chính
                     }}
                   >
-                    <img
-                      width='100%'
-                      height='auto'
-                      alt={item.name}
-                      src={item.image}
-                      style={{
-                        transition: 'transform 1s ease'
-                      }}
-                    />
-                  </Box>
-                  <Box pt='1rem'>
-                    <Typography variant='subtitle2' color='#fff'>
-                      {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
-                    </Typography>
-
                     <Box
-                      // pb='1rem'
-                      // sx={{
-                      //   fontSize: '1rem',
-                      //   fontWeight: 600
-                      // }}
-                      color='#fff'
-                      dangerouslySetInnerHTML={{
-                        __html: displayValueByLanguage({
-                          language: i18n.language,
-                          value: item,
-                          field: 'description'
-                        })
+                      sx={{
+                        overflow: 'hidden',
+                        borderRadius: '0.5rem',
+                        fontSize: '0px'
                       }}
-                    ></Box>
-                    {/* <Typography color='#fff'>
-                      {displayValueByLanguage({ language: i18n.language, value: item, field: 'description' })}
-                    </Typography> */}
+                    >
+                      <img
+                        width='100%'
+                        height='auto'
+                        alt={item.name}
+                        src={item.image}
+                        style={{
+                          transition: 'transform 1s ease'
+                        }}
+                      />
+                    </Box>
+                    <Box pt='1rem'>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
+                          fontWeight: 700,
+                          fontSize: '26px'
+                        }}
+                        variant='subtitle2'
+                        color='#fff'
+                      >
+                        {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
+                      </Typography>
+
+                      <Box
+                        color='#fff'
+                        dangerouslySetInnerHTML={{
+                          __html: displayValueByLanguage({
+                            language: i18n.language,
+                            value: item,
+                            field: 'description'
+                          })
+                        }}
+                      ></Box>
+                    </Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      left: 0,
+                      zIndex: 1
+                    }}
+                  >
+                    <Image
+                      width={16 * 1.5}
+                      height={9 * 1.5}
+                      layout='responsive'
+                      alt='image'
+                      src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/65167d720479a2589c73e28b_leav-01.svg'
+                    />
                   </Box>
                 </Box>
               </Box>

@@ -15,7 +15,7 @@ import Container from '@mui/material/Container'
 // ** views
 import HorizontalLayout from 'src/views/layouts/HorizontalLayout'
 import VerticalLayout from 'src/views/layouts/VerticalLayout'
-import { useTheme } from '@mui/material'
+import { Typography, useTheme } from '@mui/material'
 import Image from 'next/image'
 
 // ** React slick
@@ -26,6 +26,7 @@ import CustomCarousel from 'src/components/custom-carousel'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
 import Footer from './components/footer'
+import { useTranslation } from 'react-i18next'
 
 type TProps = {
   children: React.ReactNode
@@ -44,6 +45,7 @@ const settings = {
 
 const LayoutNotApp: NextPage<TProps> = ({ children }) => {
   const theme = useTheme()
+  const {t, i18n} = useTranslation()
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -68,28 +70,31 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             maxWidth: 'unset !important'
           }}
         >
-          <div style={{ position: 'relative', overflow: 'hidden', height: 'calc(100vh - 64px)' }}>
-            <div
-              style={{
+          <div style={{ position: 'relative', overflow: 'hidden', maxHeight: 'calc(100vh - 64px)' }}>
+            <Typography
+              sx={{
                 position: 'absolute',
                 top: '40%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 10,
                 color: 'white',
-                fontSize: '6rem', // Adjusted font size for the title
+                fontSize: '6rem',
                 textTransform: 'uppercase', // Making the text uppercase
                 pointerEvents: 'none',
                 fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
                 letterSpacing: '3px', // Add spacing to mimic the image style
                 width: '100%',
-                textAlign: 'center' // Center the text
+                textAlign: 'center', // Center the text
+                [theme.breakpoints.down('lg')]: {
+                  fontSize: '3rem'
+                }
               }}
             >
               URBAN SPA
-            </div>
-            <div
-              style={{
+            </Typography>
+            <Typography
+              sx={{
                 position: 'absolute',
                 top: '60%', // Adjusting position of subtitle
                 left: '50%',
@@ -100,11 +105,14 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
                 fontWeight: 'normal',
                 textTransform: 'uppercase',
                 letterSpacing: '2px',
-                fontFamily: 'Arial, sans-serif' // Different font for subtitle
+                fontFamily: 'Arial, sans-serif', // Different font for subtitle
+                [theme.breakpoints.down('lg')]: {
+                  fontSize: '1rem'
+                }
               }}
             >
-              PREMIUM SPA & WELLNESS CENTER
-            </div>
+              {t('Premium_Spa_And_Relaxation_And_Beauty').toUpperCase()}
+            </Typography>
             <Slider {...settings}>
               {bannerHome?.map((item: IBannerHome, index: number) => (
                 <Image

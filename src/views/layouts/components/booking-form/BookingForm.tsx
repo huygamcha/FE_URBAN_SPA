@@ -20,6 +20,8 @@ import { useParams } from 'next/navigation'
 import { AppDispatch } from 'src/stores'
 import { useDispatch } from 'react-redux'
 import { createOrderSpaAsync } from 'src/stores/order-spa/actions'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   // marginLeft: '1rem',
@@ -90,16 +92,16 @@ const BookingForm = () => {
   // ** Form
   // Validation Schema
   const schema = yup.object({
-    name: yup.string().required('Name is required'),
-    email: yup.string().email('Invalid email format').required('Email is required'),
+    name: yup.string().required(t('Required_field')),
+    email: yup.string().email('Invalid email format').required(t('Required_field')),
     phoneNumber: yup
       .string()
-      .required('Phone number is required')
+      .required(t('Required_field'))
       .matches(/^\d+$/, 'Phone number must contain only numbers')
       .min(9, 'Phone number must be at least 9 digits'),
     quantity: yup
       .number()
-      .typeError('Quantity must be a number')
+      .typeError(t('Required_field'))
       .required('Quantity is required')
       .min(1, 'Minimum quantity is 1'),
     date: yup.string().required(t('Required_field'))!,
@@ -178,10 +180,19 @@ const BookingForm = () => {
           overflowY: 'auto' // Enable vertical scrolling for content
         }}
       >
-        <Typography variant='subtitle2'>{t('Booking Form')}</Typography>
+        <Typography
+          sx={{
+            fontFamily: 'Playfair Display, serif' // Same font family as seen in the image
+          }}
+          fontSize='2rem'
+          textAlign='center'
+          variant='subtitle2'
+        >
+          {t('Booking_now').toUpperCase()}
+        </Typography>
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete='off'>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12}>
               <Controller
                 control={control}
@@ -193,13 +204,20 @@ const BookingForm = () => {
                     <label
                       style={{
                         fontSize: '0.813rem',
-                        marginBottom: '0.25rem',
                         display: 'block',
+                        marginBottom: '0.2rem',
                         color: errors?.packages ? theme.palette.error.main : theme.palette.primary.main
                       }}
                     >
-                      <Typography variant='body2' color={theme.palette.common.black}>
-                        {t('package')} <span style={{ color: theme.palette.error.main }}>*</span>
+                      <Typography
+                        variant='body2'
+                        sx={{
+                          color: errors?.packages
+                            ? theme.palette.error.main
+                            : `rgba(${theme.palette.customColors.main}, 0.42)`
+                        }}
+                      >
+                        {t('Package')} <span style={{ color: theme.palette.error.main }}>*</span>
                       </Typography>
                     </label>
                     {/* huyg  packages*/}
@@ -207,9 +225,6 @@ const BookingForm = () => {
                       sx={{
                         '& .MuiTabs-flexContainer': {
                           flexWrap: 'wrap'
-                        },
-                        '& .MuiTab-root': {
-                          marginTop: '0.5rem'
                         }
                       }}
                       onChange={(event: React.SyntheticEvent, value: string) => {
@@ -246,7 +261,8 @@ const BookingForm = () => {
                         sx={{
                           color: errors?.packages
                             ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`
+                            : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                          fontSize: '0.8125rem'
                         }}
                       >
                         {errors?.packages?.message}
@@ -263,9 +279,10 @@ const BookingForm = () => {
                 control={control}
                 render={({ field }) => (
                   <CustomTextField
+                    required
                     fullWidth
-                    label={t('Name')}
-                    placeholder={t('Enter your name')}
+                    label={t('Full_name')}
+                    placeholder={t('Enter_your_full_name')}
                     error={Boolean(errors?.name)}
                     helperText={errors?.name?.message}
                     {...field}
@@ -274,15 +291,15 @@ const BookingForm = () => {
               />
             </Grid>
             <Grid item xs={12} lg={6}>
-              {' '}
               <Controller
                 name='phoneNumber'
                 control={control}
                 render={({ field }) => (
                   <CustomTextField
+                    required
                     fullWidth
-                    label={t('Phone Number')}
-                    placeholder={t('Enter your phone number')}
+                    label={t('Phone_number')}
+                    placeholder={t('Enter_your_phone')}
                     error={Boolean(errors?.phoneNumber)}
                     helperText={errors?.phoneNumber?.message}
                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
@@ -296,14 +313,25 @@ const BookingForm = () => {
               <Controller
                 name='quantity'
                 control={control}
-                render={({ field }) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <CustomTextField
+                    required
                     fullWidth
-                    label={t('quantity')}
-                    placeholder={t('Enter your quantity')}
+                    label={t('Quantity_quest')}
+                    placeholder={t('Enter_your_quantity')}
                     error={Boolean(errors?.quantity)}
+                    onChange={e => {
+                      const numValue = e.target.value.replace(/\D/g, '')
+                      onChange(numValue)
+                    }}
+                    onBlur={onBlur}
+                    value={value}
+                    inputProps={{
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      minLength: 8
+                    }}
                     helperText={errors?.quantity?.message}
-                    {...field}
                   />
                 )}
               />
@@ -314,9 +342,10 @@ const BookingForm = () => {
                 control={control}
                 render={({ field }) => (
                   <CustomTextField
+                    required
                     fullWidth
                     label={t('Email')}
-                    placeholder={t('Enter your email')}
+                    placeholder={t('Enter_your_email')}
                     error={Boolean(errors?.email)}
                     helperText={errors?.email?.message}
                     {...field}
@@ -342,9 +371,11 @@ const BookingForm = () => {
                     >
                       <Typography
                         variant='body2'
-                        color={theme.palette.common.black}
                         sx={{
-                          lineHeight: `1.2 !important`
+                          lineHeight: `1.2 !important`,
+                          color: errors?.date
+                            ? theme.palette.error.main
+                            : `rgba(${theme.palette.customColors.main}, 0.42)`
                         }}
                       >
                         {t('Pickup_time')} <span style={{ color: theme.palette.error.main }}>*</span>
@@ -387,7 +418,8 @@ const BookingForm = () => {
                         sx={{
                           color: errors?.date
                             ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`
+                            : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                          fontSize: '0.8125rem'
                         }}
                       >
                         {errors?.date?.message}
@@ -431,8 +463,8 @@ const BookingForm = () => {
                 render={({ field }) => (
                   <CustomTextField
                     fullWidth
-                    label={t('notes')}
-                    placeholder={t('Enter your notes')}
+                    label={t('Others_packages')}
+                    placeholder={t('Enter_your_notes')}
                     error={Boolean(errors?.notes)}
                     helperText={errors?.notes?.message}
                     {...field}
@@ -441,11 +473,56 @@ const BookingForm = () => {
               />
             </Grid>
           </Grid>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+
+          <Box mt='1rem' sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+            <Box maxWidth='50%' sx={{ cursor: 'pointer' }}>
+              <Box mt='1rem'>
+                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
+                  <Image
+                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
+                    width={25}
+                    height={25}
+                    alt='Picture of the author'
+                  />
+                </Link>
+                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
+                  <Image
+                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
+                    width={25}
+                    height={25}
+                    alt='fb'
+                  />
+                </Link>
+                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
+                  <Image
+                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
+                    width={25}
+                    height={25}
+                    alt='ig'
+                  />
+                </Link>
+                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                  <Image
+                    src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
+                    width={32}
+                    height={22}
+                    alt='utube'
+                  />
+                </Link>
+                <Link target='_blank' href='https://zalo.me/1579840813471644356'>
+                  <Image
+                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
+                    width={25}
+                    height={25}
+                    alt='zalo'
+                  />
+                </Link>
+              </Box>
+            </Box>
             {/* Submit Button */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3 }}>
-                {t('Submit')}
+              <Button type='submit' variant='contained' sx={{ mt: 3, height: '30px' }}>
+                {t('Booking_now')}
               </Button>
             </Box>
           </Box>

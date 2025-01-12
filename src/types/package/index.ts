@@ -43,5 +43,6 @@ export type TPackage = {
   descriptionKo: string
   descriptionJp: string
   descriptionEn: string
+  booking?: number
   services: any[]
 }

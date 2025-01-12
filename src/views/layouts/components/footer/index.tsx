@@ -1,12 +1,16 @@
 import React from 'react'
 import { Container, Box, Grid, Typography, Link, Divider } from '@mui/material'
 import Contact from './components/Contact'
+import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 // import FacebookIcon from '@mui/icons-material/Facebook'
 // import InstagramIcon from '@mui/icons-material/Instagram'
 
 const Footer = () => {
+  const { t } = useTranslation()
+
   return (
-    <>
+    <Box overflow='hidden'>
       <Box padding='2% 5%'>
         <Contact />
       </Box>
@@ -18,109 +22,141 @@ const Footer = () => {
         ></path>
       </svg>
       <Box
-        mt={{
-          xs: '-1rem',
-          lg: '-10rem'
+        sx={{
+          position: 'relative',
+          zIndex: 1
         }}
-        sx={{ backgroundColor: theme => theme.palette.customBackground.main }}
       >
-        <Container maxWidth='lg'>
-          {/* Logo Section */}
-          <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <Link href='/' underline='none'>
-              <img
-                src='https://cdn.kampa.vn/urban-oasis-spa-logo.png'
-                alt='urbanspa Logo'
-                width={250}
-                style={{ display: 'block', margin: '0 auto' }}
-              />
-            </Link>
-          </Box>
-
-          {/* Navigation Links */}
-          <Grid container spacing={2} justifyContent='center' sx={{ marginBottom: '2rem' }}>
-            <Grid item>
-              <Link href='/#about' underline='hover'>
-                <Typography color='title.light' variant='subtitle2'>
-                  About Us
-                </Typography>
+        <Box
+          mt={{
+            xs: '-1rem',
+            lg: '-10rem'
+          }}
+          sx={{ backgroundColor: theme => theme.palette.customBackground.main }}
+        >
+          <Container
+            sx={{
+              position: 'relative',
+              zIndex: 2
+            }}
+            maxWidth='lg'
+          >
+            {/* Logo Section */}
+            <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <Link href='/' underline='none'>
+                <img
+                  src='https://cdn.kampa.vn/urban-oasis-spa-logo.png'
+                  alt='urbanspa Logo'
+                  width={250}
+                  style={{ display: 'block', margin: '0 auto' }}
+                />
               </Link>
-            </Grid>
-            <Grid item>
-              <Link href='/#services' color='title.light' underline='hover'>
+            </Box>
+
+            {/* Navigation Links */}
+            <Grid container spacing={4} justifyContent='center' sx={{ marginBottom: '2rem' }}>
+              <Grid item>
+                <Link href='/#about'>
+                  <Typography color='title.light' variant='subtitle2'>
+                    {t('About_Us')}
+                  </Typography>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href='/#package' color='title.light'>
+                  <Typography color='title.light' variant='subtitle2'>
+                    {t('Package')}
+                  </Typography>
+                </Link>
+              </Grid>
+              <Grid item>
                 <Typography color='title.light' variant='subtitle2'>
-                  Services
+                  {t('Booking_now')}
                 </Typography>
-              </Link>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href='/promotions' color='title.light' underline='hover'>
-                <Typography color='title.light' variant='subtitle2'>
-                  Booking Now
-                </Typography>
-              </Link>
-            </Grid>
-          </Grid>
 
-          {/* Contact Info */}
-          <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <Typography variant='subtitle1' gutterBottom color='title.light'>
-              Opening daily 9h00 - 22h00
-            </Typography>
+            {/* Contact Info */}
+            <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
+              <Typography variant='subtitle1' gutterBottom color='title.light'>
+                {t('Opening_Daily')} 9h00 - 22h00
+              </Typography>
+            </Box>
+
+            {/* Contact Methods */}
+            <Grid container spacing={4} justifyContent='center' sx={{ marginBottom: '2rem' }}>
+              <Grid item>
+                <Box textAlign='center'>
+                  <Typography variant='subtitle1' gutterBottom color='title.light'>
+                    {t('Email')}
+                  </Typography>
+                  <Link
+                    href='mailto:spa39ahanghanh@gmail.com'
+                    color='title.light'
+                    underline='hover'
+                    variant='subtitle1'
+                  >
+                    spa39ahanghanh@gmail.com
+                  </Link>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box textAlign='center'>
+                  <Typography variant='subtitle1' gutterBottom color='title.light'>
+                    {t('Hotline')}
+                  </Typography>
+                  <Link href='tel:+842433543333' color='title.light' underline='hover' variant='subtitle1'>
+                    (+84) 243.354.3333
+                  </Link>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box textAlign='center'>
+                  <Typography variant='subtitle1' gutterBottom color='title.light'>
+                    {t('Inbox_Facebook')}
+                  </Typography>
+                  <Link
+                    href=''
+                    color='title.light'
+                    underline='hover'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    variant='subtitle1'
+                  >
+                    www.facebook.com
+                  </Link>
+                </Box>
+              </Grid>
+            </Grid>
+
+            {/* Footer Bottom */}
+            <Box textAlign='center' sx={{ paddingBottom: '1rem' }}>
+              <Typography variant='body2' color='title.light'>
+                © 2016 Urban Oasis Spa.Allright resserved.
+              </Typography>
+            </Box>
+          </Container>
+
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: '-10rem',
+              right: 0,
+              left: 0,
+              zIndex: 1
+            }}
+          >
+            <Image
+              width={16 * 1.5}
+              height={9 * 1.5}
+              layout='responsive'
+              alt='image'
+              src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515a98d12efd8698e527eb1_partent-01.svg'
+            />
           </Box>
-
-          {/* Contact Methods */}
-          <Grid container spacing={4} justifyContent='center' sx={{ marginBottom: '2rem' }}>
-            <Grid item>
-              <Box textAlign='center'>
-                <Typography variant='subtitle1' gutterBottom color='title.light'>
-                  Email
-                </Typography>
-                <Link href='mailto:cskh.spa@laboho.vn' color='title.light' underline='hover' variant='subtitle1'>
-                  spa39ahanghanh@gmail.com
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box textAlign='center'>
-                <Typography variant='subtitle1' gutterBottom color='title.light'>
-                  Hotline (WhatsApp / Zalo)
-                </Typography>
-                <Link href='tel:+84986320372' color='title.light' underline='hover' variant='subtitle1'>
-                  (+84) 243.354.3333
-                </Link>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box textAlign='center'>
-                <Typography variant='subtitle1' gutterBottom color='title.light'>
-                  Inbox Facebook
-                </Typography>
-                <Link
-                  href='https://www.facebook.com/laboho.spa'
-                  color='title.light'
-                  underline='hover'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  variant='subtitle1'
-                >
-                  www.facebook.com/laboho.spa
-                </Link>
-              </Box>
-            </Grid>
-          </Grid>
-
-          {/* <Divider sx={{ marginBottom: '2rem' }} /> */}
-
-          {/* Footer Bottom */}
-          <Box textAlign='center' sx={{ paddingBottom: '1rem' }}>
-            <Typography variant='body2' color='title.light'>
-              © 2016 Urban Oasis Spa.Allright resserved.
-            </Typography>
-          </Box>
-        </Container>
+        </Box>
       </Box>
-    </>
+    </Box>
   )
 }
 

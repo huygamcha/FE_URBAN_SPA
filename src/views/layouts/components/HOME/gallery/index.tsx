@@ -1,9 +1,13 @@
 import * as React from 'react'
 import Image from 'next/image'
 import { bannerHome } from 'src/app/data/bannerHome'
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 const Gallery = () => {
+  const theme = useTheme()
+  const {t, i18n} = useTranslation()
+
   const galleryRef = React.useRef<HTMLDivElement | null>(null)
   const [isDragging, setIsDragging] = React.useState(false)
   const [startX, setStartX] = React.useState(0)
@@ -61,7 +65,7 @@ const Gallery = () => {
             fontFamily: 'Playfair Display,sans-serif'
           }}
         >
-          BE BEAUTY - BE YOU
+          {t('Be_Beauty_Be_You').toUpperCase()}
         </div>
 
         {/* Gallery */}
@@ -86,15 +90,18 @@ const Gallery = () => {
           }}
         >
           {bannerHome.map((src, index) => (
-            <div
+            <Box
               key={index}
-              style={{
+              sx={{
                 flex: '0 0 auto',
                 height: '80vh', // Set height to 80% of viewport height
                 width: '35vw', // Set width to 40% of viewport width
                 position: 'relative', // Required for the image to fill the container
                 transition: 'transform 0.2s ease',
-                transform: isDragging ? 'scale(0.98)' : 'scale(1)'
+                transform: isDragging ? 'scale(0.98)' : 'scale(1)',
+                [theme.breakpoints.down('lg')]: {
+                  width: '90vw' // Set width to 40% of viewport width
+                }
               }}
             >
               <Image
@@ -109,7 +116,7 @@ const Gallery = () => {
                 layout='fill' // This makes the image fill the container
                 priority={index < 2}
               />
-            </div>
+            </Box>
           ))}
           <style jsx global>{`
             div::-webkit-scrollbar {

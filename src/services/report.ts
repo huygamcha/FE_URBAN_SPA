@@ -11,7 +11,6 @@ export const getCountUserType = async () => {
   }
 }
 
-
 export const getCountProductStatus = async () => {
   try {
     const res = await instanceAxios.get(`${API_ENDPOINT.REPORT.INDEX}/product-status/count`)
@@ -25,6 +24,15 @@ export const getCountProductStatus = async () => {
 export const getCountAllRecords = async () => {
   try {
     const res = await instanceAxios.get(`${API_ENDPOINT.REPORT.INDEX}/all-records/count`)
+
+    return res.data
+  } catch (error) {
+    return error
+  }
+}
+export const getCountAllRecordsSpa = async () => {
+  try {
+    const res = await instanceAxios.get(`${API_ENDPOINT.REPORT.INDEX}/all-records/spa/count`)
 
     return res.data
   } catch (error) {

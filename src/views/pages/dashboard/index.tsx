@@ -1,41 +1,52 @@
-"use client"
+'use client'
 
 // ** React
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 // ** Components
-import Spinner from "src/components/spinner"
+import Spinner from 'src/components/spinner'
 
 // ** Mui
-import { Box, Grid } from "@mui/material"
+import { Box, Grid } from '@mui/material'
 
 // ** Services
-import { getCountAllRecords, getCountOrderStatus, getCountProductStatus, getCountProductTypes, getCountRevenueYear, getCountUserType } from "src/services/report"
-import CardCountRecords from "src/views/pages/dashboard/components/CardCountRecords"
-import CardProductType from "src/views/pages/dashboard/components/CardProductType"
-import CardCountRevenue from "src/views/pages/dashboard/components/CardCountRevenue"
-import CardCountUserType from "src/views/pages/dashboard/components/CardCountUserType"
-import CardCountOrderStatus from "src/views/pages/dashboard/components/CardCountStatusOrder"
-import { getAllProducts } from "src/services/product"
-import CardProductPopular from "src/views/pages/dashboard/components/CardProductPopular"
+import {
+  getCountAllRecords,
+  getCountAllRecordsSpa,
+  getCountOrderStatus,
+  getCountProductStatus,
+  getCountProductTypes,
+  getCountRevenueYear,
+  getCountUserType
+} from 'src/services/report'
+import CardCountRecords from 'src/views/pages/dashboard/components/CardCountRecords'
+import CardProductType from 'src/views/pages/dashboard/components/CardProductType'
+import CardCountRevenue from 'src/views/pages/dashboard/components/CardCountRevenue'
+import CardCountUserType from 'src/views/pages/dashboard/components/CardCountUserType'
+import CardCountOrderStatus from 'src/views/pages/dashboard/components/CardCountStatusOrder'
+import { getAllProducts } from 'src/services/product'
+import CardProductPopular from 'src/views/pages/dashboard/components/CardProductPopular'
+import { getAllOrderSpas } from 'src/services/order-spa'
+import { getAllPackages } from 'src/services/packages'
+import { TPackage } from 'src/types/package'
 
 export interface TCountProductType {
-  typeName: string,
+  typeName: string
   total: number
 }
 
 export interface TCountRevenue {
-  year: string,
-  month: string,
+  year: string
+  month: string
   total: number
 }
 
 export interface TProductPopular {
-  name: string,
-  price: string,
-  image: string,
+  name: string
+  price: string
+  image: string
   slug: string
-  _id: string,
+  _id: string
   type: {
     name: string
   }
@@ -48,75 +59,87 @@ const Dashboard = () => {
   const [countRevenues, setCountRevenues] = useState<TCountRevenue[]>([])
   const [countUserType, setCountUserType] = useState<Record<number, number>>({} as any)
   const [countOrderStatus, setCountOrderStatus] = useState<Record<number, number>>({} as any)
-  const [listProductPopular, setListProductPopular] = useState<TProductPopular[]>([])
+  const [listProductPopular, setListProductPopular] = useState<TPackage[]>([])
+
+  console.log('««««« countRevenues »»»»»', countRevenues)
 
   // ** Fetch API
   const fetchAllCountRecords = async () => {
     setLoading(true)
-    await getCountAllRecords().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountRecords(data)
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getCountAllRecordsSpa()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountRecords(data)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchAllProductTypes = async () => {
     setLoading(true)
-    await getCountProductTypes().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountProductTypes(data)
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getCountProductTypes()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountProductTypes(data)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchAllTotalRevenues = async () => {
     setLoading(true)
-    await getCountRevenueYear().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountRevenues(data)
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getCountRevenueYear()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountRevenues(data)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchAllCountUserType = async () => {
     setLoading(true)
-    await getCountUserType().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountUserType(data?.data)
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getCountUserType()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountUserType(data?.data)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchAllCountStatusOrder = async () => {
     setLoading(true)
-    await getCountOrderStatus().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountOrderStatus(
-        data?.data
-      )
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getCountOrderStatus()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountOrderStatus(data?.data)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchListProductPopular = async () => {
     setLoading(true)
-    await getAllProducts({params: {limit: 5, page: 1, order: "sold desc"}}).then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setListProductPopular(data?.products)
-    }).catch(e => {
-      setLoading(false)
-    })
+    await getAllPackages({ params: { limit: 5, page: 1, order: 'booking desc' } })
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setListProductPopular(data?.packages)
+      })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   useEffect(() => {
@@ -133,21 +156,21 @@ const Dashboard = () => {
       {loading && <Spinner />}
       <CardCountRecords data={countRecords} />
       <Grid container spacing={6}>
-        <Grid item md={6} xs={12}>
+        {/* <Grid item md={6} xs={12}>
           <CardProductType data={countProductTypes} />
-        </Grid>
-        <Grid item md={6} xs={12}>
+        </Grid> */}
+        <Grid item md={8} xs={12}>
           <CardCountRevenue data={countRevenues} />
-        </Grid>
-        <Grid item md={4} xs={12}>
-          <CardProductPopular data={listProductPopular} />
-        </Grid>
-        <Grid item md={4} xs={12}>
-          <CardCountUserType data={countUserType} />
         </Grid>
         <Grid item md={4} xs={12}>
           <CardCountOrderStatus data={countOrderStatus} />
         </Grid>
+        {/* <Grid item md={4} xs={12}>
+          <CardProductPopular data={listProductPopular} />
+        </Grid> */}
+        {/* <Grid item md={4} xs={12}>
+          <CardCountUserType data={countUserType} />
+        </Grid> */}
       </Grid>
     </Box>
   )

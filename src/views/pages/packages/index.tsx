@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 // ** Next
@@ -48,19 +49,6 @@ const PackagePage: NextPage<TProps> = props => {
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
 
-  // ** Redux
-  const {
-    isSuccessLike,
-    isErrorLike,
-    isErrorUnLike,
-    typeError,
-    isSuccessUnLike,
-    messageErrorLike,
-    messageErrorUnLike,
-    isLoading
-  } = useSelector((state: RootState) => state.product)
-  const dispatch: AppDispatch = useDispatch()
-
   // ** theme
   const theme = useTheme()
   const router = useRouter()
@@ -98,7 +86,7 @@ const PackagePage: NextPage<TProps> = props => {
 
   return (
     <>
-      <Box ref={ref} sx={{ padding: '2% 5%' }}>
+      <Box sx={{ padding: '2% 5%', position: 'relative', zIndex: 1 }}>
         <Box
           sx={{
             color: 'var(--red-text)',
@@ -107,7 +95,9 @@ const PackagePage: NextPage<TProps> = props => {
             flexDirection: 'column',
             padding: '20px 40px',
             display: 'flex',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            position: 'relative',
+            zIndex: 2
           }}
         >
           <Box>
@@ -140,7 +130,7 @@ const PackagePage: NextPage<TProps> = props => {
             ></Box>
 
             <Grid container spacing={5}>
-              <Grid item xs={6}>
+              <Grid item xs={12} lg={6}>
                 <Box>
                   <Box
                     sx={{
@@ -163,7 +153,7 @@ const PackagePage: NextPage<TProps> = props => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} lg={6}>
                 <Box border='1px solid #492828' borderRadius='8px' p='1rem' pt='0rem'>
                   {packages.services.map((item, index) => (
                     <Box
@@ -226,11 +216,37 @@ const PackagePage: NextPage<TProps> = props => {
 
             <Box mt='1rem' display='flex' justifyContent='end'>
               <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
-                {t('Đặt lịch')}
+                {t('Booking_now')}
               </Button>
             </Box>
           </Box>
         </Box>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            left: 0,
+            zIndex: 1
+          }}
+        >
+          <Image
+            width={16}
+            height={9}
+            layout='responsive'
+            alt='image'
+            src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515aa4ad40879fbf1594f50_pattenr%203-01.svg'
+          />
+        </Box>
+        <Box
+          ref={ref}
+          sx={{
+            background: 'red',
+            position: 'absolute',
+            zIndex: 1,
+            top: '-3rem'
+          }}
+        ></Box>
       </Box>
       <BookingForm />
     </>
