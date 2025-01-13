@@ -27,7 +27,6 @@ const Packages = (props: TProps) => {
     router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)
   }
 
-  
   useEffect(() => {
     const observerOptions = {
       root: null,
@@ -57,7 +56,19 @@ const Packages = (props: TProps) => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, position: 'relative', zIndex: 2 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          maxWidth: '80rem',
+          width: '100%',
+          minHeight: '64px',
+          alignItems: 'center',
+          margin: '0 auto',
+          justifyContent: 'space-between',
+          position: 'relative',
+          zIndex: 2
+        }}
+      >
         {/* Dòng ngang với hiệu ứng mở rộng */}
         <Box>
           <Typography

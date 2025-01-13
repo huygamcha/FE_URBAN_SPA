@@ -29,13 +29,11 @@ interface TImage {
 }
 type TProps = {}
 
-const CustomLayout = styled('div')(({ theme }) => ({
-  padding: '0% 5%'
-}))
+const CustomLayout = styled('div')(({ theme }) => ({}))
 
 const settings = {
   infinite: true,
-  slidesToShow: 3,
+  slidesToShow: 4,
   slidesToScroll: 1,
   draggable: false,
   centerMode: true, // Kích hoạt center mode
@@ -44,8 +42,8 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: 4,
+        slidesToScroll: 4,
         infinite: true,
         dots: true,
         arrows: true
@@ -89,42 +87,24 @@ const CustomerImages = (props: TProps) => {
       <Slider {...settings}>
         {customerImages?.map((item: TImage, index: number) => (
           <Box
-            overflow='hidden'
             key={index}
             sx={{
               position: 'relative',
               width: '100%',
+              maxWidth: '309px', // Giới hạn chiều rộng tối đa
+              maxHeight: '231px', // Giới hạn chiều cao tối đa
+              aspectRatio: '4 / 3', // Giữ tỉ lệ 4:3
+              overflow: 'hidden',
               outline: '0',
               borderRadius: '0.5rem'
             }}
           >
-            <Box
-              sx={{
-                '&:hover': {
-                  transform: `scale(1.1)`,
-                  transition: 'transform 1s ease'
-                }
-              }}
-            >
-              <Box
-                key={index}
-                sx={{
-                  width: '100%',
-                  height: { xs: '231px', sm: '231px' }, // Responsive heights for mobile and larger screens
-                  position: 'relative', // Needed for Next.js <Image />
-                  borderRadius: '0.5rem',
-                  overflow: 'hidden'
-                }}
-              >
-                <Image
-                  style={{ objectFit: 'cover' }}
-                  key={index}
-                  src={item.image}
-                  alt='about us'
-                  fill // Allows the image to stretch to the Box dimensions
-                />
-              </Box>
-            </Box>
+            <Image
+              src={item.image}
+              alt='about us'
+              layout='fill' // Đảm bảo hình ảnh lấp đầy container
+              objectFit='cover' // Hình ảnh giữ nội dung mà không bị méo
+            />
           </Box>
         ))}
       </Slider>

@@ -40,26 +40,6 @@ const HomePage: NextPage<TProps> = props => {
   const { t, i18n } = useTranslation()
   const router = useRouter()
 
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://cdn.trustindex.io/loader.js?25395fd393746564284627faa4a'
-    script.defer = true
-    script.async = true
-
-    // Chèn script vào phần tử có ID "google-reviews"
-    const targetElement = document.getElementById('google-reviews')
-    if (targetElement) {
-      targetElement.appendChild(script)
-    }
-
-    // Cleanup: Xóa script khi component bị unmount
-    // return () => {
-    //   if (targetElement) {
-    //     targetElement.removeChild(script)
-    //   }
-    // }
-  }, []) // Chỉ chạy một lần khi component được mount
-
   return (
     <>
       {/* {loading && <Spinner />} */}

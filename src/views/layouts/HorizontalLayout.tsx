@@ -243,7 +243,19 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Button onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)} variant='outlined'>
+                <Button
+                  onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)}
+                  variant='outlined'
+                  sx={{
+                    borderRadius: '99px',
+                    color: 'rgb(84, 19, 13)',
+                    borderColor: 'rgb(84, 19, 13)',
+                    '&:hover': {
+                      backgroundColor: 'white',
+                      color: 'rgb(84, 19, 13)'
+                    }
+                  }}
+                >
                   {t('Booking_now')}
                 </Button>
               </ListItemText>

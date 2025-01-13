@@ -36,7 +36,19 @@ const Contact = () => {
   }, [])
 
   return (
-    <Box sx={{ flexGrow: 1, padding: 2, zIndex: 2, position: 'relative' }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        maxWidth: '80rem',
+        width: '100%',
+        minHeight: '64px',
+        alignItems: 'center',
+        margin: '0 auto',
+        justifyContent: 'space-between',
+        position: 'relative',
+        zIndex: 2
+      }}
+    >
       <Box>
         <Typography
           ref={(el: HTMLDivElement | null) => {

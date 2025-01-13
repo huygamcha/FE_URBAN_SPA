@@ -106,7 +106,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             <Typography
               sx={{
                 position: 'absolute',
-                top: '60%', // Adjusting position of subtitle
+                top: '50%', // Adjusting position of subtitle
                 left: '50%',
                 transform: 'translateX(-50%)',
                 zIndex: 10,
