@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react'
+'use client'
+
+import React, { useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import Modal from '@mui/material/Modal'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { FormHelperText, Grid, Tab, Tabs, useTheme, styled, TabsProps, MenuItem } from '@mui/material'
 import { useDrawer } from 'src/hooks/useDrawer'
 import { useForm, Controller } from 'react-hook-form'
@@ -22,6 +24,8 @@ import { useDispatch } from 'react-redux'
 import { createOrderSpaAsync } from 'src/stores/order-spa/actions'
 import Link from 'next/link'
 import Image from 'next/image'
+import IconifyIcon from 'src/components/Icon'
+import { ROUTE_CONFIG } from 'src/configs/route'
 
 const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   // marginLeft: '1rem',
@@ -38,30 +42,29 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
     display: 'none'
   },
   '& .MuiTab-root': {
-    marginRight: '0.5rem'
+    gap: '1rem'
+    // marginRight: '0.5rem',
+    // marginBottom: '0.5rem'
   }
 }))
 
 // Form field type
 
-const duration = [
-  { value: '15', label: '15' },
-  { value: '30', label: '30' },
-  { value: '45', label: '45' },
-  { value: '60', label: '60' },
-  { value: '75', label: '75' },
-  { value: '90', label: '90' }
+const durations = [
+  { value: '9:00', label: '9:00' },
+  { value: '10:00', label: '10:00' },
+  { value: '11:00', label: '11:00' },
+  { value: '12:00', label: '12:00' },
+  { value: '13:00', label: '13:00' },
+  { value: '14:00', label: '14:00' },
+  { value: '15:00', label: '15:00' },
+  { value: '16:00', label: '16:00' },
+  { value: '17:00', label: '17:00' },
+  { value: '18:00', label: '18:00' },
+  { value: '19:00', label: '19:00' },
+  { value: '20:00', label: '20:00' },
+  { value: '21:00', label: '21:00' }
 ]
-type BookingFormValues = {
-  name: string
-  email: string
-  phoneNumber: string
-  quantity: number
-  date: string
-  packages: string
-  duration: string
-  notes: string
-}
 
 const BookingForm = () => {
   // Context
@@ -69,6 +72,7 @@ const BookingForm = () => {
 
   // ** State
   const [choosePackage, setChoosePackage] = useState<string>('')
+  const ref = useRef<HTMLElement | null>(null)
 
   // ** redux
   const dispatch: AppDispatch = useDispatch()
@@ -105,7 +109,7 @@ const BookingForm = () => {
       .required('Quantity is required')
       .min(1, 'Minimum quantity is 1'),
     date: yup.string().required(t('Required_field'))!,
-    duration: yup.string().required(t('Required_field'))!,
+    duration: yup.string().required(t('Required_field')),
     packages: yup.string().required(t('Required_field'))!,
     notes: yup.string().optional()
   })
@@ -126,7 +130,7 @@ const BookingForm = () => {
       date: '',
       quantity: 1,
       packages: '',
-      duration: '15',
+      duration: '',
       notes: ''
     }
   })
@@ -146,7 +150,6 @@ const BookingForm = () => {
       })
     )
     reset()
-    setOpenBookingForm(false)
   }
 
   useEffect(() => {
@@ -159,376 +162,476 @@ const BookingForm = () => {
     }
   }, [allPackages, openBookingForm])
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [])
+
   return (
-    <Modal
+    <Box
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'auto'
+        padding: '2% 5%',
+        zIndex: 1,
+        position: 'relative'
       }}
-      open={openBookingForm}
-      onClose={() => setOpenBookingForm(false)}
     >
-      <Box
+      <Grid
         sx={{
-          padding: '1.5rem',
-          borderRadius: '15px',
-          backgroundColor: theme.palette.background.paper,
-          width: { xs: '90%', md: '50%' },
-          maxHeight: { xs: '90vh', md: '80vh' }, // Set max height to allow scroll
-          overflowY: 'auto' // Enable vertical scrolling for content
+          zIndex: 2,
+          position: 'relative'
         }}
+        container
+        spacing={4}
       >
-        <Typography
-          sx={{
-            fontFamily: 'Playfair Display, serif' // Same font family as seen in the image
-          }}
-          fontSize='2rem'
-          textAlign='center'
-          variant='subtitle2'
-        >
-          {t('Booking_now').toUpperCase()}
-        </Typography>
-
-        <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete='off'>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <div>
-                    <label
-                      style={{
-                        fontSize: '0.813rem',
-                        display: 'block',
-                        marginBottom: '0.2rem',
-                        color: errors?.packages ? theme.palette.error.main : theme.palette.primary.main
-                      }}
-                    >
-                      <Typography
-                        variant='body2'
-                        sx={{
-                          color: errors?.packages
-                            ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`
-                        }}
-                      >
-                        {t('Package')} <span style={{ color: theme.palette.error.main }}>*</span>
-                      </Typography>
-                    </label>
-                    {/* huyg  packages*/}
-                    <StyledTabs
-                      sx={{
-                        '& .MuiTabs-flexContainer': {
-                          flexWrap: 'wrap'
-                        }
-                      }}
-                      onChange={(event: React.SyntheticEvent, value: string) => {
-                        onChange(value)
-                        setChoosePackage(value)
-                      }}
-                      value={choosePackage}
-                    >
-                      {allPackages?.map((opt: any) => {
-                        return (
-                          <Tab
+        <Grid item xs={12} lg={8}>
+          <Box
+            sx={{
+              backgroundColor: '#fffffff0',
+              p: '1rem',
+              borderRadius: '1rem'
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: 'Playfair Display, serif' // Same font family as seen in the image
+              }}
+              fontSize='2rem'
+              textAlign='center'
+              variant='subtitle2'
+            >
+              {t('Booking_now').toUpperCase()}
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete='off'>
+              <Grid container spacing={6}>
+                <Grid item xs={12}>
+                  <Controller
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <div>
+                        <label
+                          style={{
+                            fontSize: '0.813rem',
+                            display: 'block',
+                            marginBottom: '0.2rem',
+                            color: errors?.packages ? theme.palette.error.main : theme.palette.primary.main
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
                             sx={{
-                              borderRadius: '1.875rem',
-                              backgroundColor: theme.palette.customBackground.tabs,
-                              fontWeight: 'normal',
+                              color: errors?.packages
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
                               fontSize: '0.9rem',
-                              '&. MuiTouchRipple-root': {
-                                display: 'none !important'
-                              },
-                              [theme.breakpoints.down('lg')]: {
-                                fontSize: '0.7rem'
-                              }
+                              fontWeight: '600'
                             }}
-                            key={opt._id}
-                            value={opt._id}
-                            label={t(`${opt.name}`)}
-                          />
-                        )
-                      })}
-                    </StyledTabs>
+                          >
+                            {t('Package')} <span style={{ color: theme.palette.error.main }}>*</span>
+                          </Typography>
+                        </label>
+                        {/* huyg  packages*/}
+                        <StyledTabs
+                          sx={{
+                            '& .MuiTabs-flexContainer': {
+                              flexWrap: 'wrap',
+                              gap: '0.5rem'
+                            }
+                          }}
+                          onChange={(event: React.SyntheticEvent, value: string) => {
+                            onChange(value)
+                            setChoosePackage(value)
+                          }}
+                          value={choosePackage}
+                        >
+                          {allPackages?.map((opt: any) => {
+                            return (
+                              <Tab
+                                sx={{
+                                  borderRadius: '1.875rem',
+                                  backgroundColor: theme.palette.customBackground.tabs,
+                                  fontWeight: 'normal',
+                                  fontSize: '0.9rem',
+                                  '&. MuiTouchRipple-root': {
+                                    display: 'none !important'
+                                  },
+                                  [theme.breakpoints.down('lg')]: {
+                                    fontSize: '0.7rem'
+                                  }
+                                }}
+                                key={opt._id}
+                                value={opt._id}
+                                label={t(`${opt.name}`)}
+                              />
+                            )
+                          })}
+                        </StyledTabs>
 
-                    {errors?.packages?.message && (
-                      <FormHelperText
-                        sx={{
-                          color: errors?.packages
-                            ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`,
-                          fontSize: '0.8125rem'
-                        }}
-                      >
-                        {errors?.packages?.message}
-                      </FormHelperText>
+                        {errors?.packages?.message && (
+                          <FormHelperText
+                            sx={{
+                              color: errors?.packages
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.8125rem'
+                            }}
+                          >
+                            {errors?.packages?.message}
+                          </FormHelperText>
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
-                name='packages'
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Controller
-                name='name'
-                control={control}
-                render={({ field }) => (
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label={t('Full_name')}
-                    placeholder={t('Enter_your_full_name')}
-                    error={Boolean(errors?.name)}
-                    helperText={errors?.name?.message}
-                    {...field}
+                    name='packages'
                   />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Controller
-                name='phoneNumber'
-                control={control}
-                render={({ field }) => (
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label={t('Phone_number')}
-                    placeholder={t('Enter_your_phone')}
-                    error={Boolean(errors?.phoneNumber)}
-                    helperText={errors?.phoneNumber?.message}
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    {...field}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              {' '}
-              <Controller
-                name='quantity'
-                control={control}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label={t('Quantity_quest')}
-                    placeholder={t('Enter_your_quantity')}
-                    error={Boolean(errors?.quantity)}
-                    onChange={e => {
-                      const numValue = e.target.value.replace(/\D/g, '')
-                      onChange(numValue)
-                    }}
-                    onBlur={onBlur}
-                    value={value}
-                    inputProps={{
-                      inputMode: 'numeric',
-                      pattern: '[0-9]*',
-                      minLength: 8
-                    }}
-                    helperText={errors?.quantity?.message}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Controller
-                name='email'
-                control={control}
-                render={({ field }) => (
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label={t('Email')}
-                    placeholder={t('Enter_your_email')}
-                    error={Boolean(errors?.email)}
-                    helperText={errors?.email?.message}
-                    {...field}
-                  />
-                )}
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <div>
-                    <label
-                      style={{
-                        fontSize: '0.813rem',
-                        marginBottom: '0.25rem',
-                        display: 'block',
-                        color: errors?.date ? theme.palette.error.main : theme.palette.primary.main
-                      }}
-                    >
-                      <Typography
-                        variant='body2'
-                        sx={{
-                          lineHeight: `1.2 !important`,
-                          color: errors?.date
-                            ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`
-                        }}
-                      >
-                        {t('Pickup_time')} <span style={{ color: theme.palette.error.main }}>*</span>
-                      </Typography>
-                    </label>
+                </Grid>
 
-                    <Box
-                      sx={{
-                        '& .MuiStack-root': {
-                          paddingTop: '0rem !important', // Xóa khoảng cách trên cùng
-                          overflow: 'hidden' // Ẩn tràn nội dung
-                        },
-                        '& .MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputAdornedEnd': {
-                          paddingTop: '0.58rem', // Thêm khoảng cách trên cho input
-                          paddingBottom: '0.58rem' // Thêm khoảng cách dưới cho input
-                        },
-                        '& .MuiOutlinedInput-root': {
-                          borderColor: 'black', // Đường viền luôn màu đen
-                          '& fieldset': {
-                            borderColor: 'black' // Đường viền của fieldset luôn màu đen
-                          }
-                          // '&:hover fieldset': {
-                          //   borderColor: 'black' // Màu viền đen khi hover
-                          // },
-                          // '&.Mui-focused fieldset': {
-                          //   borderColor: 'black' // Màu viền đen khi focus
-                          // }
-                        }
-                      }}
-                    >
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DateTimePicker']}>
-                          <DateTimePicker value={value || null} onChange={onChange} />
-                        </DemoContainer>
-                      </LocalizationProvider>
-                    </Box>
-
-                    {errors?.date?.message && (
-                      <FormHelperText
-                        sx={{
-                          color: errors?.date
-                            ? theme.palette.error.main
-                            : `rgba(${theme.palette.customColors.main}, 0.42)`,
-                          fontSize: '0.8125rem'
-                        }}
-                      >
-                        {errors?.date?.message}
-                      </FormHelperText>
+                <Grid item xs={12}>
+                  <Controller
+                    name='name'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label={t('Full_name')}
+                        placeholder={t('Enter_your_full_name')}
+                        error={Boolean(errors?.name)}
+                        helperText={errors?.name?.message}
+                        {...field}
+                      />
                     )}
-                  </div>
-                )}
-                name='date'
-              />
-            </Grid>
-            <Grid item xs={12} lg={6}>
-              <Controller
-                name='duration'
-                control={control}
-                render={({ field: { onChange, value, ...field } }) => (
-                  <CustomTextField
-                    select
-                    fullWidth
-                    label={t('Duration')}
-                    placeholder={t('Select your duration')}
-                    error={Boolean(errors?.duration)}
-                    helperText={errors?.duration?.message}
-                    onChange={onChange}
-                    value={value}
-                    {...field}
-                  >
-                    {duration.map(item => (
-                      <MenuItem key={item.value} value={item.value}>
-                        {item.label} {t('minutes')}
-                      </MenuItem>
-                    ))}
-                  </CustomTextField>
-                )}
-              />
-            </Grid>
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name='phoneNumber'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label={t('Phone_number')}
+                        placeholder={t('Enter_your_phone')}
+                        error={Boolean(errors?.phoneNumber)}
+                        helperText={errors?.phoneNumber?.message}
+                        inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  {' '}
+                  <Controller
+                    name='quantity'
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label={t('Quantity_quest')}
+                        placeholder={t('Enter_your_quantity')}
+                        error={Boolean(errors?.quantity)}
+                        onChange={e => {
+                          const numValue = e.target.value.replace(/\D/g, '')
+                          onChange(numValue)
+                        }}
+                        onBlur={onBlur}
+                        value={value}
+                        inputProps={{
+                          inputMode: 'numeric',
+                          pattern: '[0-9]*',
+                          minLength: 8
+                        }}
+                        helperText={errors?.quantity?.message}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    name='email'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label={t('Email')}
+                        placeholder={t('Enter_your_email')}
+                        error={Boolean(errors?.email)}
+                        helperText={errors?.email?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Controller
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <div>
+                        <label
+                          style={{
+                            fontSize: '0.813rem',
+                            marginBottom: '0.25rem',
+                            display: 'block',
+                            color: errors?.date ? theme.palette.error.main : theme.palette.primary.main
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
+                            sx={{
+                              lineHeight: `1.2 !important`,
+                              color: errors?.date
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.9rem',
+                              fontWeight: '600'
+                            }}
+                          >
+                            {t('Pickup_time')} <span style={{ color: theme.palette.error.main }}>*</span>
+                          </Typography>
+                        </label>
 
-            <Grid item xs={12} lg={12}>
-              <Controller
-                name='notes'
-                control={control}
-                render={({ field }) => (
-                  <CustomTextField
-                    fullWidth
-                    label={t('Others_packages')}
-                    placeholder={t('Enter_your_notes')}
-                    error={Boolean(errors?.notes)}
-                    helperText={errors?.notes?.message}
-                    {...field}
-                  />
-                )}
-              />
-            </Grid>
-          </Grid>
+                        <Box
+                          sx={{
+                            '& .MuiStack-root': {
+                              paddingTop: '0rem !important', // Xóa khoảng cách trên cùng
+                              overflow: 'hidden' // Ẩn tràn nội dung
+                            },
+                            '& .MuiInputBase-input.MuiOutlinedInput-input.MuiInputBase-inputAdornedEnd': {
+                              paddingTop: '0.58rem', // Thêm khoảng cách trên cho input
+                              paddingBottom: '0.58rem' // Thêm khoảng cách dưới cho input
+                            },
+                            '& .MuiOutlinedInput-root': {
+                              borderColor: 'black', // Đường viền luôn màu đen
+                              '& fieldset': {
+                                borderColor: 'black' // Đường viền của fieldset luôn màu đen
+                              }
+                              // '&:hover fieldset': {
+                              //   borderColor: 'black' // Màu viền đen khi hover
+                              // },
+                              // '&.Mui-focused fieldset': {
+                              //   borderColor: 'black' // Màu viền đen khi focus
+                              // }
+                            }
+                          }}
+                        >
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={['DateTimePicker']}>
+                              <DatePicker value={value || null} onChange={onChange} />
+                            </DemoContainer>
+                          </LocalizationProvider>
+                        </Box>
 
-          <Box mt='1rem' sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-            <Box maxWidth='50%' sx={{ cursor: 'pointer' }}>
-              <Box mt='1rem'>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
-                    width={25}
-                    height={25}
-                    alt='Picture of the author'
+                        {errors?.date?.message && (
+                          <FormHelperText
+                            sx={{
+                              color: errors?.date
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.8125rem'
+                            }}
+                          >
+                            {errors?.date?.message}
+                          </FormHelperText>
+                        )}
+                      </div>
+                    )}
+                    name='date'
                   />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
-                    width={25}
-                    height={25}
-                    alt='fb'
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Controller
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <div>
+                        <label
+                          style={{
+                            fontSize: '0.813rem',
+                            display: 'block',
+                            marginBottom: '0.2rem',
+                            color: errors?.duration ? theme.palette.error.main : theme.palette.primary.main
+                          }}
+                        >
+                          <Typography
+                            variant='body2'
+                            sx={{
+                              color: errors?.duration
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.9rem',
+                              fontWeight: '600'
+                            }}
+                          >
+                            {t('time_service')} <span style={{ color: theme.palette.error.main }}>*</span>
+                          </Typography>
+                        </label>
+                        {/* huyg  duration*/}
+                        <StyledTabs
+                          sx={{
+                            '& .MuiTabs-flexContainer': {
+                              flexWrap: 'wrap',
+                              gap: '0.5rem'
+                            }
+                          }}
+                          onChange={(event: React.SyntheticEvent, value: string) => {
+                            onChange(value)
+                          }}
+                          value={value}
+                        >
+                          {durations?.map((opt: any) => {
+                            return (
+                              <Tab
+                                sx={{
+                                  borderRadius: '1.875rem',
+                                  backgroundColor: theme.palette.customBackground.tabs,
+                                  fontWeight: 'normal',
+                                  fontSize: '0.9rem',
+                                  '&. MuiTouchRipple-root': {
+                                    display: 'none !important'
+                                  },
+                                  [theme.breakpoints.down('lg')]: {
+                                    fontSize: '0.7rem'
+                                  }
+                                }}
+                                key={opt.value}
+                                value={opt.value}
+                                label={opt.label}
+                              />
+                            )
+                          })}
+                        </StyledTabs>
+
+                        {errors?.duration?.message && (
+                          <FormHelperText
+                            sx={{
+                              color: errors?.duration
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.8125rem'
+                            }}
+                          >
+                            {errors?.duration?.message}
+                          </FormHelperText>
+                        )}
+                      </div>
+                    )}
+                    name='duration'
                   />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
-                    width={25}
-                    height={25}
-                    alt='ig'
+                </Grid>
+
+                <Grid item xs={12} lg={12}>
+                  <Controller
+                    name='notes'
+                    control={control}
+                    render={({ field }) => (
+                      <CustomTextField
+                        fullWidth
+                        label={t('Others_packages')}
+                        placeholder={t('Enter_your_notes')}
+                        error={Boolean(errors?.notes)}
+                        helperText={errors?.notes?.message}
+                        {...field}
+                      />
+                    )}
                   />
-                </Link>
-                <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
-                  <Image
-                    src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
-                    width={32}
-                    height={22}
-                    alt='utube'
-                  />
-                </Link>
-                <Link target='_blank' href='https://zalo.me/1579840813471644356'>
-                  <Image
-                    src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
-                    width={25}
-                    height={25}
-                    alt='zalo'
-                  />
-                </Link>
+                </Grid>
+              </Grid>
+
+              <Box display='flex'>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  sx={{ mt: 3, width: '100%', display: 'flex', alignItems: 'center', py: '0.8rem' }}
+                >
+                  <IconifyIcon icon='teenyicons:appointments-outline' />
+                  <Typography fontSize='1rem' pl='0.5rem' color='#fff'>
+                    {t('Booking_now')}
+                  </Typography>
+                </Button>
               </Box>
+            </form>
+          </Box>
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: 2,
+              backgroundColor: 'background.paper',
+              borderRadius: '1rem',
+              boxShadow: 1
+            }}
+          >
+            {/* Logo Section */}
+            <Box sx={{ marginRight: 2 }}>
+              <Typography component='h1' variant='h6' color='primary' noWrap sx={{ flexGrow: 1, fontWeight: '600' }}>
+                <Link style={{ color: 'inherit' }} href={ROUTE_CONFIG.HOME}>
+                  <Image alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
+                </Link>
+              </Typography>
             </Box>
-            {/* Submit Button */}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3, height: '30px' }}>
-                {t('Booking_now')}
-              </Button>
+
+            {/* Information Section */}
+            <Box>
+              <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
+                Urban Spa & Massage
+              </Typography>
+              <Typography color='text.secondary'>
+                {t('Hotline_short')}:{' '}
+                <Typography fontSize='0.9rem' component='span' sx={{ fontWeight: 'bold' }}>
+                  0243.354.3333
+                </Typography>
+              </Typography>
+              <Typography color='text.secondary'>
+                {t('time_opening')}:{' '}
+                <Typography fontSize='0.9rem' component='span' sx={{ fontWeight: 'bold' }}>
+                  09:00 - 22:00
+                </Typography>
+              </Typography>
             </Box>
           </Box>
-        </form>
+        </Grid>
+      </Grid>
+      <Box
+        ref={ref}
+        sx={{
+          background: 'red',
+          position: 'absolute',
+          zIndex: 1,
+          top: '-3rem'
+        }}
+      ></Box>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          left: 0,
+          zIndex: 1
+        }}
+      >
+        <Image
+          width={16}
+          height={9}
+          layout='responsive'
+          alt='image'
+          src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515aa4ad40879fbf1594f50_pattenr%203-01.svg'
+        />
       </Box>
-    </Modal>
+    </Box>
   )
 }
 

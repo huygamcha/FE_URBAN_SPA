@@ -32,5 +32,8 @@ export const ROUTE_CONFIG = {
     DELIVERY_TYPE: '/settings/delivery-type'
   },
   DASHBOARD: '/dashboard',
-  PACKAGE: '/packages'
+  PACKAGE: '/packages',
+  BOOKING: {
+    INDEX: '/booking'
+  }
 }

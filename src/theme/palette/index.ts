@@ -21,6 +21,7 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
   const backgroundMain = '#ffd5a9'
   const backgroundSecondary = '#5e8172'
   const backgroundThird = '#ae572c'
+  const backgroundFour = '#54130c'
 
   const defaultBgColor = () => {
     if (skin === 'bordered' && mode === 'light') {
@@ -49,12 +50,14 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
     customBackground: {
       main: backgroundSecondary,
       secondary: backgroundMain,
+      four: backgroundFour,
       hover: backgroundThird,
       tabs: '#e2e8f0'
     },
 
     title: {
-      light: '#ffe3c6'
+      light: '#ffe3c6',
+      main: headerText
     },
 
     mode: mode,

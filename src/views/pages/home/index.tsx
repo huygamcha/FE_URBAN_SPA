@@ -6,7 +6,7 @@ import { NextPage } from 'next'
 // ** React
 
 // ** Mui
-import { Box } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 
 // ** Redux
 
@@ -25,6 +25,10 @@ import { TPackage } from 'src/types/package'
 import Packages from 'src/views/layouts/components/HOME/packages'
 import Image from 'next/image'
 import { useEffect } from 'react'
+import CustomerImages from 'src/views/layouts/components/HOME/google-reviews/components/CustomerImages'
+import { useTranslation } from 'react-i18next'
+import { ROUTE_CONFIG } from 'src/configs/route'
+import { useRouter } from 'next/navigation'
 
 type TProps = {
   packages: TPackage[]
@@ -33,6 +37,8 @@ type TProps = {
 const HomePage: NextPage<TProps> = props => {
   // ** Props
   const { packages } = props
+  const { t, i18n } = useTranslation()
+  const router = useRouter()
 
   useEffect(() => {
     const script = document.createElement('script')
@@ -47,11 +53,11 @@ const HomePage: NextPage<TProps> = props => {
     }
 
     // Cleanup: Xóa script khi component bị unmount
-    return () => {
-      if (targetElement) {
-        targetElement.removeChild(script)
-      }
-    }
+    // return () => {
+    //   if (targetElement) {
+    //     targetElement.removeChild(script)
+    //   }
+    // }
   }, []) // Chỉ chạy một lần khi component được mount
 
   return (
@@ -108,7 +114,6 @@ const HomePage: NextPage<TProps> = props => {
           />
         </Box>
       </Box>
-      <div id='google-reviews'></div>
     </>
   )
 }

@@ -10,7 +10,9 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       lineHeight: 1.2,
       position: 'relative',
       marginBottom: theme.spacing(1),
-      fontSize: theme.typography.body2.fontSize
+      // fontSize: theme.typography.body2.fontSize,
+      fontSize: '0.9rem',
+      fontWeight: '600'
     },
     '& .MuiInputBase-root': {
       borderRadius: 8,

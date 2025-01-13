@@ -49,28 +49,6 @@ type TProps = {
   isHideMenu?: boolean
 }
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: prop => prop !== 'open'
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: 1000,
-  background: theme.palette.customBackground.secondary,
-  // backgroundColor:
-  //   theme.palette.mode === 'light' ? theme.palette.customColors.lightPaperBg : theme.palette.customColors.darkPaperBg,
-  color: theme.palette.text.primary,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  })
-}))
-
 const CustomLayout = styled('div')(({ theme }) => ({
   // 1188
   // maxWidth: '74.25rem',
@@ -119,7 +97,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
       <CustomLayout
         sx={{
           position: 'fixed',
-          background: theme => theme.palette.customBackground.secondary,
+          background: theme => theme.palette.customBackground.four,
           left: '0',
           right: '0',
           boxShadow: '0 2px 5px #0003'
@@ -136,20 +114,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             justifyContent: 'space-between'
           }}
         >
-          {/* {!isHideMenu && (
-          <IconButton
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' })
-            }}
-          >
-            <Icon icon='ic:round-menu' />
-          </IconButton>
-        )} */}
           <Box>
             <Typography component='h1' variant='h6' color='primary' noWrap sx={{ flexGrow: 1, fontWeight: '600' }}>
               <Link style={{ color: 'inherit' }} href={ROUTE_CONFIG.HOME}>
@@ -165,27 +129,38 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 alignItems='center'
                 sx={{
                   '& a:hover .MuiTypography-root': {
-                    color: '#325658',
-                    opacity: 0.67
+                    opacity: 0.8
                   }
                 }}
               >
                 <Link href='#home'>
-                  <Typography variant='subtitle2' fontWeight='500'>
+                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Home')}
                   </Typography>
                 </Link>
                 <Link href='#about'>
-                  <Typography variant='subtitle2' fontWeight='500'>
+                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('About_Us')}
                   </Typography>
                 </Link>
                 <Link href='#package'>
-                  <Typography variant='subtitle2' fontWeight='500'>
+                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Package')}
                   </Typography>
                 </Link>
-                <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
+                <Button
+                  onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)}
+                  variant='outlined'
+                  sx={{
+                    borderRadius: '99px',
+                    color: 'white',
+                    borderColor: 'white',
+                    '&:hover': {
+                      backgroundColor: 'white',
+                      color: 'rgb(84, 19, 13)'
+                    }
+                  }}
+                >
                   {t('Booking_now')}
                 </Button>
               </Box>
@@ -213,7 +188,11 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                   paddingRight: '0rem !important'
                 }}
               >
-                {!mobileMenuOpen ? <Icon icon='ic:round-menu' /> : <Icon icon='iwwa:delete' />}
+                {!mobileMenuOpen ? (
+                  <Icon color='#fff' icon='ic:round-menu' />
+                ) : (
+                  <Icon color='#fff' icon='iwwa:delete' />
+                )}
               </IconButton>
             )}
           </Box>
@@ -227,8 +206,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
         sx={{
           '& .MuiDrawer-paper': {
             width: '100%',
-            padding: '1rem',
-            background: theme => theme.palette.customBackground.main
+            padding: '1rem'
           }
           // zIndex: 1102
         }}
@@ -239,7 +217,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Link href='#home'>
-                  <Typography color='title.light' variant='subtitle1'>
+                  <Typography color='title.main' variant='subtitle1'>
                     {t('Home')}
                   </Typography>
                 </Link>
@@ -248,7 +226,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Link href='#about'>
-                  <Typography color='title.light' variant='subtitle1'>
+                  <Typography color='title.main' variant='subtitle1'>
                     {t('About_Us')}
                   </Typography>
                 </Link>
@@ -257,7 +235,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Link href='#package'>
-                  <Typography color='title.light' variant='subtitle1'>
+                  <Typography color='title.main' variant='subtitle1'>
                     {t('Package')}
                   </Typography>
                 </Link>
@@ -265,7 +243,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Button onClick={() => setOpenBookingForm(true)} variant='outlined'>
+                <Button onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)} variant='outlined'>
                   {t('Booking_now')}
                 </Button>
               </ListItemText>
@@ -273,7 +251,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           </List>
         </Box>
       </Drawer>
-      <BookingForm />
     </>
     // </AppBar>
   )

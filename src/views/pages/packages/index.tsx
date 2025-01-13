@@ -31,6 +31,7 @@ import { displayValueByLanguage, formatCurrency } from 'src/utils'
 import BookingForm from 'src/views/layouts/components/booking-form/BookingForm'
 import { useDrawer } from 'src/hooks/useDrawer'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
+import { ROUTE_CONFIG } from 'src/configs/route'
 
 type TProps = {
   packages: TPackage
@@ -215,7 +216,7 @@ const PackagePage: NextPage<TProps> = props => {
             </Grid>
 
             <Box mt='1rem' display='flex' justifyContent='end'>
-              <Button onClick={() => setOpenBookingForm(true)} variant='contained'>
+              <Button onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)} variant='contained'>
                 {t('Booking_now')}
               </Button>
             </Box>
@@ -248,7 +249,6 @@ const PackagePage: NextPage<TProps> = props => {
           }}
         ></Box>
       </Box>
-      <BookingForm />
     </>
   )
 }

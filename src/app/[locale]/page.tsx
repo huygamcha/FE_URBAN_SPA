@@ -1,10 +1,7 @@
 import { Metadata } from 'next'
-import Head from 'next/head'
 import { ReactNode } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
 import { getAllPackages } from 'src/services/packages'
-import { getAllProductsPublic } from 'src/services/product'
-import { getAllProductTypes } from 'src/services/product-type'
 import { TPackage } from 'src/types/package'
 
 // layouts

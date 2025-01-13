@@ -1,0 +1,54 @@
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animation khi hover (fadeOut) */
+@keyframes fadeOut {
+  0% {
+    opacity: 1; /* Hiển thị hoàn toàn */
+  }
+  100% {
+    opacity: 0; /* Biến mất */
+  }
+}
+
+@keyframes slideInFromRightHoverCity {
+  0% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

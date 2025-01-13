@@ -14,7 +14,6 @@ import Container from '@mui/material/Container'
 
 // ** views
 import HorizontalLayout from 'src/views/layouts/HorizontalLayout'
-import VerticalLayout from 'src/views/layouts/VerticalLayout'
 import { Typography, useTheme } from '@mui/material'
 import Image from 'next/image'
 
@@ -22,7 +21,7 @@ import Image from 'next/image'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import CustomCarousel from 'src/components/custom-carousel'
+import 'src/views/css/customReactSlickBanner.css'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
 import Footer from './components/footer'
@@ -45,7 +44,7 @@ const settings = {
 
 const LayoutNotApp: NextPage<TProps> = ({ children }) => {
   const theme = useTheme()
-  const {t, i18n} = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -71,6 +70,17 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
           }}
         >
           <div style={{ position: 'relative', overflow: 'hidden', maxHeight: 'calc(100vh - 64px)' }}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black overlay
+                zIndex: 5
+              }}
+            />
             <Typography
               sx={{
                 position: 'absolute',
@@ -113,7 +123,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
             >
               {t('Premium_Spa_And_Relaxation_And_Beauty').toUpperCase()}
             </Typography>
-            <Slider {...settings}>
+            <Slider {...settings} className='slider-banner'>
               {bannerHome?.map((item: IBannerHome, index: number) => (
                 <Image
                   style={{ height: 'calc(100vh - 64px)' }}
@@ -130,14 +140,10 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
         </Box>
         <Container
           sx={{
-            // m: 4,
-            // width: 'calc(100vw - 32px)',
             maxWidth: 'unset !important',
-            // overflow: 'auto',
             maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight} - 32px)`,
             padding: '0 !important',
             overflow: 'hidden'
-            // borderRadius: '0.5rem'
           }}
         >
           {children}

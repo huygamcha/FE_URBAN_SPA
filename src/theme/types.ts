@@ -18,9 +18,11 @@ declare module '@mui/material/styles' {
       secondary: string
       hover: string
       tabs: string
+      four: string
     }
     title: {
       light: string
+      main: string
     }
   }
 
