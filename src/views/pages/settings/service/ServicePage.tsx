@@ -14,7 +14,6 @@ import { GridColDef, GridRowSelectionModel, GridSortModel } from '@mui/x-data-gr
 // ** Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'src/stores'
-import { resetInitialState } from 'src/stores/service'
 
 // ** Components
 import GridDelete from 'src/components/grid-delete'
@@ -42,6 +41,7 @@ import { formatDate } from 'src/utils/date'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import { deleteMultipleServiceAsync, deleteServiceAsync, getAllServicesAsync } from 'src/stores/service/actions'
 import CreateEditService from './component/CreateEditService'
+import { resetInitialState } from 'src/stores/service'
 
 type TProps = {}
 
@@ -154,7 +154,7 @@ const ServiceListPage: NextPage<TProps> = () => {
   const columns: GridColDef[] = [
     {
       field: 'packageId',
-      headerName: t('Package'),
+      headerName: t('Category'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -176,7 +176,7 @@ const ServiceListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameKo',
-      headerName: t('Name (Korean)'),
+      headerName: t('Name_Korean'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -187,7 +187,7 @@ const ServiceListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameEn',
-      headerName: t('Name (English)'),
+      headerName: t('Name_English'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -198,7 +198,7 @@ const ServiceListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameJp',
-      headerName: t('Name (Japanese)'),
+      headerName: t('Name_Japanese'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {

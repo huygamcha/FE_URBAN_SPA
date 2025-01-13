@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { TPackage } from 'src/types/package'
-import { Grid, Typography, Box } from '@mui/material'
+import { Grid, Typography, Box, keyframes } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
 import { useRouter } from 'next/navigation'
@@ -116,13 +116,20 @@ const Packages = (props: TProps) => {
                 sx={{
                   opacity: 0,
                   transform: 'translateY(50px)',
-                  borderRadius: '0.75rem',
+                  borderRadius: '1.25rem',
                   cursor: 'pointer',
                   background: theme => theme.palette.customBackground.main,
                   transition: 'all 1s cubic-bezier(0.17, 0.55, 0.55, 1)',
                   '&.show': {
                     opacity: 1,
                     transform: 'translateY(0)'
+                  },
+                  '&:hover': {
+                    transform: `scale(0.96)`,
+                    transition: 'transform 0.5s ease',
+                    backgroundColor: 'rgb(211, 146, 80)',
+                    borderRadius: '1.25rem',
+                    borderColor: 'rgba(192, 192, 211, 0)'
                   }
                 }}
               >
@@ -130,89 +137,69 @@ const Packages = (props: TProps) => {
                   sx={{
                     position: 'relative',
                     zIndex: 1,
-                    borderColor: 'rgba(192, 192, 211, 0.2)',
-                    '&:hover': {
-                      transform: `scale(1.02)`,
-                      transition: 'transform 2s ease',
-                      backgroundColor: 'rgb(211, 146, 80)',
-                      borderRadius: '0.75rem',
-                      borderColor: 'rgba(192, 192, 211, 0)',
-                      '& > .MuiBox-root > .MuiBox-root > img': {
-                        transform: 'scale(1.1)',
-                        transition: 'transform 1s ease'
-                      }
-                    }
+                    borderColor: 'rgba(192, 192, 211, 0.2)'
                   }}
                 >
                   <Box
-                    p='1rem'
+                    key={index}
                     sx={{
-                      top: 0,
-                      overflow: 'hidden',
-                      transform: 'translate3d(0px, 0px, 0px) scale3d(1, 1, 1)',
-                      transformStyle: 'preserve-3d',
-                      position: 'relative',
-                      zIndex: 2 // Nội dung chính
+                      width: '100%',
+                      height: { xs: '410px', sm: '410px' }, // Responsive height
+                      position: 'relative', // Needed for Next.js <Image />
+                      borderRadius: '1.25rem',
+                      overflow: 'hidden'
                     }}
                   >
+                    {/* Image */}
+                    <Image
+                      style={{
+                        objectFit: 'cover'
+                      }}
+                      alt={item.name}
+                      src={item.image}
+                      fill // Ensures the image stretches to fill the Box
+                    />
+                    {/* Overlay */}
                     <Box
                       sx={{
-                        overflow: 'hidden',
-                        borderRadius: '0.5rem',
-                        fontSize: '0px'
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: '#0a101d3b', // Semi-transparent overlay
+                        zIndex: 2, // Ensure overlay is above the image
+                        display: 'flex',
+                        justifyContent: 'center',
+                        borderRadius: '1.25rem'
+                      }}
+                    ></Box>
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 3, // Ensure overlay is above the image
+                        display: 'flex',
+                        justifyContent: 'center',
+                        borderRadius: '1.25rem'
                       }}
                     >
-                      <img
-                        width='100%'
-                        height='auto'
-                        alt={item.name}
-                        src={item.image}
-                        style={{
-                          transition: 'transform 1s ease'
-                        }}
-                      />
-                    </Box>
-                    <Box pt='1rem'>
                       <Typography
                         sx={{
-                          fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
-                          fontWeight: 700,
-                          fontSize: '26px'
+                          color: 'white',
+                          fontSize: '1.5rem',
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          textTransform: 'uppercase',
+                          paddingTop: '2rem'
                         }}
-                        variant='subtitle2'
-                        color='#fff'
                       >
-                        {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
+                        {item.name}
                       </Typography>
-
-                      <Box
-                        color='#fff'
-                        dangerouslySetInnerHTML={{
-                          __html: displayValueByLanguage({
-                            language: i18n.language,
-                            value: item,
-                            field: 'description'
-                          })
-                        }}
-                      ></Box>
                     </Box>
-                  </Box>
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      zIndex: 1
-                    }}
-                  >
-                    <Image
-                      width={16 * 1.5}
-                      height={9 * 1.5}
-                      layout='responsive'
-                      alt='image'
-                      src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/65167d720479a2589c73e28b_leav-01.svg'
-                    />
                   </Box>
                 </Box>
               </Box>

@@ -114,17 +114,22 @@ const Footer = () => {
         </Box>
       </Box>
       <Box overflow='hidden'>
-        <Box padding='2% 5%'>
+        <Box
+          sx={{
+            background: theme => theme.palette.customBackground.four
+          }}
+          padding='2% 5%'
+        >
           <Contact />
         </Box>
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
+        {/* <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'>
           <path
             fill='#5e8172'
             fill-opacity='1'
             d='M0,96L48,90.7C96,85,192,75,288,64C384,53,480,43,576,48C672,53,768,75,864,85.3C960,96,1056,96,1152,96C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'
           ></path>
-        </svg>
-        <Box
+        </svg> */}
+        {/* <Box
           sx={{
             position: 'relative',
             zIndex: 1
@@ -144,7 +149,6 @@ const Footer = () => {
               }}
               maxWidth='lg'
             >
-              {/* Logo Section */}
               <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <Link href='/' underline='none'>
                   <img
@@ -156,7 +160,6 @@ const Footer = () => {
                 </Link>
               </Box>
 
-              {/* Navigation Links */}
               <Grid container spacing={4} justifyContent='center' sx={{ marginBottom: '2rem' }}>
                 <Grid item>
                   <Link href='/#about'>
@@ -183,14 +186,12 @@ const Footer = () => {
                 </Grid>
               </Grid>
 
-              {/* Contact Info */}
               <Box sx={{ textAlign: 'center', marginBottom: '2rem' }}>
                 <Typography variant='subtitle1' gutterBottom color='title.light'>
                   {t('Opening_Daily')} 9h00 - 22h00
                 </Typography>
               </Box>
 
-              {/* Contact Methods */}
               <Grid container spacing={4} justifyContent='center' sx={{ marginBottom: '2rem' }}>
                 <Grid item>
                   <Box textAlign='center'>
@@ -236,7 +237,6 @@ const Footer = () => {
                 </Grid>
               </Grid>
 
-              {/* Footer Bottom */}
               <Box textAlign='center' sx={{ paddingBottom: '1rem' }}>
                 <Typography variant='body2' color='title.light'>
                   © 2016 Urban Oasis Spa.Allright resserved.
@@ -262,7 +262,7 @@ const Footer = () => {
               />
             </Box>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </>
   )

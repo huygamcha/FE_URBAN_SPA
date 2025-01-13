@@ -42,10 +42,6 @@ type TDefaultValue = {
   nameKo: string
   nameEn: string
   nameJp: string
-  description: EditorState
-  descriptionKo: EditorState
-  descriptionEn: EditorState
-  descriptionJp: EditorState
   image: string
   slug: string
 }
@@ -56,18 +52,11 @@ interface FieldConfig {
 }
 
 const fields: FieldConfig[] = [
+  { name: 'slug', label: 'Slug' },
   { name: 'name', label: 'Name' },
-  { name: 'nameKo', label: 'Name (Korean)' },
-  { name: 'nameEn', label: 'Name (English)' },
-  { name: 'nameJp', label: 'Name (Japanese)' },
-  { name: 'slug', label: 'Slug' }
-]
-
-const descriptionFields: FieldConfig[] = [
-  { name: 'description', label: 'Description (Default)' },
-  { name: 'descriptionKo', label: 'Description (Korean)' },
-  { name: 'descriptionEn', label: 'Description (English)' },
-  { name: 'descriptionJp', label: 'Description (Japanese)' }
+  { name: 'nameKo', label: 'Name_Korean' },
+  { name: 'nameEn', label: 'Name_English' },
+  { name: 'nameJp', label: 'Name_Japanese' }
 ]
 
 const CreateEditPackage = (props: TCreateEditPackage) => {
@@ -90,10 +79,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     nameKo: yup.string().required(t('Required_field')),
     nameEn: yup.string().required(t('Required_field')),
     nameJp: yup.string().required(t('Required_field')),
-    description: yup.object().required(t('Required_field')),
-    descriptionKo: yup.object().required(t('Required_field')),
-    descriptionEn: yup.object().required(t('Required_field')),
-    descriptionJp: yup.object().required(t('Required_field')),
     image: yup.string().required(t('Required_field')),
     slug: yup.string().required(t('Required_field'))
   })
@@ -103,10 +88,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     nameKo: '',
     nameEn: '',
     nameJp: '',
-    description: EditorState.createEmpty(),
-    descriptionKo: EditorState.createEmpty(),
-    descriptionEn: EditorState.createEmpty(),
-    descriptionJp: EditorState.createEmpty(),
     image: '',
     slug: ''
   }
@@ -134,10 +115,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         dispatch(
           updatePackageAsync({
             ...data,
-            description: data.description ? draftToHtml(convertToRaw(data.description.getCurrentContent())) : '',
-            descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
-            descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
-            descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : '',
             image: result.image ? result.image : data?.image,
             id: idPackage
           })
@@ -146,10 +123,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         dispatch(
           createPackageAsync({
             ...data,
-            description: data.description ? draftToHtml(convertToRaw(data.description.getCurrentContent())) : '',
-            descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
-            descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
-            descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : '',
             image: result.image ? result.image : data?.image
           })
         )
@@ -170,11 +143,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
             nameEn: data.nameEn,
             nameJp: data.nameJp,
             slug: data.slug,
-            image: data.image,
-            description: data.description ? convertHTMLToDraft(data.description) : '',
-            descriptionEn: data.descriptionEn ? convertHTMLToDraft(data.descriptionEn) : '',
-            descriptionJp: data.descriptionJp ? convertHTMLToDraft(data.descriptionJp) : '',
-            descriptionKo: data.descriptionKo ? convertHTMLToDraft(data.descriptionKo) : ''
+            image: data.image
           })
         }
         setLoading(false)
@@ -226,7 +195,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
             <Typography variant='h4' sx={{ fontWeight: 600 }}>
-              {idPackage ? t('Edit_package') : t('Create_package')}
+              {idPackage ? t('Edit_category') : t('Create_category')}
             </Typography>
             <IconButton sx={{ position: 'absolute', top: '-4px', right: '-10px' }} onClick={onClose}>
               <Icon icon='material-symbols-light:close' fontSize={'30px'} />
@@ -308,7 +277,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                 </Grid>
 
                 {fields.map(({ name, label }) => (
-                  <Grid item md={12} xs={12} key={name}>
+                  <Grid item md={6} xs={12} key={name}>
                     <Controller
                       control={control}
                       name={name}
@@ -338,25 +307,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                           helperText={errors?.name?.message}
                         />
                       )}
-                    />
-                  </Grid>
-                ))}
-                {descriptionFields.map(({ name, label }) => (
-                  <Grid item md={12} xs={12} key={name}>
-                    <Controller
-                      control={control}
-                      render={({ field: { onChange, onBlur, value } }) => (
-                        <CustomEditor
-                          onEditorStateChange={onChange}
-                          label={`${t(label)}`}
-                          onBlur={onBlur}
-                          editorState={value as EditorState}
-                          placeholder={t(`Enter_${label.replace(/\s/g, '_')}`)}
-                          error={Boolean(errors?.[name])}
-                          helperText={errors?.[name]?.message}
-                        />
-                      )}
-                      name={name}
                     />
                   </Grid>
                 ))}

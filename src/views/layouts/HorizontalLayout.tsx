@@ -34,7 +34,7 @@ import { useTranslation } from 'react-i18next'
 import i18nConfig from 'src/app/i18nConfig'
 import Image from 'next/image'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
-import BookingForm from './components/booking-form/BookingForm'
+import BookingForm from '../pages/booking-form/BookingForm'
 import { useDrawer } from 'src/hooks/useDrawer'
 
 const drawerWidth: number = 240
@@ -107,7 +107,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           sx={{
             maxWidth: '80rem',
             width: '100%',
-            minHeight: '64px',
+            height: '72px',
             display: 'flex',
             alignItems: 'center',
             margin: '0 auto',

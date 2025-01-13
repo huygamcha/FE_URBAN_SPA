@@ -21,14 +21,11 @@ import Image from 'next/image'
 // ** Services
 
 // ** Utils
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'src/stores'
 import { useRouter } from 'next/navigation'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { TPackage } from 'src/types/package'
 import { displayValueByLanguage, formatCurrency } from 'src/utils'
-import BookingForm from 'src/views/layouts/components/booking-form/BookingForm'
 import { useDrawer } from 'src/hooks/useDrawer'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
 import { ROUTE_CONFIG } from 'src/configs/route'
@@ -56,6 +53,11 @@ const PackagePage: NextPage<TProps> = props => {
 
   // ** Context
   const { openBookingForm, setOpenBookingForm } = useDrawer()
+
+  const handleBooking = () => {
+    router.push(`${ROUTE_CONFIG.BOOKING.INDEX}/${packages.slug}`)
+    // ;() => router.push(ROUTE_CONFIG.BOOKING.INDEX)
+  }
 
   // fetch api
   // ** fetch api
@@ -114,22 +116,6 @@ const PackagePage: NextPage<TProps> = props => {
               {displayValueByLanguage({ language: i18n.language, value: packages, field: 'name' })}
             </Typography>
 
-            <Box
-              pb='1rem'
-              sx={{
-                fontSize: '1rem',
-                fontWeight: 600
-              }}
-              color='text.secondary'
-              dangerouslySetInnerHTML={{
-                __html: displayValueByLanguage({
-                  language: i18n.language,
-                  value: packages,
-                  field: 'description'
-                })
-              }}
-            ></Box>
-
             <Grid container spacing={5}>
               <Grid item xs={12} lg={6}>
                 <Box>
@@ -170,7 +156,7 @@ const PackagePage: NextPage<TProps> = props => {
                         borderRadius='0.5rem'
                         color='#fff'
                         width='max-content'
-                        mb='1rem'
+                        mb='0.5rem'
                         variant='subtitle2'
                         fontSize='0.9rem'
                       >
@@ -180,6 +166,19 @@ const PackagePage: NextPage<TProps> = props => {
                           field: 'name'
                         })}
                       </Typography>
+
+                      <Box
+                        sx={{
+                          pb: '0.5rem'
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html: displayValueByLanguage({
+                            language: i18n.language,
+                            value: item,
+                            field: 'description'
+                          })
+                        }}
+                      />
 
                       <Box pb='0.5rem' pl='1rem'>
                         {item.options.map((option: any, optionIndex: number) => (
@@ -216,7 +215,7 @@ const PackagePage: NextPage<TProps> = props => {
             </Grid>
 
             <Box mt='1rem' display='flex' justifyContent='end'>
-              <Button onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)} variant='contained'>
+              <Button onClick={handleBooking} variant='contained'>
                 {t('Booking_now')}
               </Button>
             </Box>

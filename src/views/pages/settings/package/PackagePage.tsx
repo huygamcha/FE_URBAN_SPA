@@ -166,7 +166,7 @@ const PackageListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameKo',
-      headerName: t('Name (Korean)'),
+      headerName: t('Name_Korean'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -177,7 +177,7 @@ const PackageListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameEn',
-      headerName: t('Name (English)'),
+      headerName: t('Name_English'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -188,7 +188,7 @@ const PackageListPage: NextPage<TProps> = () => {
     },
     {
       field: 'nameJp',
-      headerName: t('Name (Japanese)'),
+      headerName: t('Name_Japanese'),
       flex: 1,
       minWidth: 200,
       renderCell: params => {
@@ -210,7 +210,7 @@ const PackageListPage: NextPage<TProps> = () => {
     // },
     // {
     //   field: 'descriptionKo',
-    //   headerName: t('Description (Korean)'),
+    //   headerName: t('Description_Korean'),
     //   flex: 2,
     //   minWidth: 300,
     //   renderCell: params => {
@@ -221,7 +221,7 @@ const PackageListPage: NextPage<TProps> = () => {
     // },
     // {
     //   field: 'descriptionEn',
-    //   headerName: t('Description (English)'),
+    //   headerName: t('Description_English'),
     //   flex: 2,
     //   minWidth: 300,
     //   renderCell: params => {
@@ -232,7 +232,7 @@ const PackageListPage: NextPage<TProps> = () => {
     // },
     // {
     //   field: 'descriptionJp',
-    //   headerName: t('Description (Japanese)'),
+    //   headerName: t('Description_Japanese'),
     //   flex: 2,
     //   minWidth: 300,
     //   renderCell: params => {
@@ -319,9 +319,9 @@ const PackageListPage: NextPage<TProps> = () => {
   useEffect(() => {
     if (isSuccessCreateEdit) {
       if (!openCreateEdit.id) {
-        toast.success(t('Create_package_success'))
+        toast.success(t('Create_category_success'))
       } else {
-        toast.success(t('Update_package_success'))
+        toast.success(t('Update_category_success'))
       }
       handleGetListPackages()
       handleCloseCreateEdit()

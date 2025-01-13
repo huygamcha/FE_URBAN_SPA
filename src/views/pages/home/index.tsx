@@ -55,7 +55,8 @@ const HomePage: NextPage<TProps> = props => {
               bottom: 0,
               right: 0,
               left: 0,
-              zIndex: 1
+              zIndex: 1,
+              fontSize: '0px'
             }}
           >
             <Image

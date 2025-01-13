@@ -29,6 +29,7 @@ import { useTranslation } from 'react-i18next'
 
 type TProps = {
   children: React.ReactNode
+  isHiddenBanner?: boolean
 }
 const settings = {
   dots: false,
@@ -42,7 +43,7 @@ const settings = {
   fade: true
 }
 
-const LayoutNotApp: NextPage<TProps> = ({ children }) => {
+const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) => {
   const theme = useTheme()
   const { t, i18n } = useTranslation()
 
@@ -50,7 +51,6 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Box
-        // component='main'
         sx={{
           backgroundColor: theme => theme.palette.customBackground.secondary,
           flexGrow: 1,
@@ -60,84 +60,87 @@ const LayoutNotApp: NextPage<TProps> = ({ children }) => {
         }}
       >
         <HorizontalLayout toggleDrawer={() => {}} open={false} isHideMenu />
-        <Toolbar />
+        <Toolbar sx={{ height: '72px' }} />
 
-        <Box
-          // đặt giới hạn chiều dài để sử dụng được slider
-          sx={{
-            // width: 'calc(100vw - 0px)',
-            maxWidth: 'unset !important'
-          }}
-        >
-          <div style={{ position: 'relative', overflow: 'hidden', maxHeight: 'calc(100vh - 64px)' }}>
-            <Box
-              sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black overlay
-                zIndex: 5
-              }}
-            />
-            <Typography
-              sx={{
-                position: 'absolute',
-                top: '40%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 10,
-                color: 'white',
-                fontSize: '6rem',
-                textTransform: 'uppercase', // Making the text uppercase
-                pointerEvents: 'none',
-                fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
-                letterSpacing: '3px', // Add spacing to mimic the image style
-                width: '100%',
-                textAlign: 'center', // Center the text
-                [theme.breakpoints.down('lg')]: {
-                  fontSize: '3rem'
-                }
-              }}
-            >
-              URBAN SPA
-            </Typography>
-            <Typography
-              sx={{
-                position: 'absolute',
-                top: '50%', // Adjusting position of subtitle
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 10,
-                color: 'white',
-                fontSize: '1.5rem', // Subtitle font size
-                fontWeight: 'normal',
-                textTransform: 'uppercase',
-                letterSpacing: '2px',
-                fontFamily: 'Arial, sans-serif', // Different font for subtitle
-                [theme.breakpoints.down('lg')]: {
-                  fontSize: '1rem'
-                }
-              }}
-            >
-              {t('Premium_Spa_And_Relaxation_And_Beauty').toUpperCase()}
-            </Typography>
-            <Slider {...settings} className='slider-banner'>
-              {bannerHome?.map((item: IBannerHome, index: number) => (
-                <Image
-                  style={{ height: 'calc(100vh - 64px)' }}
-                  key={index}
-                  src={item.image}
-                  alt='Responsive Image'
-                  layout='responsive'
-                  width={16}
-                  height={9}
-                />
-              ))}
-            </Slider>
-          </div>
-        </Box>
+        {!isHiddenBanner && (
+          <Box
+            // đặt giới hạn chiều dài để sử dụng được slider
+            sx={{
+              // width: 'calc(100vw - 0px)',
+              maxWidth: 'unset !important'
+            }}
+          >
+            <div style={{ position: 'relative', overflow: 'hidden', maxHeight: 'calc(100vh - 64px)' }}>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent black overlay
+                  zIndex: 5
+                }}
+              />
+              <Typography
+                sx={{
+                  position: 'absolute',
+                  top: '40%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: 10,
+                  color: 'white',
+                  fontSize: '6rem',
+                  textTransform: 'uppercase', // Making the text uppercase
+                  pointerEvents: 'none',
+                  fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
+                  letterSpacing: '3px', // Add spacing to mimic the image style
+                  width: '100%',
+                  textAlign: 'center', // Center the text
+                  [theme.breakpoints.down('lg')]: {
+                    fontSize: '3rem'
+                  }
+                }}
+              >
+                URBAN SPA
+              </Typography>
+              <Typography
+                sx={{
+                  position: 'absolute',
+                  top: '50%', // Adjusting position of subtitle
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  zIndex: 10,
+                  color: 'white',
+                  fontSize: '1.5rem', // Subtitle font size
+                  fontWeight: 'normal',
+                  textTransform: 'uppercase',
+                  letterSpacing: '2px',
+                  fontFamily: 'Arial, sans-serif', // Different font for subtitle
+                  [theme.breakpoints.down('lg')]: {
+                    fontSize: '1rem'
+                  }
+                }}
+              >
+                {t('Premium_Spa_And_Relaxation_And_Beauty').toUpperCase()}
+              </Typography>
+              <Slider {...settings} className='slider-banner'>
+                {bannerHome?.map((item: IBannerHome, index: number) => (
+                  <Image
+                    style={{ height: 'calc(100vh - 64px)' }}
+                    key={index}
+                    src={item.image}
+                    alt='Responsive Image'
+                    layout='responsive'
+                    width={16}
+                    height={9}
+                  />
+                ))}
+              </Slider>
+            </div>
+          </Box>
+        )}
+
         <Container
           sx={{
             maxWidth: 'unset !important',

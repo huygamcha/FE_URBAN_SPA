@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { FormHelperText, useTheme } from '@mui/material'
 import { Box, BoxProps, InputLabel, styled } from '@mui/material'
@@ -20,20 +20,20 @@ const StyleWrapperEditor = styled(Box)<TStyleWrapperEditor>(({ theme, error }) =
   '.rdw-editor-wrapper': {
     borderRadius: 8,
     backgroundColor: 'transparent !important',
-    border: error ? `1px solid ${theme.palette.error.main}` : `1px solid rgba(${theme.palette.customColors.main}, 0.2)`
+    border: error ? `1px solid ${theme.palette.error.main}` : `1px solid #000`
   },
   '.rdw-editor-toolbar': {
     border: 'none',
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
     backgroundColor: theme.palette.background.paper,
-    ".rdw-option-wrapper": {
-    // backgroundColor: theme.palette.background.default,
-    border: `1px solid rgba(${theme.palette.customColors.main}, 0.2)`
+    '.rdw-option-wrapper': {
+      // backgroundColor: theme.palette.background.default,
+      border: `1px solid #000`
     }
   },
   '.rdw-editor-main': {
-    borderTop: `1px solid rgba(${theme.palette.customColors.main}, 0.2)`,
+    borderTop: `1px solid #000`,
     padding: '8px',
     minHeight: '200px',
     maxHeight: '200px',
@@ -51,10 +51,9 @@ const CustomEditor = (props: TProps) => {
     <StyleWrapperEditor error={error}>
       <InputLabel
         sx={{
-          fontSize: '13px',
-          marginBottom: '4px',
-          display: 'block',
-          color: error ? theme.palette.error.main : `rgba(${theme.palette.customColors.main}, 0.68)`
+          fontSize: '0.9rem',
+          fontWeight: '600',
+          color: error ? theme.palette.error.main : `rgba(${theme.palette.customColors.main}, 0.42)`
         }}
       >
         {label}

@@ -20,6 +20,10 @@ export type TParamsCreateService = {
   nameEn: string
   nameJp: string
   packageId: string
+  description: string
+  descriptionKo: string
+  descriptionEn: string
+  descriptionJp: string
   options: TOptionOfService[]
 }
 
@@ -30,6 +34,10 @@ export type TParamsEditService = {
   nameEn: string
   nameJp: string
   packageId: string
+  description: string
+  descriptionKo: string
+  descriptionEn: string
+  descriptionJp: string
   options: TOptionOfService[]
 }
 

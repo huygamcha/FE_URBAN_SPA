@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import { Grid, Box, IconButton, Typography, Link } from '@mui/material'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
+import IconifyIcon from 'src/components/Icon'
 
 const Contact = () => {
   // ** Hooks
@@ -56,7 +57,7 @@ const Contact = () => {
           }}
           sx={{
             height: '6px',
-            background: theme => theme.palette.customBackground.main,
+            background: theme => theme.palette.common.white,
             width: '0%',
             transition: 'width 0.8s cubic-bezier(0.17, 0.55, 0.55, 1)',
             '&.show': {
@@ -88,7 +89,7 @@ const Contact = () => {
                 fontSize: '2.5rem',
                 fontWeight: '700',
                 lineHeight: '1.2',
-                color: '#6b4241',
+                color: theme => theme.palette.common.white,
                 fontFamily: 'Playfair Display,sans-serif'
               }}
             >
@@ -103,15 +104,27 @@ const Contact = () => {
                 transition: 'opacity 0.8s ease-in-out',
                 '&.show': {
                   opacity: 1
+                },
+                '& .MuiTypography-root': {
+                  color: theme => theme.palette.common.white
                 }
               }}
               ref={(el: HTMLDivElement | null) => {
                 allRefs.current[2] = el
               }}
             >
-              <Typography>{t('contact_1')}</Typography>
-              <Typography>{t('contact_2')}</Typography>
-              <Typography>{t('contact_3')}</Typography>
+              <Box pb='0.5rem' display='flex' alignItems='center'>
+                <IconifyIcon color='#fff' icon='mdi:address-marker' />
+                <Typography pl='0.2rem'>39A Hang Hanh, Hoan Kiem Dist, Hanoi, Vietnam.</Typography>
+              </Box>
+              <Link pb='0.5rem' href='mailto:spa39ahanghanh@kampa.vn' display='flex' alignItems='center'>
+                <IconifyIcon color='#fff' icon='ic:twotone-email' />
+                <Typography pl='0.2rem'>spa39ahanghanh@gmail.com</Typography>
+              </Link>
+              <Link href={`tel:02433543333'}`} display='flex' alignItems='center'>
+                <IconifyIcon color='#fff' icon='fluent:call-20-filled' />
+                <Typography pl='0.2rem'>(+84) 24 3354 3333</Typography>
+              </Link>
             </Box>
             <Box
               sx={{
@@ -139,7 +152,7 @@ const Contact = () => {
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
                       width={25}
                       height={25}
-                      alt='Picture of the author'
+                      alt='naver'
                     />
                   </Link>
                   <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
@@ -147,34 +160,38 @@ const Contact = () => {
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_cafe.svg'
                       width={25}
                       height={25}
-                      alt='Picture of the author'
+                      alt='cafe'
                     />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/kampavietnam'>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
                       width={25}
                       height={25}
-                      alt='Picture of the author'
+                      alt='fb'
                     />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com/kampavietnam/'>
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
                       width={25}
                       height={25}
-                      alt='Picture of the author'
+                      alt='ig'
                     />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                  <Link
+                    style={{ paddingRight: '1rem' }}
+                    target='_blank'
+                    href='https://www.youtube.com/watch?v=GQjEjprY0WE&t=1s'
+                  >
                     <Image
                       src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
                       width={32}
                       height={22}
-                      alt='Picture of the author'
+                      alt='cafe'
                     />
                   </Link>
-                  <Link target='_blank' href='https://zalo.me/1579840813471644356'>
+                  <Link target='_blank' href='https://zalo.me/0868144408'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
                       width={25}
@@ -183,6 +200,35 @@ const Contact = () => {
                     />
                   </Link>
                 </Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                opacity: 0, // Ban đầu ẩn
+                transform: 'translateY(-30px)', // Ban đầu ở trên
+                transition: 'opacity 2s ease-in-out, transform 0.8s ease-in-out', // Hiệu ứng mượt mà
+                '&.show': {
+                  opacity: 1, // Hiện nội dung
+                  transform: 'translateY(0)' // Trả về vị trí ban đầu
+                },
+                marginTop: '1rem',
+                border: '1px solid #fff',
+                width: 'max-content',
+                padding: '0.8rem 2rem'
+              }}
+              ref={(el: HTMLDivElement | null) => {
+                allRefs.current[4] = el
+              }}
+            >
+              <Box>
+                <Typography variant='subtitle1' color='common.white'>
+                  {t('Opening_Daily')}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography variant='subtitle1' color='common.white'>
+                  9:00 AM - 22:00 PM
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -208,10 +254,19 @@ const Contact = () => {
               width='100%'
               height='300'
               loading='lazy'
+              style={{
+                borderRadius: '1rem'
+              }}
             ></iframe>
           </Box>
         </Grid>
       </Grid>
+
+      <Box pt='1rem'>
+        <Typography textAlign='center' color='common.white'>
+          © 2016 Urban Oasis Spa.Allright resserved
+        </Typography>
+      </Box>
     </Box>
   )
 }

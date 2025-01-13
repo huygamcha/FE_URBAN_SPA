@@ -36,8 +36,11 @@ import { AppDispatch } from 'src/stores'
 import { useDispatch } from 'react-redux'
 import { createServiceAsync, updateServiceAsync } from 'src/stores/service/actions'
 import { useGetListPackages } from 'src/queries/packages'
-import CustomSelect from 'src/components/custom-select'
 import { getDetailsService } from 'src/services/service'
+import { convertToRaw, EditorState } from 'draft-js'
+import { convertHTMLToDraft } from 'src/utils'
+import draftToHtml from 'draftjs-to-html'
+import CustomEditor from 'src/components/custom-editor'
 
 interface TCreateEditService {
   open: boolean
@@ -60,8 +63,24 @@ type TDefaultValue = {
   nameEn: string
   nameJp: string
   packageId: string
+  description: EditorState
+  descriptionKo: EditorState
+  descriptionEn: EditorState
+  descriptionJp: EditorState
   options: TOption[]
 }
+
+interface FieldConfig {
+  name: keyof TDefaultValue
+  label: string
+}
+
+const descriptionFields: FieldConfig[] = [
+  { name: 'description', label: 'Description' },
+  { name: 'descriptionKo', label: 'Description_Korean' },
+  { name: 'descriptionEn', label: 'Description_English' },
+  { name: 'descriptionJp', label: 'Description_Japanese' }
+]
 
 const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   // marginLeft: '1rem',
@@ -76,9 +95,6 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   },
   '& .MuiTabs-indicator': {
     display: 'none'
-  },
-  '& .MuiTab-root': {
-    marginRight: '0.5rem'
   }
 }))
 
@@ -115,6 +131,10 @@ const CreateEditService = (props: TCreateEditService) => {
           nameEn: data.nameEn || '',
           nameJp: data.nameJp || '',
           packageId: data.packageId || '',
+          description: data.description ? convertHTMLToDraft(data.description) : '',
+          descriptionEn: data.descriptionEn ? convertHTMLToDraft(data.descriptionEn) : '',
+          descriptionJp: data.descriptionJp ? convertHTMLToDraft(data.descriptionJp) : '',
+          descriptionKo: data.descriptionKo ? convertHTMLToDraft(data.descriptionKo) : '',
           options:
             data.options?.map((option: any) => ({
               title: option.title || '',
@@ -140,6 +160,10 @@ const CreateEditService = (props: TCreateEditService) => {
     nameKo: yup.string().required(t('Required_field')),
     nameEn: yup.string().required(t('Required_field')),
     nameJp: yup.string().required(t('Required_field')),
+    description: yup.object().required(t('Required_field')),
+    descriptionKo: yup.object().required(t('Required_field')),
+    descriptionEn: yup.object().required(t('Required_field')),
+    descriptionJp: yup.object().required(t('Required_field')),
     packageId: yup.string().required(t('Required_field')),
     options: yup.array().of(
       yup.object().shape({
@@ -159,6 +183,10 @@ const CreateEditService = (props: TCreateEditService) => {
     nameEn: '',
     nameJp: '',
     packageId: '',
+    description: EditorState.createEmpty(),
+    descriptionKo: EditorState.createEmpty(),
+    descriptionEn: EditorState.createEmpty(),
+    descriptionJp: EditorState.createEmpty(),
     options: [{ title: '', titleKo: '', titleJp: '', titleEn: '', duration: '', price: 0 }]
   }
 
@@ -184,9 +212,26 @@ const CreateEditService = (props: TCreateEditService) => {
 
   const onSubmit = (data: any) => {
     if (idService) {
-      dispatch(updateServiceAsync({ ...data, id: idService }))
+      dispatch(
+        updateServiceAsync({
+          ...data,
+          id: idService,
+          description: data.description ? draftToHtml(convertToRaw(data.description.getCurrentContent())) : '',
+          descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
+          descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
+          descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : ''
+        })
+      )
     } else {
-      dispatch(createServiceAsync(data))
+      dispatch(
+        createServiceAsync({
+          ...data,
+          description: data.description ? draftToHtml(convertToRaw(data.description.getCurrentContent())) : '',
+          descriptionKo: data.descriptionKo ? draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())) : '',
+          descriptionEn: data.descriptionEn ? draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())) : '',
+          descriptionJp: data.descriptionJp ? draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())) : ''
+        })
+      )
     }
     onClose()
   }
@@ -223,7 +268,7 @@ const CreateEditService = (props: TCreateEditService) => {
           </Box>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
             <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 <Grid item xs={12}>
                   <Controller
                     control={control}
@@ -235,23 +280,29 @@ const CreateEditService = (props: TCreateEditService) => {
                         <label
                           style={{
                             fontSize: '0.813rem',
-                            marginBottom: '0.25rem',
                             display: 'block',
                             color: errors?.packageId ? theme.palette.error.main : theme.palette.primary.main
                           }}
                         >
-                          <Typography variant='body2' color={theme.palette.common.black}>
-                            {t('package')} <span style={{ color: theme.palette.error.main }}>*</span>
+                          <Typography
+                            variant='body2'
+                            sx={{
+                              fontSize: '0.9rem',
+                              fontWeight: '600',
+                              color: errors?.packageId
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`
+                            }}
+                            color={theme.palette.common.black}
+                          >
+                            {t('Category')} <span style={{ color: theme.palette.error.main }}>*</span>
                           </Typography>
                         </label>
-                        {/* huyg  packageId*/}
                         <StyledTabs
                           sx={{
                             '& .MuiTabs-flexContainer': {
-                              flexWrap: 'wrap'
-                            },
-                            '& .MuiTab-root': {
-                              marginTop: '0.5rem'
+                              flexWrap: 'wrap',
+                              gap: '0.5rem'
                             }
                           }}
                           onChange={(event: React.SyntheticEvent, newValue: string) => {
@@ -307,6 +358,7 @@ const CreateEditService = (props: TCreateEditService) => {
                         fullWidth
                         label={t('Name')}
                         error={Boolean(errors?.name)}
+                        placeholder={t('Enter_Name')}
                         helperText={errors?.name?.message}
                         {...field}
                       />
@@ -320,7 +372,8 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('NameKo')}
+                        placeholder={t('Enter_Name_Korean')}
+                        label={t('Name_Korean')}
                         error={Boolean(errors?.nameKo)}
                         helperText={errors?.nameKo?.message}
                         {...field}
@@ -335,7 +388,8 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('NameJp')}
+                        label={t('Name_Japanese')}
+                        placeholder={t('Enter_Name_Japanese')}
                         error={Boolean(errors?.nameJp)}
                         helperText={errors?.nameJp?.message}
                         {...field}
@@ -350,7 +404,8 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('NameEn')}
+                        label={t('Name_English')}
+                        placeholder={t('Enter_Name_English')}
                         error={Boolean(errors?.nameEn)}
                         helperText={errors?.nameEn?.message}
                         {...field}
@@ -359,16 +414,38 @@ const CreateEditService = (props: TCreateEditService) => {
                   />
                 </Grid>
               </Grid>
+              <Box sx={{ height: '1rem' }}></Box>
+              <Grid container spacing={4}>
+                {descriptionFields.map(({ name, label }) => (
+                  <Grid item md={6} xs={12} key={name}>
+                    <Controller
+                      control={control}
+                      render={({ field: { onChange, onBlur, value } }) => (
+                        <CustomEditor
+                          onEditorStateChange={onChange}
+                          label={`${t(label)}`}
+                          onBlur={onBlur}
+                          editorState={value as EditorState}
+                          placeholder={t(`Enter_${label.replace(/\s/g, '_')}`)}
+                          error={Boolean(errors?.[name])}
+                          helperText={errors?.[name]?.message}
+                        />
+                      )}
+                      name={name}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
 
               {/* Options */}
-              <Typography variant='h6' sx={{ mt: 4 }}>
+              <Typography variant='h6' sx={{ mt: 4, mb: 1 }}>
                 {t('Options')}
               </Typography>
               {optionFields.map((field, index) => (
                 <Box
                   key={field.id}
                   sx={{
-                    mt: 4,
+                    mb: 4,
                     display: 'flex',
                     gap: 2,
                     background: theme => theme.palette.customBackground.tabs,
@@ -384,7 +461,8 @@ const CreateEditService = (props: TCreateEditService) => {
                         render={({ field }) => (
                           <CustomTextField
                             fullWidth
-                            label={t('Title')}
+                            label={t('Name')}
+                            placeholder={t('Enter_Name')}
                             error={Boolean(errors?.options?.[index]?.title)}
                             helperText={errors?.options?.[index]?.title?.message}
                             {...field}
@@ -399,7 +477,8 @@ const CreateEditService = (props: TCreateEditService) => {
                         render={({ field }) => (
                           <CustomTextField
                             fullWidth
-                            label={t('TitleKo')}
+                            placeholder={t('Enter_Name_Korean')}
+                            label={t('Name_Korean')}
                             error={Boolean(errors?.options?.[index]?.titleKo)}
                             helperText={errors?.options?.[index]?.titleKo?.message}
                             {...field}
@@ -414,7 +493,8 @@ const CreateEditService = (props: TCreateEditService) => {
                         render={({ field }) => (
                           <CustomTextField
                             fullWidth
-                            label={t('TitleJp')}
+                            label={t('Name_Japanese')}
+                            placeholder={t('Enter_Name_Japanese')}
                             error={Boolean(errors?.options?.[index]?.titleJp)}
                             helperText={errors?.options?.[index]?.titleJp?.message}
                             {...field}
@@ -429,7 +509,8 @@ const CreateEditService = (props: TCreateEditService) => {
                         render={({ field }) => (
                           <CustomTextField
                             fullWidth
-                            label={t('TitleEn')}
+                            label={t('Name_English')}
+                            placeholder={t('Enter_Name_English')}
                             error={Boolean(errors?.options?.[index]?.titleEn)}
                             helperText={errors?.options?.[index]?.titleEn?.message}
                             {...field}
@@ -445,6 +526,7 @@ const CreateEditService = (props: TCreateEditService) => {
                           <CustomTextField
                             fullWidth
                             label={t('Duration')}
+                            placeholder={t('Enter_Duration')}
                             error={Boolean(errors?.options?.[index]?.duration)}
                             helperText={errors?.options?.[index]?.duration?.message}
                             {...field}

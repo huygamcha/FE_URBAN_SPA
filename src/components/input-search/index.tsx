@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import React, { KeyboardEvent, useEffect, useState } from 'react'
@@ -21,7 +21,7 @@ const Search = styled('div')(({ theme }) => ({
   marginLeft: '0 !important',
   height: '38px',
   width: '100%',
-  border: `1px solid ${theme.palette.customColors?.borderColor}`,
+  border: `1px solid #000`,
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(1),
     width: 'auto'
@@ -57,7 +57,7 @@ const InputSearch = (props: TInputSearch) => {
   const { value, onChange, placeholder = t('Search') } = props
 
   // ** State
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     setSearch(value)
@@ -72,14 +72,14 @@ const InputSearch = (props: TInputSearch) => {
         value={search}
         placeholder={placeholder}
         inputProps={{ 'aria-label': 'search' }}
-        onKeyDown={(e:KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-          if(e.key === "Enter" && (e as any).target.value) {
+        onKeyDown={(e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+          if (e.key === 'Enter' && (e as any).target.value) {
             onChange((e as any).target.value)
           }
         }}
         onChange={e => {
           setSearch(e.target.value)
-          if(!e.target.value) {
+          if (!e.target.value) {
             onChange(e.target.value)
           }
         }}
