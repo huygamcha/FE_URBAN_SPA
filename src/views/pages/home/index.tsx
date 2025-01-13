@@ -24,6 +24,7 @@ import Gallery from 'src/views/layouts/components/HOME/gallery'
 import { TPackage } from 'src/types/package'
 import Packages from 'src/views/layouts/components/HOME/packages'
 import Image from 'next/image'
+import { useEffect } from 'react'
 
 type TProps = {
   packages: TPackage[]
@@ -32,7 +33,27 @@ type TProps = {
 const HomePage: NextPage<TProps> = props => {
   // ** Props
   const { packages } = props
-  
+
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://cdn.trustindex.io/loader.js?25395fd393746564284627faa4a'
+    script.defer = true
+    script.async = true
+
+    // Chèn script vào phần tử có ID "google-reviews"
+    const targetElement = document.getElementById('google-reviews')
+    if (targetElement) {
+      targetElement.appendChild(script)
+    }
+
+    // Cleanup: Xóa script khi component bị unmount
+    return () => {
+      if (targetElement) {
+        targetElement.removeChild(script)
+      }
+    }
+  }, []) // Chỉ chạy một lần khi component được mount
+
   return (
     <>
       {/* {loading && <Spinner />} */}
@@ -61,9 +82,11 @@ const HomePage: NextPage<TProps> = props => {
           </Box>
         </Box>
       </Box>
+
       <Box>
         <Gallery />
       </Box>
+
       <div id='package'></div>
       <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
         <Packages packages={packages} />
@@ -85,6 +108,7 @@ const HomePage: NextPage<TProps> = props => {
           />
         </Box>
       </Box>
+      <div id='google-reviews'></div>
     </>
   )
 }

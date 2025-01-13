@@ -50,8 +50,6 @@ export const metadata: Metadata = {
 export default async function Home() {
   const { packages } = await getPackages()
 
-  console.log('««««« packages »»»»»', packages);
-
   return (
     <AuthLayoutWrapper
       guestGuard={false}

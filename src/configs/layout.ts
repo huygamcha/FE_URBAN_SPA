@@ -87,12 +87,12 @@ export const VerticalItems = () => {
       icon: 'ant-design:setting-outlined',
       childrens: [
         {
-          title: t('Package'),
+          title: t('Category'),
           icon: 'icon-park-outline:ad-product',
           path: ROUTE_CONFIG.SETTINGS.PACKAGE
         },
         {
-          title: t('Service'),
+          title: t('Package'),
           icon: 'eos-icons:service-outlined',
           path: ROUTE_CONFIG.SETTINGS.SERVICE
         }
