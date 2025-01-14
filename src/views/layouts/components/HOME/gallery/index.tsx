@@ -6,12 +6,13 @@ import { useTranslation } from 'react-i18next'
 
 const Gallery = () => {
   const theme = useTheme()
-  const {t, i18n} = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const galleryRef = React.useRef<HTMLDivElement | null>(null)
   const [isDragging, setIsDragging] = React.useState(false)
   const [startX, setStartX] = React.useState(0)
   const [scrollLeft, setScrollLeft] = React.useState(0)
+  //
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault()
