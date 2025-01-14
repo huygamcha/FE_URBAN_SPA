@@ -116,9 +116,10 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) =>
                   fontWeight: 'normal',
                   textTransform: 'uppercase',
                   letterSpacing: '2px',
-                  fontFamily: 'Arial, sans-serif', // Different font for subtitle
+                  textAlign: 'center',
+                  width: '100%',
                   [theme.breakpoints.down('lg')]: {
-                    fontSize: '1rem'
+                    fontSize: '0.8rem'
                   }
                 }}
               >
