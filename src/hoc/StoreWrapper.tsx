@@ -61,7 +61,7 @@ export const StoreWrapper = ({ children }: { children: ReactNode }) => {
             </SessionProvider>
           </AxiosInterceptor>
         </AuthProvider>
-        <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' />
+        {/* <ReactQueryDevtools initialIsOpen={false} buttonPosition='bottom-left' /> */}
       </QueryClientProvider>
     </Provider>
   )

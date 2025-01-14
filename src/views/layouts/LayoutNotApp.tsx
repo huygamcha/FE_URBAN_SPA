@@ -35,9 +35,9 @@ const settings = {
   dots: false,
   arrows: false,
   infinite: true,
-  autoplay: true,
-  speed: 2000,
-  autoplaySpeed: 2000,
+  // autoplay: true,
+  // speed: 2000,
+  // autoplaySpeed: 2000,
   slidesToShow: 1,
   slidesToScroll: 1,
   fade: true
@@ -67,7 +67,8 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) =>
             // đặt giới hạn chiều dài để sử dụng được slider
             sx={{
               // width: 'calc(100vw - 0px)',
-              maxWidth: 'unset !important'
+              maxWidth: 'unset !important',
+              fontSize: '0px'
             }}
           >
             <div style={{ position: 'relative', overflow: 'hidden', maxHeight: 'calc(100vh - 64px)' }}>
@@ -131,7 +132,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) =>
                     style={{ height: 'calc(100vh - 64px)' }}
                     key={index}
                     src={item.image}
-                    alt='Responsive Image'
+                    alt='banner home Image'
                     layout='responsive'
                     width={16}
                     height={9}
