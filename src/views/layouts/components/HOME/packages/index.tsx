@@ -167,7 +167,7 @@ const Packages = (props: TProps) => {
                         left: 0,
                         width: '100%',
                         height: '100%',
-                        backgroundColor: '#0a101d3b', // Semi-transparent overlay
+                        backgroundColor: '#0000005e', // Semi-transparent overlay
                         zIndex: 2, // Ensure overlay is above the image
                         display: 'flex',
                         justifyContent: 'center',
@@ -194,10 +194,11 @@ const Packages = (props: TProps) => {
                           fontWeight: 'bold',
                           textAlign: 'center',
                           textTransform: 'uppercase',
-                          paddingTop: '2rem'
+                          paddingTop: '2rem',
+                          fontFamily: 'Playfair Display,sans-serif'
                         }}
                       >
-                        {item.name}
+                        {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
                       </Typography>
                     </Box>
                   </Box>

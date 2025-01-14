@@ -58,7 +58,7 @@ const CustomEditor = (props: TProps) => {
       >
         {label}
       </InputLabel>
-      <ReactDraftWysiwyg {...rests} />
+      <ReactDraftWysiwyg handlePastedText={() => false} {...rests} />
       {helperText && (
         <FormHelperText
           sx={{

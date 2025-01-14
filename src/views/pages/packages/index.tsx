@@ -124,7 +124,8 @@ const PackagePage: NextPage<TProps> = props => {
               <Typography
                 sx={{
                   fontSize: '2rem',
-                  fontWeight: 600
+                  fontWeight: 600,
+                  fontFamily: 'Playfair Display,sans-serif'
                 }}
                 textAlign='center'
                 color='text.secondary'
@@ -186,7 +187,10 @@ const PackagePage: NextPage<TProps> = props => {
 
                         <Box
                           sx={{
-                            pb: '0.5rem'
+                            pb: '0.5rem',
+                            color: '#575757',
+                            fontWeight: '500',
+                            fontSize: '0.9rem'
                           }}
                           dangerouslySetInnerHTML={{
                             __html: displayValueByLanguage({
