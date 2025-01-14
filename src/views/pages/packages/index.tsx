@@ -89,137 +89,164 @@ const PackagePage: NextPage<TProps> = props => {
 
   return (
     <>
-      <Box sx={{ padding: '2% 5%', position: 'relative', zIndex: 1 }}>
+      <Box
+        sx={{ padding: '2% 5%', position: 'relative', zIndex: 1, [theme.breakpoints.down('md')]: { padding: '0%' } }}
+      >
         <Box
           sx={{
-            color: 'var(--red-text)',
-            backgroundColor: '#ffffffc7',
-            borderRadius: '20px',
-            flexDirection: 'column',
-            padding: '20px 40px',
-            display: 'flex',
-            overflow: 'hidden',
+            flexGrow: 1,
+            maxWidth: '80rem',
+            width: '100%',
+            minHeight: '64px',
+            alignItems: 'center',
+            margin: '0 auto',
+            justifyContent: 'space-between',
             position: 'relative',
             zIndex: 2
           }}
         >
-          <Box>
-            <Typography
-              sx={{
-                fontSize: '2rem',
-                fontWeight: 600
-              }}
-              textAlign='center'
-              color='text.secondary'
-              gutterBottom
-            >
-              {displayValueByLanguage({ language: i18n.language, value: packages, field: 'name' })}
-            </Typography>
+          {' '}
+          <Box
+            sx={{
+              color: 'var(--red-text)',
+              backgroundColor: '#ffffffc7',
+              borderRadius: '20px',
+              flexDirection: 'column',
+              padding: '20px 40px',
+              display: 'flex',
+              overflow: 'hidden',
+              position: 'relative',
+              zIndex: 2,
+              [theme.breakpoints.down('md')]: { borderRadius: '0px', padding: '20px' }
+            }}
+          >
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: '2rem',
+                  fontWeight: 600
+                }}
+                textAlign='center'
+                color='text.secondary'
+                gutterBottom
+              >
+                {displayValueByLanguage({ language: i18n.language, value: packages, field: 'name' })}
+              </Typography>
 
-            <Grid container spacing={5}>
-              <Grid item xs={12} lg={6}>
-                <Box>
-                  <Box
-                    sx={{
-                      overflow: 'hidden',
-                      borderRadius: 'inherit',
-                      fontSize: '0px'
-                    }}
-                  >
-                    <Image
-                      src={packages.image}
-                      alt='packages image'
-                      width={626}
-                      height={417}
-                      layout='responsive' // Sử dụng layout responsive
-                      style={{
-                        borderRadius: '8px',
-                        objectFit: 'cover' // Giữ tỷ lệ ảnh đúng, cắt khi cần
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-              <Grid item xs={12} lg={6}>
-                <Box border='1px solid #492828' borderRadius='8px' p='1rem' pt='0rem'>
-                  {packages.services.map((item, index) => (
+              <Grid container spacing={5}>
+                <Grid item xs={12} lg={6}>
+                  <Box>
                     <Box
-                      py='1rem'
-                      key={index}
-                      borderBottom={index !== packages.services.length - 1 ? '1px solid #492828' : 'none'}
+                      sx={{
+                        overflow: 'hidden',
+                        borderRadius: 'inherit',
+                        fontSize: '0px'
+                      }}
                     >
-                      <Typography
-                        sx={{
-                          background: theme => theme.palette.customBackground.main
-                        }}
-                        p='0.2rem 1rem'
-                        borderRadius='0.5rem'
-                        color='#fff'
-                        width='max-content'
-                        mb='0.5rem'
-                        variant='subtitle2'
-                        fontSize='0.9rem'
-                      >
-                        {displayValueByLanguage({
-                          language: i18n.language,
-                          value: item,
-                          field: 'name'
-                        })}
-                      </Typography>
-
-                      <Box
-                        sx={{
-                          pb: '0.5rem'
-                        }}
-                        dangerouslySetInnerHTML={{
-                          __html: displayValueByLanguage({
-                            language: i18n.language,
-                            value: item,
-                            field: 'description'
-                          })
+                      <Image
+                        src={packages.image}
+                        alt='packages image'
+                        width={626}
+                        height={417}
+                        layout='responsive' // Sử dụng layout responsive
+                        style={{
+                          borderRadius: '8px',
+                          objectFit: 'cover' // Giữ tỷ lệ ảnh đúng, cắt khi cần
                         }}
                       />
-
-                      <Box pb='0.5rem' pl='1rem'>
-                        {item.options.map((option: any, optionIndex: number) => (
-                          <Box
-                            pb='0.3rem'
-                            width='100%'
-                            display='flex'
-                            alignItems='center'
-                            key={optionIndex}
-                            borderTop={optionIndex === 0 ? '1px dashed #bdbdbd' : 'none'}
-                            borderBottom='1px dashed #bdbdbd'
-                            padding='0.5rem 0'
-                          >
-                            <Typography width='50%' fontWeight='500'>
-                              {displayValueByLanguage({
-                                language: i18n.language,
-                                value: option,
-                                field: 'title'
-                              })}
-                            </Typography>
-                            <Typography width='20%' textAlign='center' color='textSecondary'>
-                              {option.duration} {t('minutes')}
-                            </Typography>
-                            <Typography width='30%' textAlign='right' fontWeight='bold'>
-                              {formatCurrency(option.price)}
-                            </Typography>
-                          </Box>
-                        ))}
-                      </Box>
                     </Box>
-                  ))}
-                </Box>
-              </Grid>
-            </Grid>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} lg={6}>
+                  <Box border='1px solid #492828' borderRadius='8px' p='1rem' pt='0rem'>
+                    {packages.services.map((item, index) => (
+                      <Box
+                        py='1rem'
+                        key={index}
+                        borderBottom={index !== packages.services.length - 1 ? '1px solid #492828' : 'none'}
+                      >
+                        <Typography
+                          sx={{
+                            background: theme => theme.palette.customBackground.main
+                          }}
+                          p='0.2rem 1rem'
+                          borderRadius='0.5rem'
+                          color='#fff'
+                          width='max-content'
+                          mb='0.5rem'
+                          variant='subtitle2'
+                          fontSize='0.9rem'
+                        >
+                          {displayValueByLanguage({
+                            language: i18n.language,
+                            value: item,
+                            field: 'name'
+                          })}
+                        </Typography>
 
-            <Box mt='1rem' display='flex' justifyContent='end'>
-              <Button onClick={handleBooking} variant='contained'>
-                {t('Booking_now')}
-              </Button>
+                        <Box
+                          sx={{
+                            pb: '0.5rem'
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html: displayValueByLanguage({
+                              language: i18n.language,
+                              value: item,
+                              field: 'description'
+                            })
+                          }}
+                        />
+
+                        <Box pb='0.5rem' pl='1rem'>
+                          {item.options.map((option: any, optionIndex: number) => (
+                            <Box
+                              pb='0.3rem'
+                              width='100%'
+                              display='flex'
+                              alignItems='center'
+                              key={optionIndex}
+                              borderTop={optionIndex === 0 ? '1px dashed #bdbdbd' : 'none'}
+                              borderBottom='1px dashed #bdbdbd'
+                              padding='0.5rem 0'
+                            >
+                              <Typography width='50%' fontWeight='500'>
+                                {displayValueByLanguage({
+                                  language: i18n.language,
+                                  value: option,
+                                  field: 'title'
+                                })}
+                              </Typography>
+                              <Typography width='20%' textAlign='center' color='textSecondary'>
+                                {option.duration} {t('minutes')}
+                              </Typography>
+                              <Typography width='30%' textAlign='right' fontWeight='bold'>
+                                {formatCurrency(option.price)}
+                              </Typography>
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+                </Grid>
+              </Grid>
+
+              <Box mt='1rem' display='flex' justifyContent='end'>
+                <Button onClick={handleBooking} variant='contained'>
+                  {t('Booking_now')}
+                </Button>
+              </Box>
             </Box>
           </Box>
+          <Box
+            ref={ref}
+            sx={{
+              background: 'red',
+              position: 'absolute',
+              zIndex: 1,
+              top: '-3rem'
+            }}
+          ></Box>
         </Box>
         <Box
           sx={{
@@ -238,15 +265,6 @@ const PackagePage: NextPage<TProps> = props => {
             src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515aa4ad40879fbf1594f50_pattenr%203-01.svg'
           />
         </Box>
-        <Box
-          ref={ref}
-          sx={{
-            background: 'red',
-            position: 'absolute',
-            zIndex: 1,
-            top: '-3rem'
-          }}
-        ></Box>
       </Box>
     </>
   )
