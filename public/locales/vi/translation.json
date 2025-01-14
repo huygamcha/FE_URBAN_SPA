@@ -404,5 +404,6 @@
   "Create_category_success": "Tạo danh mục thành công",
   "Update_category_success": "Chỉnh sửa danh mục thành công",
   "Create_service_success": "Tạo dịch vụ thành công",
-  "Update_service_success": "Cập nhật dịch vụ thành công"
+  "Update_service_success": "Cập nhật dịch vụ thành công",
+  "View_Detail": "Chi tiết"
 }

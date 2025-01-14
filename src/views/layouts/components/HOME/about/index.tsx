@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import 'src/views/css/customReactSlickBanner.css'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
 import { useTranslation } from 'react-i18next'
@@ -15,9 +16,9 @@ const settings = {
   dots: false,
   arrows: false,
   infinite: true,
-  autoplay: true,
-  speed: 2000,
-  autoplaySpeed: 2000,
+  // autoplay: true,
+  // speed: 2000,
+  // autoplaySpeed: 2000,
   slidesToShow: 1,
   slidesToScroll: 1,
   fade: true
@@ -40,7 +41,7 @@ const AboutSpa = () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show')
-        } 
+        }
         // else {
         //   entry.target.classList.remove('show')
         // }
@@ -77,7 +78,7 @@ const AboutSpa = () => {
             overflow='hidden'
             borderRadius='1rem'
             sx={{
-              background: theme => theme.palette.common.white,
+              background: '#ffffffeb',
               padding: '1rem',
               position: 'relative'
             }}
@@ -188,7 +189,7 @@ const AboutSpa = () => {
               fontSize: '0px'
             }}
           >
-            <Slider {...settings}>
+            <Slider {...settings} className='slider-banner'>
               {bannerHome?.map((item: IBannerHome, index: number) => (
                 <Box
                   key={index}

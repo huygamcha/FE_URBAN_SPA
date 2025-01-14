@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { TPackage } from 'src/types/package'
-import { Grid, Typography, Box, keyframes } from '@mui/material'
+import { Grid, Typography, Box, keyframes, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
 import { useRouter } from 'next/navigation'
@@ -130,6 +130,11 @@ const Packages = (props: TProps) => {
                     backgroundColor: 'rgb(211, 146, 80)',
                     borderRadius: '1.25rem',
                     borderColor: 'rgba(192, 192, 211, 0)'
+                  },
+                  '&:hover .view-detail': {
+                    // Hiệu ứng hover
+                    bottom: '4rem',
+                    opacity: 1
                   }
                 }}
               >
@@ -200,6 +205,40 @@ const Packages = (props: TProps) => {
                       >
                         {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
                       </Typography>
+                    </Box>
+                    <Box
+                      className='view-detail'
+                      sx={{
+                        position: 'absolute',
+                        transform: 'translateX(-50%)',
+                        borderRadius: 99,
+                        bottom: '2rem',
+                        left: '50%',
+                        opacity: 0,
+                        zIndex: 3, // Ensure overlay is above the image
+                        transition: 'bottom 1s ease, opacity 0.3s ease'
+                      }}
+                    >
+                      <Button
+                        variant='outlined'
+                        sx={{
+                          width: '6rem', // Chiều rộng bằng chiều cao để tạo hình tròn
+                          height: '6rem', // Chiều cao của button
+                          borderRadius: '50%', // Bo tròn 100% để thành hình tròn
+                          color: 'white',
+                          borderColor: 'white',
+                          display: 'flex', // Đảm bảo nội dung căn giữa
+                          alignItems: 'center', // Căn giữa theo chiều dọc
+                          justifyContent: 'center', // Căn giữa theo chiều ngang
+                          whiteSpace: 'nowrap',
+                          '&:hover': {
+                            backgroundColor: 'white',
+                            color: 'rgb(84, 19, 13)'
+                          }
+                        }}
+                      >
+                        {t('View_Detail')}
+                      </Button>
                     </Box>
                   </Box>
                 </Box>
