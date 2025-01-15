@@ -74,7 +74,7 @@ const Footer = () => {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'rgb(84, 19, 13)',
+                backgroundColor: theme => theme.palette.customBackground.secondary,
                 opacity: 0.8,
                 zIndex: 0
               }}
@@ -116,7 +116,7 @@ const Footer = () => {
       <Box overflow='hidden'>
         <Box
           sx={{
-            background: theme => theme.palette.customBackground.four
+            background: theme => theme.palette.customBackground.secondary
           }}
           padding='2% 5%'
         >

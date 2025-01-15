@@ -12,7 +12,8 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       marginBottom: theme.spacing(1),
       // fontSize: theme.typography.body2.fontSize,
       fontSize: '0.9rem',
-      fontWeight: '600'
+      fontWeight: '600',
+      color: theme.palette.common.black
     },
     '& .MuiInputBase-root': {
       borderRadius: 8,

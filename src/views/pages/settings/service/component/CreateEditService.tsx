@@ -49,10 +49,10 @@ interface TCreateEditService {
 }
 
 type TOption = {
-  title: string
-  titleKo: string
-  titleJp: string
-  titleEn: string
+  // title: string
+  // titleKo: string
+  // titleJp: string
+  // titleEn: string
   duration: string
   price: number
 }
@@ -137,10 +137,10 @@ const CreateEditService = (props: TCreateEditService) => {
           descriptionKo: data.descriptionKo ? convertHTMLToDraft(data.descriptionKo) : '',
           options:
             data.options?.map((option: any) => ({
-              title: option.title || '',
-              titleKo: option.titleKo || '',
-              titleJp: option.titleJp || '',
-              titleEn: option.titleEn || '',
+              // title: option.title || '',
+              // titleKo: option.titleKo || '',
+              // titleJp: option.titleJp || '',
+              // titleEn: option.titleEn || '',
               duration: option.duration || '',
               price: option.price || 0
             })) || []
@@ -167,10 +167,10 @@ const CreateEditService = (props: TCreateEditService) => {
     packageId: yup.string().required(t('Required_field')),
     options: yup.array().of(
       yup.object().shape({
-        title: yup.string().required(t('Required_field')),
-        titleKo: yup.string().required(t('Required_field')),
-        titleJp: yup.string().required(t('Required_field')),
-        titleEn: yup.string().required(t('Required_field')),
+        // title: yup.string().required(t('Required_field')),
+        // titleKo: yup.string().required(t('Required_field')),
+        // titleJp: yup.string().required(t('Required_field')),
+        // titleEn: yup.string().required(t('Required_field')),
         duration: yup.string().required(t('Required_field')),
         price: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
       })
@@ -187,7 +187,7 @@ const CreateEditService = (props: TCreateEditService) => {
     descriptionKo: EditorState.createEmpty(),
     descriptionEn: EditorState.createEmpty(),
     descriptionJp: EditorState.createEmpty(),
-    options: [{ title: '', titleKo: '', titleJp: '', titleEn: '', duration: '', price: 0 }]
+    options: [{ duration: '', price: 0 }]
   }
 
   const {
@@ -454,7 +454,7 @@ const CreateEditService = (props: TCreateEditService) => {
                   }}
                 >
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <Controller
                         control={control}
                         name={`options.${index}.title`}
@@ -517,7 +517,7 @@ const CreateEditService = (props: TCreateEditService) => {
                           />
                         )}
                       />
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={6}>
                       <Controller
                         control={control}
@@ -557,11 +557,7 @@ const CreateEditService = (props: TCreateEditService) => {
                   </Grid>
                 </Box>
               ))}
-              <Button
-                variant='outlined'
-                sx={{ mt: 2 }}
-                onClick={() => append({ title: '', titleKo: '', titleJp: '', titleEn: '', duration: '', price: 0 })}
-              >
+              <Button variant='outlined' sx={{ mt: 2 }} onClick={() => append({ duration: '', price: 0 })}>
                 {t('Add Option')}
               </Button>
             </Box>

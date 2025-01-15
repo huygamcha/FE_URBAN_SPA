@@ -18,8 +18,8 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
   // const titleText = '#6c4241'
   // const descriptionText = '#6c4241'
 
-  const backgroundMain = '#ffd5a9'
-  const backgroundSecondary = '#5e8172'
+  const backgroundMain = '#120202'
+  const backgroundSecondary = '#492828'
   const backgroundThird = '#ae572c'
   const backgroundFour = '#54130c'
 
@@ -52,7 +52,7 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       secondary: backgroundMain,
       four: backgroundFour,
       hover: backgroundThird,
-      tabs: '#e2e8f0'
+      tabs: '#d1ae8e'
     },
 
     title: {

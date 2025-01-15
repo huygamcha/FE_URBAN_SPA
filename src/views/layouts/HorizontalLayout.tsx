@@ -97,7 +97,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
       <CustomLayout
         sx={{
           position: 'fixed',
-          background: theme => theme.palette.customBackground.four,
+          background: theme => theme.palette.customBackground.secondary,
           left: '0',
           right: '0',
           boxShadow: '0 2px 5px #0003'
@@ -115,8 +115,26 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           }}
         >
           <Box>
-            <Typography component='h1' variant='h6' color='primary' noWrap sx={{ flexGrow: 1, fontWeight: '600' }}>
-              <Link style={{ color: 'inherit' }} href={ROUTE_CONFIG.HOME}>
+            <Typography
+              component='h1'
+              variant='h6'
+              color='primary'
+              noWrap
+              sx={{
+                flexGrow: 1,
+                fontWeight: '600',
+                '&:hover': {
+                  transform: 'scale(1.1)',
+                  transition: 'transform 1s ease'
+                }
+              }}
+            >
+              <Link
+                style={{
+                  color: 'inherit'
+                }}
+                href={ROUTE_CONFIG.HOME}
+              >
                 <Image alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
               </Link>
             </Typography>

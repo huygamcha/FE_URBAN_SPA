@@ -2,11 +2,11 @@
 
 // ** Next
 import { NextPage } from 'next'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 // ** React
 
 // ** Mui
-import { Box, Button, Grid, Typography } from '@mui/material'
 
 // ** Redux
 
@@ -19,16 +19,18 @@ import { Box, Button, Grid, Typography } from '@mui/material'
 // ** Utils
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import AboutSpa from 'src/views/layouts/components/HOME/about'
-import Gallery from 'src/views/layouts/components/HOME/gallery'
 import { TPackage } from 'src/types/package'
-import Packages from 'src/views/layouts/components/HOME/packages'
-import Image from 'next/image'
-import { useEffect } from 'react'
-import CustomerImages from 'src/views/layouts/components/HOME/google-reviews/components/CustomerImages'
 import { useTranslation } from 'react-i18next'
-import { ROUTE_CONFIG } from 'src/configs/route'
 import { useRouter } from 'next/navigation'
+// calender
+
+import '@schedule-x/theme-default/dist/index.css'
+import ControlCalendar from 'src/components/CustomizingCalendar/CustomizingCalendar'
+import { Box } from '@mui/material'
+import Gallery from 'src/views/layouts/components/HOME/gallery'
+import AboutSpa from 'src/views/layouts/components/HOME/about'
+import Image from 'next/image'
+import Packages from 'src/views/layouts/components/HOME/packages'
 
 type TProps = {
   packages: TPackage[]
@@ -44,7 +46,7 @@ const HomePage: NextPage<TProps> = props => {
     <>
       {/* {loading && <Spinner />} */}
       {/* <ChatBotAI /> */}
-
+      {/* <ControlCalendar /> */}
       <div id='about'></div>
       <Box>
         <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>

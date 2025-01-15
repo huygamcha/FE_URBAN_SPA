@@ -77,7 +77,7 @@ const Packages = (props: TProps) => {
             }}
             sx={{
               height: '6px',
-              background: theme => theme.palette.customBackground.main,
+              background: theme => theme.palette.common.white,
               margin: 'auto',
               width: '0%', // Ban đầu dòng có chiều rộng bằng 0
               transition: 'width 0.8s cubic-bezier(0.17, 0.55, 0.55, 1)',
@@ -97,7 +97,7 @@ const Packages = (props: TProps) => {
             fontWeight: '700',
             lineHeight: '1.2',
             textAlign: 'center',
-            color: '#6b4241',
+            color: 'common.white',
             fontFamily: 'Playfair Display,sans-serif'
           }}
         >
@@ -198,15 +198,17 @@ const Packages = (props: TProps) => {
                           fontSize: '1.5rem',
                           fontWeight: 'bold',
                           textAlign: 'center',
+                          display: 'flex',
+                          alignItems: 'end',
                           textTransform: 'uppercase',
-                          paddingTop: '2rem',
+                          paddingBottom: '2rem',
                           fontFamily: 'Playfair Display,sans-serif'
                         }}
                       >
                         {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
                       </Typography>
                     </Box>
-                    <Box
+                    {/* <Box
                       className='view-detail'
                       sx={{
                         position: 'absolute',
@@ -239,7 +241,7 @@ const Packages = (props: TProps) => {
                       >
                         {t('View_Detail')}
                       </Button>
-                    </Box>
+                    </Box> */}
                   </Box>
                 </Box>
               </Box>

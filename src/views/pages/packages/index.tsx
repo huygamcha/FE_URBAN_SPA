@@ -202,6 +202,17 @@ const PackagePage: NextPage<TProps> = props => {
                         />
 
                         <Box pb='0.5rem' pl='1rem'>
+                          <Box pb='0.3rem' width='100%' display='flex' alignItems='center' padding='0.5rem 0'>
+                            <Typography width='20%' textAlign='center' color='common.black' fontWeight='bold'>
+                              Thời gian
+                            </Typography>
+                            <Typography width='30%' textAlign='right' color='common.black' fontWeight='bold'>
+                              Giá tiền
+                            </Typography>
+                          </Box>
+                        </Box>
+
+                        <Box pb='0.5rem' pl='1rem'>
                           {item.options.map((option: any, optionIndex: number) => (
                             <Box
                               pb='0.3rem'
@@ -213,17 +224,10 @@ const PackagePage: NextPage<TProps> = props => {
                               borderBottom='1px dashed #bdbdbd'
                               padding='0.5rem 0'
                             >
-                              <Typography width='50%' fontWeight='500'>
-                                {displayValueByLanguage({
-                                  language: i18n.language,
-                                  value: option,
-                                  field: 'title'
-                                })}
-                              </Typography>
-                              <Typography width='20%' textAlign='center' color='textSecondary'>
+                              <Typography width='20%' textAlign='center' color='common.black'>
                                 {option.duration} {t('minutes')}
                               </Typography>
-                              <Typography width='30%' textAlign='right' fontWeight='bold'>
+                              <Typography width='30%' textAlign='right' color='common.black' fontWeight='bold'>
                                 {formatCurrency(option.price)}
                               </Typography>
                             </Box>
@@ -232,14 +236,13 @@ const PackagePage: NextPage<TProps> = props => {
                       </Box>
                     ))}
                   </Box>
+                  <Box mt='1rem' display='flex' justifyContent='start'>
+                    <Button onClick={handleBooking} variant='contained'>
+                      {t('Booking_now')}
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
-
-              <Box mt='1rem' display='flex' justifyContent='end'>
-                <Button onClick={handleBooking} variant='contained'>
-                  {t('Booking_now')}
-                </Button>
-              </Box>
             </Box>
           </Box>
           <Box

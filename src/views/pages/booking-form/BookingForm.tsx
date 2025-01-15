@@ -63,7 +63,8 @@ const durations = [
   { value: '18:00', label: '18:00' },
   { value: '19:00', label: '19:00' },
   { value: '20:00', label: '20:00' },
-  { value: '21:00', label: '21:00' }
+  { value: '21:00', label: '21:00' },
+  { value: '21:30', label: '21:30' }
 ]
 
 const BookingForm = () => {
@@ -229,9 +230,7 @@ const BookingForm = () => {
                             <Typography
                               variant='body2'
                               sx={{
-                                color: errors?.packages
-                                  ? theme.palette.error.main
-                                  : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                                color: errors?.packages ? theme.palette.error.main : theme.palette.common.black,
                                 fontSize: '0.9rem',
                                 fontWeight: '600'
                               }}
@@ -397,9 +396,7 @@ const BookingForm = () => {
                               variant='body2'
                               sx={{
                                 lineHeight: `1.2 !important`,
-                                color: errors?.date
-                                  ? theme.palette.error.main
-                                  : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                                color: errors?.date ? theme.palette.error.main : theme.palette.common.black,
                                 fontSize: '0.9rem',
                                 fontWeight: '600'
                               }}
@@ -434,7 +431,15 @@ const BookingForm = () => {
                           >
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DemoContainer components={['DateTimePicker']}>
-                                <DatePicker value={value || null} onChange={onChange} />
+                                <DatePicker
+                                  sx={{
+                                    '& .MuiOutlinedInput-root': {
+                                      background: '#fff'
+                                    }
+                                  }}
+                                  value={value || null}
+                                  onChange={onChange}
+                                />
                               </DemoContainer>
                             </LocalizationProvider>
                           </Box>
@@ -493,9 +498,7 @@ const BookingForm = () => {
                             <Typography
                               variant='body2'
                               sx={{
-                                color: errors?.duration
-                                  ? theme.palette.error.main
-                                  : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                                color: errors?.duration ? theme.palette.error.main : theme.palette.common.black,
                                 fontSize: '0.9rem',
                                 fontWeight: '600'
                               }}
@@ -615,6 +618,7 @@ const BookingForm = () => {
                 <Typography color='text.secondary'>
                   {t('Hotline_short')}:
                   <Typography fontSize='0.9rem' component='span' sx={{ fontWeight: 'bold' }}>
+                    {' '}
                     0243.354.3333
                   </Typography>
                 </Typography>
