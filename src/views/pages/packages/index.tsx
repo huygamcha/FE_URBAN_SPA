@@ -281,19 +281,13 @@ const PackagePage: NextPage<TProps> = props => {
         <Box
           sx={{
             position: 'absolute',
-            top: 0,
+            bottom: 0,
             right: 0,
             left: 0,
             zIndex: 1
           }}
         >
-          <Image
-            width={16}
-            height={9}
-            layout='responsive'
-            alt='image'
-            src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515aa4ad40879fbf1594f50_pattenr%203-01.svg'
-          />
+          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/hoaspa.svg' />
         </Box>
       </Box>
     </>

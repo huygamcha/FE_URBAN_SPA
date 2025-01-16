@@ -12,7 +12,7 @@ export const useGetListAppointments = (
   options?: Omit<UseQueryOptions<any>, 'queryKey' | 'queryFn'>
 ) => {
   return useQuery({
-    queryKey: [queryKeys.appointment_list, params.order, params.search, params.limit, params.page],
+    queryKey: [queryKeys.appointment_list, params.start, params.end],
     queryFn: async () => {
       const res = await getAllAppointments({ params: { ...params } })
 

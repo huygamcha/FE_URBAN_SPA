@@ -6,55 +6,64 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { Box } from '@mui/material'
 import { useGetListAppointments } from 'src/queries/appointments'
 import Spinner from '../spinner'
-
-const events = [
-  {
-    start: moment('2025-01-19T14:00:00').toDate(),
-    end: moment('2025-01-19T15:00:00').toDate(),
-    title: 'Massage chân'
-  },
-  {
-    start: moment('2025-01-20T11:00:00').toDate(),
-    end: moment('2025-01-20T15:30:00').toDate(),
-    title: 'Xông hơi'
-  },
-  {
-    start: moment('2025-01-19T14:00:00').toDate(),
-    end: moment('2025-01-19T15:00:00').toDate(),
-    title: 'Thư giãn'
-  },
-  {
-    start: moment('2025-01-19T14:30:00').toDate(),
-    end: moment('2025-01-19T15:30:00').toDate(),
-    title: 'Thư giãn'
-  }
-]
-
-console.log('««««« events »»»»»', events)
+import { isObject } from '@mui/x-data-grid/internals'
+import { useState } from 'react'
 
 const ControlCalendar = () => {
   const today = new Date()
+  // ** State
+  const [duration, setDuration] = useState<{ start: string; end: string }>({
+    start: moment().startOf('month').format('YYYY-MM-DD'),
+    end: moment().endOf('month').format('YYYY-MM-DD')
+  })
+
   const { data: allAppointments, isPending } = useGetListAppointments(
-    { start: '2025-01-12', end: '2025-01-30' },
+    { start: duration.start, end: duration.end },
     {
       select: data =>
         data?.totalAppointments.map((item: any) => {
-          console.log('««««« item »»»»»', item)
-
           return {
             ...item,
-            start: moment(item.start).toDate(), // Giữ nguyên thời gian UTC
-            end: moment(item.end).toDate() // Giữ nguyên thời gian UTC
+            start: moment(item.start).subtract(7, 'hour').toDate(), // Giữ nguyên thời gian UTC
+            end: moment(item.end).subtract(7, 'hour').toDate() // Giữ nguyên thời gian UTC
           }
         }),
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-      staleTime: 10000
+      staleTime: 10000,
+      enabled: !!duration?.start && !!duration?.end
     }
   )
+
   console.log('««««« allAppointments »»»»»', allAppointments)
   const handleChange = (e: any) => {
-    console.log('««««« e »»»»»', e)
+    if (Array.isArray(e)) {
+      if (e.length === 7) {
+        const startDate = moment(e[0]).format('YYYY-MM-DD')
+        const endDate = moment(e[6]).format('YYYY-MM-DD')
+        setDuration(prev => ({
+          ...prev,
+          start: startDate,
+          end: endDate
+        }))
+      } else {
+        console.log('««««« e »»»»»', e)
+        const startDate = moment(e[0]).format('YYYY-MM-DD')
+        setDuration(prev => ({
+          ...prev,
+          start: startDate,
+          end: startDate
+        }))
+      }
+    } else if (isObject(e)) {
+      const startDate = moment(e['start']).format('YYYY-MM-DD')
+      const endDate = moment(e['end']).format('YYYY-MM-DD')
+      setDuration(prev => ({
+        ...prev,
+        start: startDate,
+        end: endDate
+      }))
+    }
   }
 
   return (
