@@ -203,10 +203,22 @@ const PackagePage: NextPage<TProps> = props => {
 
                         <Box pb='0.5rem' pl='1rem'>
                           <Box pb='0.3rem' width='100%' display='flex' alignItems='center' padding='0.5rem 0'>
-                            <Typography width='20%' textAlign='center' color='common.black' fontWeight='bold'>
+                            <Typography
+                              sx={{
+                                width: 'calc(100% / 3)', // Chiều rộng
+                                color: 'common.black', // Màu sắc (dùng palette của Material-UI)
+                                fontWeight: 'bold' // Chữ đậm
+                              }}
+                            >
                               Thời gian
                             </Typography>
-                            <Typography width='30%' textAlign='right' color='common.black' fontWeight='bold'>
+                            <Typography
+                              sx={{
+                                width: 'calc(100% / 3)', // Chiều rộng
+                                color: 'common.black', // Màu sắc (dùng palette của Material-UI)
+                                fontWeight: 'bold' // Chữ đậm
+                              }}
+                            >
                               Giá tiền
                             </Typography>
                           </Box>
@@ -224,10 +236,21 @@ const PackagePage: NextPage<TProps> = props => {
                               borderBottom='1px dashed #bdbdbd'
                               padding='0.5rem 0'
                             >
-                              <Typography width='20%' textAlign='center' color='common.black'>
+                              <Typography
+                                sx={{
+                                  width: 'calc(100% / 3)', // Chiều rộng
+                                  color: 'common.black' // Màu sắc (dùng palette của Material-UI)
+                                }}
+                              >
                                 {option.duration} {t('minutes')}
                               </Typography>
-                              <Typography width='30%' textAlign='right' color='common.black' fontWeight='bold'>
+                              <Typography
+                                sx={{
+                                  width: 'calc(100% / 3)', // Chiều rộng
+                                  color: 'common.black', // Màu sắc (dùng palette của Material-UI)
+                                  fontWeight: 'bold' // Chữ đậm
+                                }}
+                              >
                                 {formatCurrency(option.price)}
                               </Typography>
                             </Box>

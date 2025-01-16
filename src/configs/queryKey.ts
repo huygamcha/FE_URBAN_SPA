@@ -6,5 +6,6 @@ export const queryKeys = {
       delete_role: 'role_delete',
 
       // spa
-      package_list: 'package_list'
+      package_list: 'package_list',
+      appointment_list: 'appointment_list'
 }

@@ -258,7 +258,7 @@ const Footer = () => {
                 height={9 * 1.5}
                 layout='responsive'
                 alt='image'
-                src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515a98d12efd8698e527eb1_partent-01.svg'
+                src='https://cdn.kampa.vn/hoaspa.svg'
               />
             </Box>
           </Box>

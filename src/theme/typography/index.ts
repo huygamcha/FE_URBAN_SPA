@@ -1,5 +1,6 @@
 const typography = {
   fontFamily: [
+    'Montserrat',
     'Inter',
     'Playfair Display',
     'Public Sans',
@@ -11,7 +12,7 @@ const typography = {
     '"Helvetica Neue"',
     'Arial',
     'sans-serif',
-    '"Apple Color Emoji"',  
+    '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"'
   ].join(','),

@@ -39,7 +39,6 @@
     "@types/html-to-draftjs": "^1.4.3",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/nprogress": "^0.2.3",
-    "@types/react-big-calendar": "^1.16.0",
     "@types/react-datepicker": "^4.19.5",
     "@types/react-draft-wysiwyg": "1.13.4",
     "@typescript-eslint/eslint-plugin": "^6.16.0",

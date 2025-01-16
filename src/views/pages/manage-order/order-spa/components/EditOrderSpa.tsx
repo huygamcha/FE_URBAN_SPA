@@ -19,6 +19,7 @@ import Spinner from 'src/components/spinner'
 import CustomTextField from 'src/components/text-field'
 import CustomSelect from 'src/components/custom-select'
 import CustomDatePicker from 'src/components/custom-date-picker'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 // ** Redux
 import { AppDispatch } from 'src/stores'
@@ -65,7 +66,7 @@ type TDefaultValue = {
   note: string
   totalPrice: number
   language: string
-  duration: number
+  duration: string
   quantity: number
 }
 
@@ -88,7 +89,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     appointmentDate: yup.string().required(t('Required_field')),
     status: yup.string().required(t('Required_field')),
     quantity: yup.number().required(t('Required_field')),
-    duration: yup.number().required(t('Required_field')),
+    duration: yup.string().required(t('Required_field')),
     note: yup.string(),
     totalPrice: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field')),
     language: yup.string().required(t('Required_field'))
@@ -105,7 +106,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     totalPrice: 0,
     language: '',
     quantity: 0,
-    duration: 0
+    duration: '9:00'
   }
 
   const {
@@ -148,7 +149,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
             totalPrice: data.totalPrice,
             language: data.language,
             duration: data.duration,
-            quantity: data.quantity,
+            quantity: data.quantity
           })
         }
         setLoading(false)
@@ -316,7 +317,15 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                         >
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DateTimePicker']}>
-                              <DateTimePicker value={dayjs(value) || null} onChange={onChange} />
+                              <DatePicker
+                                sx={{
+                                  '& .MuiOutlinedInput-root': {
+                                    background: '#fff'
+                                  }
+                                }}
+                                value={dayjs(value) || null}
+                                onChange={onChange}
+                              />
                             </DemoContainer>
                           </LocalizationProvider>
                         </Box>

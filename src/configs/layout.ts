@@ -25,6 +25,12 @@ export const VerticalItems = () => {
       path: ROUTE_CONFIG.DASHBOARD,
       permission: PERMISSIONS.DASHBOARD
     },
+    {
+      title: t('Appointments'),
+      icon: 'lsicon:work-order-appointment-filled',
+      path: ROUTE_CONFIG.APPOINTMENTS,
+      permission: PERMISSIONS.APPOINTMENTS
+    },
     // {
     //   title: t('System'),
     //   icon: 'eos-icons:file-system-outlined',
