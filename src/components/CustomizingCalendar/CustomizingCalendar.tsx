@@ -43,8 +43,8 @@ const ControlCalendar = () => {
 
           return {
             ...item,
-            start: moment.utc(item.start).toDate(), // Giữ nguyên thời gian UTC
-            end: moment.utc(item.end).toDate() // Giữ nguyên thời gian UTC
+            start: moment(item.start).toDate(), // Giữ nguyên thời gian UTC
+            end: moment(item.end).toDate() // Giữ nguyên thời gian UTC
           }
         }),
       refetchOnWindowFocus: false,
