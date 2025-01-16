@@ -212,16 +212,17 @@ const Contact = () => {
                   transform: 'translateY(0)' // Trả về vị trí ban đầu
                 },
                 marginTop: '1rem',
-                border: '1px solid #fff',
+                border: '1px solid #ffd5a9',
                 width: 'max-content',
-                padding: '0.8rem 2rem'
+                padding: '0.8rem 2rem',
+                borderRadius: '0.5rem'
               }}
               ref={(el: HTMLDivElement | null) => {
                 allRefs.current[4] = el
               }}
             >
               <Box>
-                <Typography variant='subtitle1' color='common.white'>
+                <Typography variant='subtitle1' color='customColors.light'>
                   {t('Opening_Daily')}
                 </Typography>
               </Box>
@@ -255,7 +256,7 @@ const Contact = () => {
               height='300'
               loading='lazy'
               style={{
-                borderRadius: '1rem'
+                borderRadius: '0.5rem'
               }}
             ></iframe>
           </Box>
