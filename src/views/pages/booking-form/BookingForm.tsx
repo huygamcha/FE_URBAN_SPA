@@ -26,6 +26,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import IconifyIcon from 'src/components/Icon'
 import { ROUTE_CONFIG } from 'src/configs/route'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
 
 const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   // marginLeft: '1rem',
@@ -51,20 +55,20 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 // Form field type
 
 const durations = [
-  { value: '9:00', label: '9:00' },
-  { value: '10:00', label: '10:00' },
-  { value: '11:00', label: '11:00' },
-  { value: '12:00', label: '12:00' },
-  { value: '13:00', label: '13:00' },
-  { value: '14:00', label: '14:00' },
-  { value: '15:00', label: '15:00' },
-  { value: '16:00', label: '16:00' },
-  { value: '17:00', label: '17:00' },
-  { value: '18:00', label: '18:00' },
-  { value: '19:00', label: '19:00' },
-  { value: '20:00', label: '20:00' },
-  { value: '21:00', label: '21:00' },
-  { value: '21:30', label: '21:30' }
+  { value: '09:00:00', label: '9:00' },
+  { value: '10:00:00', label: '10:00' },
+  { value: '11:00:00', label: '11:00' },
+  { value: '12:00:00', label: '12:00' },
+  { value: '13:00:00', label: '13:00' },
+  { value: '14:00:00', label: '14:00' },
+  { value: '15:00:00', label: '15:00' },
+  { value: '16:00:00', label: '16:00' },
+  { value: '17:00:00', label: '17:00' },
+  { value: '18:00:00', label: '18:00' },
+  { value: '19:00:00', label: '19:00' },
+  { value: '20:00:00', label: '20:00' },
+  { value: '21:00:00', label: '21:00' },
+  { value: '21:30:00', label: '21:30' }
 ]
 
 const BookingForm = () => {
@@ -124,9 +128,9 @@ const BookingForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: '',
-      email: '',
-      phoneNumber: '',
+      name: 'huy le',
+      email: 'huy@gmail.com',
+      phoneNumber: '3282344482',
       date: '',
       quantity: 1,
       packages: '',
@@ -136,12 +140,16 @@ const BookingForm = () => {
   })
 
   const onSubmit = (data: any) => {
+    console.log(
+      '«««««  »»»»»',
+      dayjs(`${dayjs(data.date).format('YYYY-MM-DD')} ${data.duration}`).format('YYYY-MM-DD HH:mm')
+    )
     dispatch(
       createOrderSpaAsync({
         name: data?.name,
         phoneNumber: data?.phoneNumber,
         email: data?.email,
-        appointmentDate: data?.date,
+        appointmentDate: dayjs(`${dayjs(data.date).format('YYYY-MM-DD')} ${data.duration}`).format('YYYY-MM-DD HH:mm'),
         packageId: data?.packages,
         duration: data?.duration,
         quantity: data?.quantity,
@@ -149,7 +157,7 @@ const BookingForm = () => {
         note: data?.notes
       })
     )
-    reset()
+    // reset()
   }
 
   useEffect(() => {
