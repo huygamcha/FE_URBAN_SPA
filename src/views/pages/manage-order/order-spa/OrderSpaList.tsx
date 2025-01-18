@@ -50,9 +50,12 @@ import { getCountOrderStatus } from 'src/services/report'
 import { deleteOrderSpaAsync, getAllOrderSpasAsync } from 'src/stores/order-spa/actions'
 import { STATUS_ORDER_SPA } from 'src/configs/orderSpa'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import MoreButton from './components/MoreButton'
 import EditOrderSpa from './components/EditOrderSpa'
 import ConfirmationDialog from 'src/components/confirmation-dialog'
+
+dayjs.extend(utc)
 
 type TProps = {}
 
@@ -195,7 +198,7 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     },
     {
       field: 'phoneNumber',
-      headerName: t('phoneNumber'),
+      headerName: t('Phone_number'),
       minWidth: 150,
       maxWidth: 150,
       renderCell: params => {
@@ -206,46 +209,25 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     },
     {
       field: 'appointmentDate',
-      headerName: t('appointmentDate'),
+      headerName: t('Pickup_time'),
       minWidth: 200,
       maxWidth: 200,
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{dayjs(row?.appointmentDate).format('HH:mm, DD/MM/YYYY')}</Typography>
+        return <Typography>{dayjs(row?.appointmentDate).utc().format('HH:mm, DD/MM/YYYY')}</Typography>
       }
     },
-    {
-      field: 'totalPrice',
-      headerName: t('Total_price'),
-      minWidth: 200,
-      maxWidth: 200,
-      renderCell: params => {
-        const { row } = params
 
-        return <Typography>{row.totalPrice}</Typography>
-      }
-    },
     {
       field: 'quantity',
-      headerName: t('quantity'),
-      minWidth: 100,
-      maxWidth: 100,
+      headerName: t('Quantity_quest'),
+      minWidth: 150,
+      maxWidth: 150,
       renderCell: params => {
         const { row } = params
 
         return <Typography>{row.quantity}</Typography>
-      }
-    },
-    {
-      field: 'duration',
-      headerName: t('duration'),
-      minWidth: 100,
-      maxWidth: 100,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row.duration}</Typography>
       }
     },
 
@@ -260,29 +242,15 @@ const OrderSpaListPage: NextPage<TProps> = () => {
         return <Typography>{row.email}</Typography>
       }
     },
-
     {
-      field: 'language',
-      headerName: t('language'),
-      hideSortIcons: true,
-      minWidth: 100,
-      maxWidth: 100,
+      field: 'totalPrice',
+      headerName: t('Total_price'),
+      minWidth: 200,
+      maxWidth: 200,
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{row?.language}</Typography>
-      }
-    },
-
-    {
-      field: 'createdAt',
-      headerName: t('createdAt'),
-      minWidth: 180,
-      maxWidth: 180,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{dayjs(row?.createdAt).format('HH:mm, DD/MM/YYYY')}</Typography>
+        return <Typography>{row.totalPrice}</Typography>
       }
     },
 

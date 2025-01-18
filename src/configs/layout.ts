@@ -101,6 +101,11 @@ export const VerticalItems = () => {
           title: t('Package'),
           icon: 'eos-icons:service-outlined',
           path: ROUTE_CONFIG.SETTINGS.SERVICE
+        },
+        {
+          title: t('About-us'),
+          icon: 'mdi:about-circle-outline',
+          path: ROUTE_CONFIG.SETTINGS.ABOUT
         }
         // {
         //   title: t('City'),

@@ -166,6 +166,11 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     {t('Package')}
                   </Typography>
                 </Link>
+                <Link href='#package'>
+                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
+                    {t('Contact')}
+                  </Typography>
+                </Link>
                 <Button
                   onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)}
                   variant='outlined'
@@ -246,6 +251,15 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 <Link href='#about'>
                   <Typography color='title.main' variant='subtitle1'>
                     {t('About_Us')}
+                  </Typography>
+                </Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem onClick={() => toggleMobileMenu(false)}>
+              <ListItemText>
+                <Link href='#about'>
+                  <Typography color='title.main' variant='subtitle1'>
+                    {t('Contact')}
                   </Typography>
                 </Link>
               </ListItemText>

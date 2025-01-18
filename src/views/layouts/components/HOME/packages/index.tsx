@@ -21,7 +21,7 @@ const Packages = (props: TProps) => {
   const allRefs = useRef<Array<HTMLDivElement | null>>([])
 
   // Khởi tạo refs cho cả Typography và packages
-  allRefs.current = Array(packages.length + 1).fill(null)
+  allRefs.current = Array(packages?.length + 1).fill(null)
 
   const handleDetail = (item: TPackage) => {
     router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)

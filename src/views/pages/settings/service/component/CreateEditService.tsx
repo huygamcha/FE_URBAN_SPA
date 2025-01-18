@@ -49,10 +49,6 @@ interface TCreateEditService {
 }
 
 type TOption = {
-  // title: string
-  // titleKo: string
-  // titleJp: string
-  // titleEn: string
   duration: string
   price: number
 }
@@ -137,10 +133,6 @@ const CreateEditService = (props: TCreateEditService) => {
           descriptionKo: data.descriptionKo ? convertHTMLToDraft(data.descriptionKo) : '',
           options:
             data.options?.map((option: any) => ({
-              // title: option.title || '',
-              // titleKo: option.titleKo || '',
-              // titleJp: option.titleJp || '',
-              // titleEn: option.titleEn || '',
               duration: option.duration || '',
               price: option.price || 0
             })) || []
@@ -167,10 +159,6 @@ const CreateEditService = (props: TCreateEditService) => {
     packageId: yup.string().required(t('Required_field')),
     options: yup.array().of(
       yup.object().shape({
-        // title: yup.string().required(t('Required_field')),
-        // titleKo: yup.string().required(t('Required_field')),
-        // titleJp: yup.string().required(t('Required_field')),
-        // titleEn: yup.string().required(t('Required_field')),
         duration: yup.string().required(t('Required_field')),
         price: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
       })
@@ -233,15 +221,13 @@ const CreateEditService = (props: TCreateEditService) => {
         })
       )
     }
-    onClose()
   }
 
   useEffect(() => {
     if (!open) {
       reset({ ...defaultValues })
-    } else if (idService) {
+    } else if (idService && open) {
       fetchDetailsService(idService)
-      // Fetch and populate data for editing
     }
   }, [open, idService])
 
@@ -454,70 +440,6 @@ const CreateEditService = (props: TCreateEditService) => {
                   }}
                 >
                   <Grid container spacing={2}>
-                    {/* <Grid item xs={6}>
-                      <Controller
-                        control={control}
-                        name={`options.${index}.title`}
-                        render={({ field }) => (
-                          <CustomTextField
-                            fullWidth
-                            label={t('Name')}
-                            placeholder={t('Enter_Name')}
-                            error={Boolean(errors?.options?.[index]?.title)}
-                            helperText={errors?.options?.[index]?.title?.message}
-                            {...field}
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Controller
-                        control={control}
-                        name={`options.${index}.titleKo`}
-                        render={({ field }) => (
-                          <CustomTextField
-                            fullWidth
-                            placeholder={t('Enter_Name_Korean')}
-                            label={t('Name_Korean')}
-                            error={Boolean(errors?.options?.[index]?.titleKo)}
-                            helperText={errors?.options?.[index]?.titleKo?.message}
-                            {...field}
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Controller
-                        control={control}
-                        name={`options.${index}.titleJp`}
-                        render={({ field }) => (
-                          <CustomTextField
-                            fullWidth
-                            label={t('Name_Japanese')}
-                            placeholder={t('Enter_Name_Japanese')}
-                            error={Boolean(errors?.options?.[index]?.titleJp)}
-                            helperText={errors?.options?.[index]?.titleJp?.message}
-                            {...field}
-                          />
-                        )}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Controller
-                        control={control}
-                        name={`options.${index}.titleEn`}
-                        render={({ field }) => (
-                          <CustomTextField
-                            fullWidth
-                            label={t('Name_English')}
-                            placeholder={t('Enter_Name_English')}
-                            error={Boolean(errors?.options?.[index]?.titleEn)}
-                            helperText={errors?.options?.[index]?.titleEn?.message}
-                            {...field}
-                          />
-                        )}
-                      />
-                    </Grid> */}
                     <Grid item xs={6}>
                       <Controller
                         control={control}

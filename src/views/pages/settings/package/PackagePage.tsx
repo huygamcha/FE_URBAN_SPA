@@ -197,50 +197,7 @@ const PackageListPage: NextPage<TProps> = () => {
         return <Typography>{row?.nameJp}</Typography>
       }
     },
-    // {
-    //   field: 'description',
-    //   headerName: t('Description'),
-    //   flex: 2,
-    //   minWidth: 300,
-    //   renderCell: params => {
-    //     const { row } = params
 
-    //     return <Typography>{row?.description}</Typography>
-    //   }
-    // },
-    // {
-    //   field: 'descriptionKo',
-    //   headerName: t('Description_Korean'),
-    //   flex: 2,
-    //   minWidth: 300,
-    //   renderCell: params => {
-    //     const { row } = params
-
-    //     return <Typography>{row?.descriptionKo}</Typography>
-    //   }
-    // },
-    // {
-    //   field: 'descriptionEn',
-    //   headerName: t('Description_English'),
-    //   flex: 2,
-    //   minWidth: 300,
-    //   renderCell: params => {
-    //     const { row } = params
-
-    //     return <Typography>{row?.descriptionEn}</Typography>
-    //   }
-    // },
-    // {
-    //   field: 'descriptionJp',
-    //   headerName: t('Description_Japanese'),
-    //   flex: 2,
-    //   minWidth: 300,
-    //   renderCell: params => {
-    //     const { row } = params
-
-    //     return <Typography>{row?.descriptionJp}</Typography>
-    //   }
-    // },
     {
       field: 'image',
       headerName: t('Image'),

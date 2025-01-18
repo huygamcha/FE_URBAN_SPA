@@ -41,6 +41,14 @@ export type TParamsStatusOrderUpdate = {
   status?: string
 }
 
+export type TParamsAllServicesSpa = {
+  quantity: number
+  totalPrice: number
+  packageId: string
+  serviceId: string
+  optionId: string
+}
+
 export type TParamsEditOrderSpa = {
   id: string
   name: string
@@ -52,6 +60,7 @@ export type TParamsEditOrderSpa = {
   totalPrice: string
   status: string
   language: string
+  allServices?: TParamsAllServicesSpa[]
 }
 
 export type TParamsGetOrderSpas = {

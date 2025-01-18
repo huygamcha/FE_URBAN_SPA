@@ -284,10 +284,11 @@ const PackagePage: NextPage<TProps> = props => {
             bottom: 0,
             right: 0,
             left: 0,
-            zIndex: 1
+            zIndex: 1,
+            fontSize: '0px'
           }}
         >
-          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/hoaspa.svg' />
+          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
         </Box>
       </Box>
     </>

@@ -12,6 +12,7 @@ export type TParamsGetServices = {
   page?: number
   search?: string
   order?: string
+  packageId?:string
 }
 
 export type TParamsCreateService = {

@@ -17,6 +17,9 @@ export const API_ENDPOINT = {
     CITY: {
       INDEX: `${BASE_URL}/city`
     },
+    ABOUT: {
+      INDEX: `${BASE_URL}/about-us`
+    },
     PACKAGE: {
       INDEX: `${BASE_URL}/packages`
     },

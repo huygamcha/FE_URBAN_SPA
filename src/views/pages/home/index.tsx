@@ -31,14 +31,16 @@ import Gallery from 'src/views/layouts/components/HOME/gallery'
 import AboutSpa from 'src/views/layouts/components/HOME/about'
 import Image from 'next/image'
 import Packages from 'src/views/layouts/components/HOME/packages'
+import { TParamsFetchAbout } from 'src/types/about'
 
 type TProps = {
   packages: TPackage[]
+  aboutUs: TParamsFetchAbout
 }
 
 const HomePage: NextPage<TProps> = props => {
   // ** Props
-  const { packages } = props
+  const { packages, aboutUs } = props
   const { t, i18n } = useTranslation()
   const router = useRouter()
 
@@ -50,7 +52,7 @@ const HomePage: NextPage<TProps> = props => {
       <div id='about'></div>
       <Box>
         <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
-          <AboutSpa />
+          <AboutSpa aboutUs={aboutUs} />
           <Box
             sx={{
               position: 'absolute',
@@ -61,7 +63,7 @@ const HomePage: NextPage<TProps> = props => {
               fontSize: '0px'
             }}
           >
-            <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/hoaspa.svg' />
+            <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
           </Box>
         </Box>
       </Box>
@@ -79,10 +81,11 @@ const HomePage: NextPage<TProps> = props => {
             bottom: 0,
             right: 0,
             left: 0,
-            zIndex: 1
+            zIndex: 1,
+            fontSize: '0px'
           }}
         >
-          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/hoaspa.svg' />
+          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
         </Box>
       </Box>
     </>

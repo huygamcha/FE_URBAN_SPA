@@ -1,12 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 
 // ** React
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Form
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 // ** Mui
@@ -34,18 +35,20 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import dayjs from 'dayjs'
 import { getAllPackages } from 'src/services/packages'
+import { getAllServices } from 'src/services/service'
+import { formatCurrency } from 'src/utils'
 
 const STATUS_OF_SPA = [
   {
-    label: 'Pending',
+    label: 'Chờ khách hàng',
     value: 'Pending'
   },
   {
-    label: 'Completed',
+    label: 'Hoàn thành',
     value: 'Completed'
   },
   {
-    label: 'Cancelled',
+    label: 'Huỷ đơn',
     value: 'Cancelled'
   }
 ]
@@ -54,6 +57,14 @@ interface TCreateEditOrderSpa {
   open: boolean
   onClose: () => void
   idOrder?: string
+}
+
+type allServices = {
+  packageId: string
+  serviceId: string
+  optionId: string
+  quantity: number
+  totalPrice: number
 }
 
 type TDefaultValue = {
@@ -68,11 +79,19 @@ type TDefaultValue = {
   language: string
   duration: string
   quantity: number
+  allServices: allServices[]
 }
 
 const EditOrderSpa = (props: TCreateEditOrderSpa) => {
   const [loading, setLoading] = useState(false)
   const [optionPackages, setOptionPackages] = useState<{ label: string; value: string }[]>([])
+  // lấy danh sách dịch vụ theo danh mục
+  const [optionServices, setOptionServices] = useState<Record<string, any[]>>({})
+  const [optionOptions, setOptionOptions] = useState<Record<string, any[]>>({})
+  const [optionItem, setOptionItem] = useState<Record<string, any>>({})
+  const firstRenderTotalPrice = useRef(true)
+  const firstRenderService = useRef(true)
+  const firstRenderOption = useRef(true)
 
   const { open, onClose, idOrder } = props
 
@@ -92,7 +111,16 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     duration: yup.string().required(t('Required_field')),
     note: yup.string(),
     totalPrice: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field')),
-    language: yup.string().required(t('Required_field'))
+    language: yup.string().required(t('Required_field')),
+    allServices: yup.array().of(
+      yup.object().shape({
+        packageId: yup.string().required(t('Required_field')),
+        serviceId: yup.string().required(t('Required_field')),
+        optionId: yup.string().required(t('Required_field')),
+        quantity: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field')),
+        totalPrice: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
+      })
+    )
   })
 
   const defaultValues: TDefaultValue = {
@@ -106,7 +134,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     totalPrice: 0,
     language: '',
     quantity: 0,
-    duration: '9:00'
+    duration: '9:00',
+    allServices: [{ packageId: '', serviceId: '', optionId: '', quantity: 1, totalPrice: 0 }]
   }
 
   const {
@@ -114,11 +143,22 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     control,
     formState: { errors },
     reset,
-    getValues
+    getValues,
+    watch,
+    setValue
   } = useForm({
     defaultValues,
     mode: 'onBlur',
     resolver: yupResolver(schema)
+  })
+
+  const {
+    fields: optionFields,
+    append,
+    remove
+  } = useFieldArray({
+    control,
+    name: 'allServices'
   })
 
   const onSubmit = (data: any) => {
@@ -138,6 +178,14 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
       .then(res => {
         const data = res.data
         if (data) {
+          const mappedAllServices = (data.allServices || []).map((service: any) => ({
+            packageId: service.packageId || '',
+            serviceId: service.serviceId || '',
+            optionId: service.optionId || '',
+            quantity: service.quantity || 1,
+            totalPrice: service.totalPrice || 0
+          }))
+
           reset({
             name: data.name,
             phoneNumber: data.phoneNumber,
@@ -149,7 +197,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
             totalPrice: data.totalPrice,
             language: data.language,
             duration: data.duration,
-            quantity: data.quantity
+            quantity: data.quantity,
+            allServices: mappedAllServices
           })
         }
         setLoading(false)
@@ -158,6 +207,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
         setLoading(false)
       })
   }
+
   const fetchAllPackages = async () => {
     setLoading(true)
     await getAllPackages({ params: { limit: -1, page: -1 } })
@@ -178,9 +228,55 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
       })
   }
 
+  const fetchAllServices = async (id: string) => {
+    setLoading(true)
+    await getAllServices({ params: { limit: -1, page: -1, packageId: id } })
+      .then(res => {
+        const data = res?.data?.services
+        if (data) {
+          // lấy danh sách dịch vụ theo danh mục
+          setOptionServices(prev => ({
+            ...prev,
+            [id]: data.map((item: { name: string; _id: string; options: any[] }) => ({
+              label: item.name,
+              value: item._id,
+              options: item.options
+            }))
+          }))
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }
+
+  const fetchAllOptions = async (serviceId: string, index: number) => {
+    setOptionOptions(prev => ({
+      ...prev,
+      [serviceId]: optionServices[getValues(`allServices.${index}.packageId`)]
+        ?.find((item: any) => item.value === serviceId)
+        ?.options.map((item: { _id: string; duration: number; price: number }) => ({
+          value: item._id,
+          label: `${item.duration} phút - ${formatCurrency(item.price)}`,
+          duration: item.duration,
+          price: item.price
+        }))
+    }))
+  }
+
+  const handleSetOptionItem = (id: string, index: number) => {
+    const result = optionOptions[getValues(`allServices.${index}.serviceId`)]?.find((item: any) => item.value === id)
+    const quantity = getValues(`allServices.${index}.quantity`)
+    setValue(`allServices.${index}.totalPrice`, quantity * result?.price) // Cập nhật totalPrice
+
+    setOptionItem(prev => ({ ...prev, [id]: result }))
+
+    // Cập nhật tổng giá
+  }
+
   useEffect(() => {
     if (open) {
-      // fetchAllPackages()
       if (idOrder) {
         fetchDetailsOrder(idOrder)
       }
@@ -193,9 +289,78 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
     fetchAllPackages()
   }, [])
 
+  useEffect(() => {
+    if (getValues('name')) {
+      const result = getValues('allServices') || []
+
+      const handleFetchServicesAndOptions = async () => {
+        try {
+          // Fetch all services first
+          await Promise.all(
+            result.map(async item => {
+              await fetchAllServices(item.packageId)
+            })
+          )
+
+          console.log('All data fetched successfully')
+        } catch (error) {
+          console.error('Error fetching data:', error)
+        }
+      }
+
+      handleFetchServicesAndOptions()
+    }
+  }, [getValues('name')])
+
+  useEffect(() => {
+    if (firstRenderService && Object.keys(optionServices).length === getValues('allServices')?.length) {
+      const result = getValues('allServices') || []
+
+      const handleFetchServicesAndOptions = async () => {
+        try {
+          await Promise.all(
+            result.map(async (item, index) => {
+              await fetchAllOptions(item.serviceId, index)
+            })
+          )
+
+          console.log('All data fetched successfully')
+        } catch (error) {
+          console.error('Error fetching data:', error)
+        }
+      }
+
+      handleFetchServicesAndOptions()
+
+      firstRenderService.current = false
+    }
+  }, [optionServices])
+
+  useEffect(() => {
+    if (firstRenderOption && Object.keys(optionServices).length === getValues('allServices')?.length) {
+      const result = getValues('allServices') || []
+
+      const handleFetchServicesAndOptions = async () => {
+        try {
+          result.map((item, index) => {
+            handleSetOptionItem(item.optionId, index)
+          })
+
+          console.log('All data fetched successfully')
+        } catch (error) {
+          console.error('Error fetching data:', error)
+        }
+      }
+
+      handleFetchServicesAndOptions()
+
+      firstRenderOption.current = false
+    }
+  }, [optionOptions])
+
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <CustomModal open={open} onClose={onClose}>
         <Box
           sx={{
@@ -224,6 +389,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
                         label={t('Name')}
                         error={Boolean(errors?.name)}
                         helperText={errors?.name?.message}
@@ -239,7 +405,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('Phone Number')}
+                        required
+                        label={t('Phone_number')}
                         error={Boolean(errors?.phoneNumber)}
                         helperText={errors?.phoneNumber?.message}
                         {...field}
@@ -254,6 +421,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
                         label={t('Email')}
                         error={Boolean(errors?.email)}
                         helperText={errors?.email?.message}
@@ -273,7 +441,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                       <div>
                         <label
                           style={{
-                            fontSize: '0.813rem',
                             marginBottom: '0.25rem',
                             display: 'block',
                             color: errors?.appointmentDate ? theme.palette.error.main : theme.palette.primary.main
@@ -283,10 +450,13 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                             variant='body2'
                             color={theme.palette.common.black}
                             sx={{
-                              lineHeight: `1.2 !important`
+                              lineHeight: `1.2 !important`,
+                              color: errors?.appointmentDate ? theme.palette.error.main : theme.palette.common.black,
+                              fontSize: '0.9rem',
+                              fontWeight: '600'
                             }}
                           >
-                            {t('appointmentDate')} <span style={{ color: theme.palette.error.main }}>*</span>
+                            {t('Pickup_time')} <span style={{ color: theme.palette.error.main }}>*</span>
                           </Typography>
                         </label>
 
@@ -306,12 +476,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                               '& fieldset': {
                                 borderColor: 'black' // Đường viền của fieldset luôn màu đen
                               }
-                              // '&:hover fieldset': {
-                              //   borderColor: 'black' // Màu viền đen khi hover
-                              // },
-                              // '&.Mui-focused fieldset': {
-                              //   borderColor: 'black' // Màu viền đen khi focus
-                              // }
                             }
                           }}
                         >
@@ -355,15 +519,14 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                       <Box>
                         <InputLabel
                           sx={{
-                            fontSize: '13px',
-                            marginBottom: '4px',
-                            display: 'block',
-                            color: errors?.status
-                              ? theme.palette.error.main
-                              : `rgba(${theme.palette.customColors.main}, 0.68)`
+                            lineHeight: `1.2 !important`,
+                            color: errors?.appointmentDate ? theme.palette.error.main : theme.palette.common.black,
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            marginBottom: '0.25rem'
                           }}
                         >
-                          {t('status')} *
+                          {t('Status')} *
                         </InputLabel>
                         <CustomSelect
                           fullWidth
@@ -393,25 +556,11 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                 <Grid item xs={4}>
                   <Controller
                     control={control}
-                    name='totalPrice'
-                    render={({ field }) => (
-                      <CustomTextField
-                        fullWidth
-                        label={t('Total Price')}
-                        error={Boolean(errors?.totalPrice)}
-                        helperText={errors?.totalPrice?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={4}>
-                  <Controller
-                    control={control}
                     name='language'
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
                         label={t('Language')}
                         error={Boolean(errors?.language)}
                         helperText={errors?.language?.message}
@@ -420,6 +569,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     )}
                   />
                 </Grid>
+
                 <Grid item xs={4}>
                   <Controller
                     control={control}
@@ -427,7 +577,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('duration')}
+                        required
+                        label={t('time_service')}
                         error={Boolean(errors?.duration)}
                         helperText={errors?.duration?.message}
                         {...field}
@@ -435,6 +586,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     )}
                   />
                 </Grid>
+
                 <Grid item xs={4}>
                   <Controller
                     control={control}
@@ -442,7 +594,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
-                        label={t('quantity')}
+                        required
+                        label={t('Quantity_quest')}
                         error={Boolean(errors?.quantity)}
                         helperText={errors?.quantity?.message}
                         {...field}
@@ -450,7 +603,8 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     )}
                   />
                 </Grid>
-                <Grid item xs={4}>
+
+                {/* <Grid item xs={4}>
                   <Controller
                     name='packageId'
                     control={control}
@@ -458,15 +612,14 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                       <Box>
                         <InputLabel
                           sx={{
-                            fontSize: '13px',
-                            marginBottom: '4px',
-                            display: 'block',
-                            color: errors?.packageId
-                              ? theme.palette.error.main
-                              : `rgba(${theme.palette.customColors.main}, 0.68)`
+                            lineHeight: `1.2 !important`,
+                            color: errors?.packageId ? theme.palette.error.main : theme.palette.common.black,
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            marginBottom: '0.25rem'
                           }}
                         >
-                          {t('packageId')} *
+                          {t('Package')} *
                         </InputLabel>
                         <CustomSelect
                           fullWidth
@@ -491,7 +644,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                       </Box>
                     )}
                   />
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={4}>
                   <Controller
@@ -509,6 +662,287 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                   />
                 </Grid>
               </Grid>
+              <Typography
+                sx={{
+                  mt: 4,
+                  mb: 1,
+                  lineHeight: `1.2 !important`,
+                  color: errors?.appointmentDate ? theme.palette.error.main : theme.palette.common.black,
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  marginBottom: '0.25rem'
+                }}
+              >
+                {t('Options')}
+              </Typography>
+              {optionFields.map((field, index) => (
+                <Box
+                  key={field.id}
+                  sx={{
+                    mb: 4,
+                    display: 'flex',
+                    gap: 2,
+                    background: theme => theme.palette.customBackground.tabs,
+                    padding: '1rem',
+                    borderRadius: '0.5rem'
+                  }}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={3.5}>
+                      <Controller
+                        control={control}
+                        name={`allServices.${index}.packageId`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Box>
+                            <InputLabel
+                              sx={{
+                                lineHeight: `1.2 !important`,
+                                color: errors?.allServices?.[index]?.packageId
+                                  ? theme.palette.error.main
+                                  : theme.palette.common.black,
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                marginBottom: '0.25rem'
+                              }}
+                            >
+                              {t('Category')} *
+                            </InputLabel>
+                            <CustomSelect
+                              fullWidth
+                              onChange={(event: any) => {
+                                const packageId = event.target.value
+                                onChange(packageId)
+                                fetchAllServices(packageId)
+                              }}
+                              options={optionPackages}
+                              error={Boolean(errors?.allServices?.[index]?.packageId)}
+                              onBlur={onBlur}
+                              value={value}
+                              placeholder={t('Select')}
+                            />
+                            {errors?.allServices?.[index]?.packageId?.message && (
+                              <FormHelperText
+                                sx={{
+                                  color: errors?.allServices?.[index]?.packageId
+                                    ? theme.palette.error.main
+                                    : `rgba(${theme.palette.customColors.main}, 0.42)`
+                                }}
+                              >
+                                {errors?.allServices?.[index]?.packageId?.message}
+                              </FormHelperText>
+                            )}
+                          </Box>
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid item xs={3.5}>
+                      <Controller
+                        control={control}
+                        name={`allServices.${index}.serviceId`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Box>
+                            <InputLabel
+                              sx={{
+                                lineHeight: `1.2 !important`,
+                                color: errors?.allServices?.[index]?.serviceId
+                                  ? theme.palette.error.main
+                                  : theme.palette.common.black,
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                marginBottom: '0.25rem'
+                              }}
+                            >
+                              {t('Package')} *
+                            </InputLabel>
+                            <CustomSelect
+                              fullWidth
+                              onChange={(event: any) => {
+                                const serviceId = event.target.value
+                                onChange(serviceId)
+                                fetchAllOptions(serviceId, index)
+                              }}
+                              options={optionServices[getValues(`allServices.${index}.packageId`)]}
+                              error={Boolean(errors?.allServices?.[index]?.serviceId)}
+                              onBlur={onBlur}
+                              value={value}
+                              placeholder={t('Select')}
+                            />
+                            {errors?.allServices?.[index]?.serviceId?.message && (
+                              <FormHelperText
+                                sx={{
+                                  color: errors?.allServices?.[index]?.serviceId
+                                    ? theme.palette.error.main
+                                    : `rgba(${theme.palette.customColors.main}, 0.42)`
+                                }}
+                              >
+                                {errors?.allServices?.[index]?.serviceId?.message}
+                              </FormHelperText>
+                            )}
+                          </Box>
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid item xs={3.5}>
+                      <Controller
+                        control={control}
+                        name={`allServices.${index}.optionId`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Box>
+                            <InputLabel
+                              sx={{
+                                lineHeight: `1.2 !important`,
+                                color: errors?.allServices?.[index]?.optionId
+                                  ? theme.palette.error.main
+                                  : theme.palette.common.black,
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                marginBottom: '0.25rem'
+                              }}
+                            >
+                              {t('Options')} *
+                            </InputLabel>
+                            <CustomSelect
+                              fullWidth
+                              onChange={(event: any) => {
+                                const optionId = event.target.value
+                                onChange(optionId)
+                                handleSetOptionItem(optionId, index)
+
+                                const allServices = getValues('allServices') || []
+                                const total = allServices.reduce((acc, cur) => acc + cur.totalPrice, 0)
+                                setValue('totalPrice', total)
+                                // fetchAllOptions(optionId, index)
+                              }}
+                              options={optionOptions[getValues(`allServices.${index}.serviceId`)]}
+                              error={Boolean(errors?.allServices?.[index]?.optionId)}
+                              onBlur={onBlur}
+                              value={value}
+                              placeholder={t('Select')}
+                            />
+                            {errors?.allServices?.[index]?.optionId?.message && (
+                              <FormHelperText
+                                sx={{
+                                  color: errors?.allServices?.[index]?.optionId
+                                    ? theme.palette.error.main
+                                    : `rgba(${theme.palette.customColors.main}, 0.42)`
+                                }}
+                              >
+                                {errors?.allServices?.[index]?.optionId?.message}
+                              </FormHelperText>
+                            )}
+                          </Box>
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid item xs={3.5}>
+                      <Controller
+                        control={control}
+                        name={`allServices.${index}.quantity`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            fullWidth
+                            required
+                            onChange={e => {
+                              onChange(e) // Cập nhật giá trị cho React Hook Form
+                              const quantity = e.target.value
+                              const optionPrice = optionItem[getValues(`allServices.${index}.optionId`)]?.price ?? 0
+                              setValue(`allServices.${index}.totalPrice`, +quantity * +optionPrice) // Cập nhật totalPrice
+
+                              // Cập nhật tổng giá
+                              const allServices = getValues('allServices') || []
+                              const total = allServices.reduce((acc, cur) => acc + cur.totalPrice, 0)
+                              setValue('totalPrice', total)
+                            }}
+                            value={value}
+                            label={t('Quantity_quest')}
+                            error={Boolean(errors?.allServices?.[index]?.quantity)}
+                            helperText={errors?.allServices?.[index]?.quantity?.message}
+                          />
+                        )}
+                      />
+                    </Grid>
+
+                    {/* huygamcha */}
+
+                    <Grid item xs={3.5}>
+                      <Controller
+                        control={control}
+                        name={`allServices.${index}.totalPrice`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            fullWidth
+                            required
+                            onChange={onChange}
+                            value={value}
+                            label={t('Total_price')}
+                            error={Boolean(errors?.allServices?.[index]?.totalPrice)}
+                            helperText={errors?.allServices?.[index]?.totalPrice?.message}
+                          />
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'end'
+                      }}
+                      item
+                      xs={1.5}
+                    >
+                      <IconButton
+                        onClick={() => {
+                          remove(index)
+                          // Cập nhật tổng giá
+                          const allServices = getValues('allServices') || []
+                          const total = allServices.reduce((acc, cur) => acc + cur.totalPrice, 0)
+                          setValue('totalPrice', total)
+                        }}
+                      >
+                        <Icon icon='material-symbols:delete-outline' />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                </Box>
+              ))}
+              <Box display='flex' justifyContent='space-between'>
+                {' '}
+                <Button
+                  variant='outlined'
+                  sx={{ mt: 2, height: '40px' }}
+                  onClick={() => append({ packageId: '', serviceId: '', optionId: '', quantity: 1, totalPrice: 0 })}
+                >
+                  {t('Add_Option')}
+                </Button>
+                <Box
+                  sx={{
+                    background: theme => theme.palette.customBackground.tabs,
+                    padding: '0.5rem',
+                    borderRadius: '0.5rem'
+                  }}
+                  width='40%'
+                >
+                  <Grid width='100%' item xs={6}>
+                    <Controller
+                      control={control}
+                      name='totalPrice'
+                      render={({ field }) => (
+                        <CustomTextField
+                          fullWidth
+                          required
+                          label={t('Total_price_pay')}
+                          error={Boolean(errors?.totalPrice)}
+                          helperText={errors?.totalPrice?.message}
+                          {...field}
+                        />
+                      )}
+                    />
+                  </Grid>
+                </Box>
+              </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
               <Button type='submit' variant='contained'>

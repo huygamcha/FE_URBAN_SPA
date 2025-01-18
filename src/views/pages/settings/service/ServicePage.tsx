@@ -262,6 +262,8 @@ const ServiceListPage: NextPage<TProps> = () => {
 
   useEffect(() => {
     if (isSuccessCreateEdit) {
+      console.log('««««« isSuccessCreateEdit »»»»»', isSuccessCreateEdit, openCreateEdit)
+
       if (!openCreateEdit.id) {
         toast.success(t('Create_service_success'))
       } else {
@@ -331,6 +333,7 @@ const ServiceListPage: NextPage<TProps> = () => {
         description={t('Confirm_delete_multiple_service')}
       />
       <CreateEditService open={openCreateEdit.open} onClose={handleCloseCreateEdit} idService={openCreateEdit.id} />
+
       {isLoading && <Spinner />}
       <Box
         sx={{

@@ -128,9 +128,9 @@ const BookingForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      name: 'huy le',
-      email: 'huy@gmail.com',
-      phoneNumber: '3282344482',
+      name: '',
+      email: '',
+      phoneNumber: '',
       date: '',
       quantity: 1,
       packages: '',
@@ -647,10 +647,11 @@ const BookingForm = () => {
           bottom: 0,
           right: 0,
           left: 0,
-          zIndex: 1
+          zIndex: 1,
+          fontSize: '0px'
         }}
       >
-        <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/hoaspa.svg' />
+        <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
       </Box>
     </Box>
   )

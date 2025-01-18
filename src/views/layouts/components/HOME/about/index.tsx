@@ -11,6 +11,8 @@ import 'src/views/css/customReactSlickBanner.css'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
 import { useTranslation } from 'react-i18next'
+import { TParamsFetchAbout } from 'src/types/about'
+import { displayValueByLanguage } from 'src/utils'
 
 const settings = {
   dots: false,
@@ -24,7 +26,14 @@ const settings = {
   fade: true
 }
 
-const AboutSpa = () => {
+type TProps = {
+  aboutUs: TParamsFetchAbout
+}
+
+const AboutSpa = (props: TProps) => {
+  // ** State
+  const { aboutUs } = props
+  console.log('««««« aboutUs »»»»»', aboutUs)
   // ** Hooks
   const { t, i18n } = useTranslation()
 
@@ -97,7 +106,7 @@ const AboutSpa = () => {
                 height={1}
                 layout='responsive'
                 alt='image'
-                src='https://cdn.prod.website-files.com/6324b2bcf9793bf1b40b60cf/6515ad2b3f3181bfe1a7f0cd_partent%20right-01.svg'
+                src='https://cdn.kampa.vn/sen%20gioi%20thieu.svg'
               />
             </Box>
             <Box
@@ -156,27 +165,11 @@ const AboutSpa = () => {
                     {t('About_urban_spa')}
                   </Typography>
                 </Box>
-                <Box>
-                  <Typography>Relax - Renew - Revitalize</Typography>
-                  <Typography variant='body1' mt={2}>
-                    Inspired by the nature and our modern <strong>BOHEMIAN life style</strong>,
-                    <strong> URBAN Spa </strong>
-                    offers a wide range of treatments that helps you live in the moment. We will make you feel
-                    completely relaxed and comfortable in our spa vibe. We individually design our spa treatments to
-                    suit your skin type and personality. Our nourishing hair wash with natural herbal ingredients and
-                    skincare treatments with body scrub & wrap, blissful body massage and facial treatments, will leave
-                    your skin feeling like new. <strong>URBAN Spa</strong> allows you to choose the best way to
-                    <strong> relax, unwind and recharge</strong> your body. <strong>URBAN Spa</strong> offers a wide
-                    range of treatments :
-                  </Typography>
-                  <Typography variant='body1' mt={2}>
-                    Inspired by the nature and our modern <strong>BOHEMIAN life style</strong>,
-                    <strong> URBAN Spa </strong>
-                    offers a wide range of treatments that helps you live in the moment. We will make you feel
-                    completely relaxed and comfortable in our spa vibe. We individually design our spa treatments to
-                    suit your skin type and personality.
-                  </Typography>
-                </Box>
+                <Box
+                  dangerouslySetInnerHTML={{
+                    __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
+                  }}
+                ></Box>
               </Box>
             </Box>
           </Box>
