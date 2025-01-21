@@ -70,7 +70,10 @@ const Gallery = (props: TProp) => {
             fontSize: '3rem',
             fontWeight: 'bold',
             pointerEvents: 'none',
-            fontFamily: 'Playfair Display,sans-serif'
+            fontFamily: 'Playfair Display,sans-serif',
+            [theme.breakpoints.down('lg')]: {
+              fontSize: '3rem'
+            }
           }}
         >
           {t('Be_Beauty_Be_You').toUpperCase()}
@@ -97,7 +100,7 @@ const Gallery = (props: TProp) => {
             paddingBottom: '5px'
           }}
         >
-          {banner.map((src : any, index) => (
+          {banner.map((src: any, index) => (
             <Box
               key={index}
               sx={{

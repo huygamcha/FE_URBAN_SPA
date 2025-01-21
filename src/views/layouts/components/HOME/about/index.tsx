@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Box, Typography, Container, Grid, Button, IconButton } from '@mui/material'
+import {useTheme, Box, Typography, Container, Grid, Button, IconButton } from '@mui/material'
 import ReactPlayer from 'react-player/lazy'
 import Image from 'next/image'
 
@@ -37,6 +37,7 @@ const AboutSpa = (props: TProps) => {
   const { aboutUs, banner } = props
   // ** Hooks
   const { t, i18n } = useTranslation()
+  const theme = useTheme()
 
   const allRefs = useRef<Array<HTMLDivElement | null>>([null, null])
 
@@ -160,7 +161,10 @@ const AboutSpa = (props: TProps) => {
                       fontFamily: 'Playfair Display,sans-serif',
                       fontSize: '3rem',
                       fontWeight: '700',
-                      lineHeight: '1.2'
+                      lineHeight: '1.2',
+                      [theme.breakpoints.down('lg')]: {
+                        fontSize: '3rem'
+                      }
                     }}
                   >
                     {t('About_urban_spa')}

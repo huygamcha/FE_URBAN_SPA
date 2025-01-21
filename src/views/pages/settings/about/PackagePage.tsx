@@ -4,45 +4,24 @@
 import { NextPage } from 'next'
 
 // ** React
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Mui
-import { Box, Grid, Typography, useTheme } from '@mui/material'
-import { GridColDef, GridRowSelectionModel, GridSortModel } from '@mui/x-data-grid'
+import { useTheme } from '@mui/material'
 
 // ** Redux
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'src/stores'
-import { deletePackageAsync, deleteMultiplePackageAsync, getAllPackagesAsync } from 'src/stores/package/actions'
-import { resetInitialState } from 'src/stores/package'
 
 // ** Components
-import GridDelete from 'src/components/grid-delete'
-import GridEdit from 'src/components/grid-edit'
-import GridCreate from 'src/components/grid-create'
-import InputSearch from 'src/components/input-search'
-import CustomDataGrid from 'src/components/custom-data-grid'
-import Spinner from 'src/components/spinner'
-import ConfirmationDialog from 'src/components/confirmation-dialog'
-import CustomPagination from 'src/components/custom-pagination'
-import TableHeader from 'src/components/table-header'
-import CreateEditPackage from 'src/views/pages/settings/package/component/CreateEditPackage'
 
 // ** Others
-import toast from 'react-hot-toast'
-import { OBJECT_TYPE_ERROR_CITY } from 'src/configs/error'
 
 // ** Hooks
 import { usePermission } from 'src/hooks/usePermission'
 
 // ** Config
-import { PAGE_SIZE_OPTION } from 'src/configs/gridConfig'
 
 // ** Utils
-import { formatDate } from 'src/utils/date'
-import { hexToRGBA } from 'src/utils/hex-to-rgba'
-import Image from 'next/image'
 import CreateEditAbout from './component/CreateEditPackage'
 
 type TProps = {}
@@ -55,7 +34,7 @@ const AboutListPage: NextPage<TProps> = () => {
 
   const [openCreateEdit, setOpenCreateEdit] = useState({
     open: true,
-    id: '6788bd95f809cf516d23119c'
+    id: '678f33bca37abbb25c8d15f9'
   })
 
   const handleCloseCreateEdit = () => {

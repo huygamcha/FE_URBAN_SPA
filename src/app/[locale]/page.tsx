@@ -55,7 +55,7 @@ const getAboutUs = async () => {
       nameJp: '',
       nameKo: ''
     }
-    await getDetailAbout('6788bd95f809cf516d23119c').then(res => {
+    await getDetailAbout('678f33bca37abbb25c8d15f9').then(res => {
       aboutUs = res?.data
     })
 
