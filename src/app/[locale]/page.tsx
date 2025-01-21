@@ -2,8 +2,10 @@ import { Metadata } from 'next'
 import { ReactNode } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
 import { getDetailAbout } from 'src/services/about'
+import { getAllBanners } from 'src/services/banners'
 import { getAllPackages } from 'src/services/packages'
 import { TParamsFetchAbout } from 'src/types/about'
+import { TBanner } from 'src/types/banner'
 import { TPackage } from 'src/types/package'
 
 // layouts
@@ -23,6 +25,23 @@ const getPackages = async () => {
   } catch (error) {
     return {
       packages: []
+    }
+  }
+}
+
+const getBanner = async () => {
+  try {
+    let banner: TBanner[] = []
+    await getAllBanners({ params: { limit: -1, page: -1 } }).then(res => {
+      banner = res?.data?.banners
+    })
+
+    return {
+      banner
+    }
+  } catch (error) {
+    return {
+      banner: []
     }
   }
 }
@@ -72,14 +91,19 @@ export const metadata: Metadata = {
 export default async function Home() {
   const { packages } = await getPackages()
   const { aboutUs } = await getAboutUs()
+  const { banner } = await getBanner()
 
   return (
     <AuthLayoutWrapper
       guestGuard={false}
       authGuard={false}
-      getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}
+      getLayout={(page: ReactNode) => (
+        <LayoutNotApp banner={banner} isHiddenBanner={true}>
+          {page}
+        </LayoutNotApp>
+      )}
     >
-      <HomePage aboutUs={aboutUs} packages={packages} />
+      <HomePage banner={banner} aboutUs={aboutUs} packages={packages} />
     </AuthLayoutWrapper>
   )
 }

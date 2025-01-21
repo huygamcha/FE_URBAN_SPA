@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   cancelOrderSpaOfMeAsync,
   createOrderSpaAsync,
+  deleteMultipleOrderSpaAsync,
   deleteOrderSpaAsync,
   getAllOrderSpasAsync,
   getAllOrderSpasByMeAsync,
@@ -28,6 +29,9 @@ const initialState = {
   messageErrorDelete: '',
   isLoading: false,
   typeError: '',
+  isSuccessMultipleDelete: false,
+  isErrorMultipleDelete: false,
+  messageErrorMultipleDelete: '',
   orderSpa: {
     name: ''
   },
@@ -59,6 +63,9 @@ export const orderSpaSlice = createSlice({
       state.isSuccessDelete = false
       state.isErrorDelete = true
       state.messageErrorDelete = ''
+      state.isSuccessMultipleDelete = false
+      state.isErrorMultipleDelete = true
+      state.messageErrorMultipleDelete = ''
     }
   },
   extraReducers: builder => {
@@ -83,9 +90,9 @@ export const orderSpaSlice = createSlice({
     })
     builder.addCase(createOrderSpaAsync.fulfilled, (state, action) => {
       state.isLoading = false
-      state.isSuccessCreate = !!action.payload?.data?._id
-      state.isErrorCreate = !action.payload?.data?._id
-      state.messageErrorCreate = action.payload?.message
+      state.isSuccessEdit = !!action.payload?.data?._id
+      state.isErrorEdit = !action.payload?.data?._id
+      state.messageErrorEdit = action.payload?.message
       state.typeError = action.payload?.typeError
     })
 
@@ -149,6 +156,18 @@ export const orderSpaSlice = createSlice({
       state.isSuccessDelete = !!action.payload?.data?._id
       state.isErrorDelete = !action.payload?.data?._id
       state.messageErrorDelete = action.payload?.message
+      state.typeError = action.payload?.typeError
+    })
+
+    // ** delete multiple OrderSpa
+    builder.addCase(deleteMultipleOrderSpaAsync.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(deleteMultipleOrderSpaAsync.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.isSuccessMultipleDelete = !!action.payload?.data
+      state.isErrorMultipleDelete = !action.payload?.data
+      state.messageErrorMultipleDelete = action.payload?.message
       state.typeError = action.payload?.typeError
     })
   }

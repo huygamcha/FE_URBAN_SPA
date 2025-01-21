@@ -36,46 +36,19 @@ import { TBanner } from 'src/types/banner'
 
 type TProps = {
   packages: TPackage[]
-  aboutUs: TParamsFetchAbout
-  banner: TBanner[]
 }
 
-const HomePage: NextPage<TProps> = props => {
+const ListPackagePage: NextPage<TProps> = props => {
   // ** Props
-  const { packages, aboutUs, banner } = props
+  const { packages } = props
   const { t, i18n } = useTranslation()
   const router = useRouter()
 
   return (
     <>
       {/* {loading && <Spinner />} */}
-      {/* <ChatBotAI /> */}
-      {/* <ControlCalendar /> */}
-      <div id='about'></div>
-      <Box>
-        <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
-          <AboutSpa banner={banner} aboutUs={aboutUs} />
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              left: 0,
-              zIndex: 1,
-              fontSize: '0px'
-            }}
-          >
-            <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
-          </Box>
-        </Box>
-      </Box>
-
-      <Box>
-        <Gallery banner={banner} />
-      </Box>
-
       <div id='package'></div>
-      <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
+      <Box sx={{ padding: '2% 5%', position: 'relative', zIndex: 1 }}>
         <Packages packages={packages} />
         <Box
           sx={{
@@ -94,4 +67,4 @@ const HomePage: NextPage<TProps> = props => {
   )
 }
 
-export default HomePage
+export default ListPackagePage

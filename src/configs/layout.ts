@@ -106,6 +106,11 @@ export const VerticalItems = () => {
           title: t('About-us'),
           icon: 'mdi:about-circle-outline',
           path: ROUTE_CONFIG.SETTINGS.ABOUT
+        },
+        {
+          title: t('Banner'),
+          icon: 'material-symbols-light:gallery-thumbnail-outline-rounded',
+          path: ROUTE_CONFIG.SETTINGS.BANNER
         }
         // {
         //   title: t('City'),

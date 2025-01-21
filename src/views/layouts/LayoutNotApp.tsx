@@ -26,10 +26,12 @@ import { bannerHome } from 'src/app/data/bannerHome'
 import { IBannerHome } from 'src/types/bannerHome'
 import Footer from './components/footer'
 import { useTranslation } from 'react-i18next'
+import { TBanner } from 'src/types/banner'
 
 type TProps = {
   children: React.ReactNode
   isHiddenBanner?: boolean
+  banner?: TBanner[]
 }
 const settings = {
   dots: false,
@@ -43,7 +45,7 @@ const settings = {
   fade: true
 }
 
-const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) => {
+const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false, banner }) => {
   const theme = useTheme()
   const { t, i18n } = useTranslation()
 
@@ -62,7 +64,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) =>
         <HorizontalLayout toggleDrawer={() => {}} open={false} isHideMenu />
         <Toolbar sx={{ height: '72px' }} />
 
-        {!isHiddenBanner && (
+        {isHiddenBanner && (
           <Box
             // đặt giới hạn chiều dài để sử dụng được slider
             sx={{
@@ -127,11 +129,11 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false }) =>
                 {t('Premium_Spa_And_Relaxation_And_Beauty').toUpperCase()}
               </Typography>
               <Slider {...settings} className='slider-banner'>
-                {bannerHome?.map((item: IBannerHome, index: number) => (
+                {banner?.map((item: TBanner, index: number) => (
                   <Image
                     style={{ height: 'calc(100vh - 64px)' }}
                     key={index}
-                    src={item.image}
+                    src={item.link}
                     alt='banner home Image'
                     layout='responsive'
                     width={16}

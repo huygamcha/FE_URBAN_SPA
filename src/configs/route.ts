@@ -27,6 +27,7 @@ export const ROUTE_CONFIG = {
   SETTINGS: {
     CITY: '/settings/city',
     SERVICE: '/settings/service',
+    BANNER: '/settings/banner',
     ABOUT: '/settings/about',
     PACKAGE: '/settings/package',
     PAYMENT_TYPE: '/settings/payment-type',

@@ -28,6 +28,7 @@ import IconifyIcon from 'src/components/Icon'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
+import { visitTime } from 'src/app/data/visitTime'
 
 dayjs.extend(utc)
 
@@ -53,23 +54,6 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 }))
 
 // Form field type
-
-const durations = [
-  { value: '09:00:00', label: '9:00' },
-  { value: '10:00:00', label: '10:00' },
-  { value: '11:00:00', label: '11:00' },
-  { value: '12:00:00', label: '12:00' },
-  { value: '13:00:00', label: '13:00' },
-  { value: '14:00:00', label: '14:00' },
-  { value: '15:00:00', label: '15:00' },
-  { value: '16:00:00', label: '16:00' },
-  { value: '17:00:00', label: '17:00' },
-  { value: '18:00:00', label: '18:00' },
-  { value: '19:00:00', label: '19:00' },
-  { value: '20:00:00', label: '20:00' },
-  { value: '21:00:00', label: '21:00' },
-  { value: '21:30:00', label: '21:30' }
-]
 
 const BookingForm = () => {
   // Context
@@ -140,10 +124,6 @@ const BookingForm = () => {
   })
 
   const onSubmit = (data: any) => {
-    console.log(
-      '«««««  »»»»»',
-      dayjs(`${dayjs(data.date).format('YYYY-MM-DD')} ${data.duration}`).format('YYYY-MM-DD HH:mm')
-    )
     dispatch(
       createOrderSpaAsync({
         name: data?.name,
@@ -243,7 +223,7 @@ const BookingForm = () => {
                                 fontWeight: '600'
                               }}
                             >
-                              {t('Package')} <span style={{ color: theme.palette.error.main }}>*</span>
+                              {t('Package')} <span>*</span>
                             </Typography>
                           </label>
                           {/* huyg  packages*/}
@@ -409,7 +389,7 @@ const BookingForm = () => {
                                 fontWeight: '600'
                               }}
                             >
-                              {t('Pickup_time')} <span style={{ color: theme.palette.error.main }}>*</span>
+                              {t('Pickup_time')} <span>*</span>
                             </Typography>
                           </label>
 
@@ -511,7 +491,7 @@ const BookingForm = () => {
                                 fontWeight: '600'
                               }}
                             >
-                              {t('time_service')} <span style={{ color: theme.palette.error.main }}>*</span>
+                              {t('time_service')} <span>*</span>
                             </Typography>
                           </label>
                           {/* huyg  duration*/}
@@ -536,7 +516,7 @@ const BookingForm = () => {
                             }}
                             value={value}
                           >
-                            {durations?.map((opt: any) => {
+                            {visitTime?.map((opt: any) => {
                               return (
                                 <Tab
                                   sx={{

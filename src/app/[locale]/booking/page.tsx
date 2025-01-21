@@ -14,7 +14,7 @@ export default async function Home() {
     <AuthLayoutWrapper
       guestGuard={false}
       authGuard={false}
-      getLayout={(page: ReactNode) => <LayoutNotApp isHiddenBanner={true}>{page}</LayoutNotApp>}
+      getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}
     >
       <BookingForm />
     </AuthLayoutWrapper>

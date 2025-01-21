@@ -15,7 +15,7 @@ const Footer = () => {
 
   useEffect(() => {
     const script = document.createElement('script')
-    script.src = 'https://cdn.trustindex.io/loader.js?25395fd393746564284627faa4a'
+    script.src = 'https://cdn.trustindex.io/loader.js?52151ea40d3703517466e78e411'
     script.defer = true
     script.async = true
 
@@ -116,11 +116,31 @@ const Footer = () => {
       <Box overflow='hidden'>
         <Box
           sx={{
+            position: 'relative',
+            zIndex: 1,
             background: theme => theme.palette.customBackground.secondary
           }}
           padding='2% 5%'
         >
           <Contact />
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: 1,
+              bottom: 0,
+              right: 0,
+              left: 0,
+              fontSize: '0px'
+            }}
+          >
+            <Image
+              width={16}
+              height={9}
+              layout='responsive'
+              alt='image'
+              src='https://cdn.kampa.vn/footerurbanspa.svg'
+            />
+          </Box>
         </Box>
       </Box>
     </>

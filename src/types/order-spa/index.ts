@@ -24,14 +24,16 @@ export type TItemSpaMe = {
 
 export type TParamsCreateOrderSpa = {
   name: string
+  packageId?: string
   phoneNumber: string
   email: string
-  packageId: string
   appointmentDate: string
+  status?: string
   note: string
   language: string
   quantity: number
   duration: string
+  allServices?: TParamsAllServicesSpa[]
 }
 
 export type TParamsStatusOrderUpdate = {
@@ -79,6 +81,10 @@ export type TItemOrderSpaMe = {
   note: string
   totalPrice: string
   status: string
+}
+
+export type TParamsDeleteMultipleOrderSpa = {
+  appointmentIds: string[]
 }
 
 export interface TItemOrderSpas extends TItemOrderSpaMe {}

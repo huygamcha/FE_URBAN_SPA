@@ -14,6 +14,8 @@ import { GridColDef, GridRowSelectionModel, GridSortModel } from '@mui/x-data-gr
 // ** Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'src/stores'
+import { deleteBannerAsync, deleteMultipleBannerAsync, getAllBannersAsync } from 'src/stores/banner/actions'
+import { resetInitialState } from 'src/stores/banner'
 
 // ** Components
 import GridDelete from 'src/components/grid-delete'
@@ -25,6 +27,7 @@ import Spinner from 'src/components/spinner'
 import ConfirmationDialog from 'src/components/confirmation-dialog'
 import CustomPagination from 'src/components/custom-pagination'
 import TableHeader from 'src/components/table-header'
+import CreateEditBanner from 'src/views/pages/settings/banner/component/CreateEditBanner'
 
 // ** Others
 import toast from 'react-hot-toast'
@@ -39,13 +42,12 @@ import { PAGE_SIZE_OPTION } from 'src/configs/gridConfig'
 // ** Utils
 import { formatDate } from 'src/utils/date'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
-import { deleteMultipleServiceAsync, deleteServiceAsync, getAllServicesAsync } from 'src/stores/service/actions'
-import CreateEditService from './component/CreateEditService'
-import { resetInitialState } from 'src/stores/service'
+import Image from 'next/image'
+import CreateBanner from './component/CreateBanner'
 
 type TProps = {}
 
-const ServiceListPage: NextPage<TProps> = () => {
+const BannerListPage: NextPage<TProps> = () => {
   // ** Translate
   const { t } = useTranslation()
 
@@ -55,11 +57,11 @@ const ServiceListPage: NextPage<TProps> = () => {
     open: false,
     id: ''
   })
-  const [openDeleteService, setOpenDeleteService] = useState({
+  const [openDeleteBanner, setOpenDeleteBanner] = useState({
     open: false,
     id: ''
   })
-  const [openDeleteMultipleService, setOpenDeleteMultipleService] = useState(false)
+  const [openDeleteMultipleBanner, setOpenDeleteMultipleBanner] = useState(false)
   const [sortBy, setSortBy] = useState('createdAt desc')
   const [searchBy, setSearchBy] = useState('')
 
@@ -74,7 +76,7 @@ const ServiceListPage: NextPage<TProps> = () => {
   /// ** redux
   const dispatch: AppDispatch = useDispatch()
   const {
-    services,
+    banners,
     isSuccessCreateEdit,
     isErrorCreateEdit,
     isLoading,
@@ -86,27 +88,27 @@ const ServiceListPage: NextPage<TProps> = () => {
     isSuccessMultipleDelete,
     isErrorMultipleDelete,
     messageErrorMultipleDelete
-  } = useSelector((state: RootState) => state.services)
+  } = useSelector((state: RootState) => state.banners)
 
   // ** theme
   const theme = useTheme()
 
   // fetch api
-  const handleGetListServices = () => {
+  const handleGetListBanners = () => {
     const query = { params: { limit: pageSize, page: page, search: searchBy, order: sortBy } }
-    dispatch(getAllServicesAsync(query))
+    dispatch(getAllBannersAsync(query))
   }
 
   // handle
-  const handleCloseConfirmDeleteService = () => {
-    setOpenDeleteService({
+  const handleCloseConfirmDeleteBanner = () => {
+    setOpenDeleteBanner({
       open: false,
       id: ''
     })
   }
 
-  const handleCloseConfirmDeleteMultipleService = () => {
-    setOpenDeleteMultipleService(false)
+  const handleCloseConfirmDeleteMultipleBanner = () => {
+    setOpenDeleteMultipleBanner(false)
   }
 
   const handleSort = (sort: GridSortModel) => {
@@ -125,14 +127,14 @@ const ServiceListPage: NextPage<TProps> = () => {
     })
   }
 
-  const handleDeleteService = () => {
-    dispatch(deleteServiceAsync(openDeleteService.id))
+  const handleDeleteBanner = () => {
+    dispatch(deleteBannerAsync(openDeleteBanner.id))
   }
 
-  const handleDeleteMultipleService = () => {
+  const handleDeleteMultipleBanner = () => {
     dispatch(
-      deleteMultipleServiceAsync({
-        serviceIds: selectedRow
+      deleteMultipleBannerAsync({
+        bannerIds: selectedRow
       })
     )
   }
@@ -140,7 +142,7 @@ const ServiceListPage: NextPage<TProps> = () => {
   const handleAction = (action: string) => {
     switch (action) {
       case 'delete': {
-        setOpenDeleteMultipleService(true)
+        setOpenDeleteMultipleBanner(true)
         break
       }
     }
@@ -153,58 +155,15 @@ const ServiceListPage: NextPage<TProps> = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'packageId',
-      headerName: t('Category'),
-      flex: 1,
+      field: 'image',
+      headerName: t('Image'),
       minWidth: 200,
+      flex: 1,
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{row?.packageId?.name}</Typography>
-      }
-    },
-    {
-      field: 'name',
-      headerName: t('Name'),
-      flex: 1,
-      minWidth: 200,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row?.name}</Typography>
-      }
-    },
-    {
-      field: 'nameKo',
-      headerName: t('Name_Korean'),
-      flex: 1,
-      minWidth: 200,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row?.nameKo}</Typography>
-      }
-    },
-    {
-      field: 'nameEn',
-      headerName: t('Name_English'),
-      flex: 1,
-      minWidth: 200,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row?.nameEn}</Typography>
-      }
-    },
-    {
-      field: 'nameJp',
-      headerName: t('Name_Japanese'),
-      flex: 1,
-      minWidth: 200,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row?.nameJp}</Typography>
+        // return <Typography>{row?.image}</Typography>
+        return <Image src={row?.link} layout='responsive' width={16} height={9} alt='image' />
       }
     },
 
@@ -231,7 +190,7 @@ const ServiceListPage: NextPage<TProps> = () => {
             <GridDelete
               disabled={!DELETE}
               onClick={() =>
-                setOpenDeleteService({
+                setOpenDeleteBanner({
                   open: true,
                   id: String(params.id)
                 })
@@ -250,24 +209,24 @@ const ServiceListPage: NextPage<TProps> = () => {
         pageSizeOptions={PAGE_SIZE_OPTION}
         pageSize={pageSize}
         page={page}
-        rowLength={services.total}
+        rowLength={banners.total}
       />
     )
   }
 
   useEffect(() => {
-    handleGetListServices()
+    handleGetListBanners()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy, searchBy, page, pageSize])
 
   useEffect(() => {
     if (isSuccessCreateEdit) {
       if (!openCreateEdit.id) {
-        toast.success(t('Create_service_success'))
+        toast.success(t('Create_banner_success'))
       } else {
-        toast.success(t('Update_service_success'))
+        toast.success(t('Update_banner_success'))
       }
-      handleGetListServices()
+      handleGetListBanners()
       handleCloseCreateEdit()
       dispatch(resetInitialState())
     } else if (isErrorCreateEdit && messageErrorCreateEdit && typeError) {
@@ -276,9 +235,9 @@ const ServiceListPage: NextPage<TProps> = () => {
         toast.error(t(errorConfig))
       } else {
         if (openCreateEdit.id) {
-          toast.error(t('Update_service_error'))
+          toast.error(t('Update_banner_error'))
         } else {
-          toast.error(t('Create_service_error'))
+          toast.error(t('Create_banner_error'))
         }
       }
       dispatch(resetInitialState())
@@ -288,25 +247,25 @@ const ServiceListPage: NextPage<TProps> = () => {
 
   useEffect(() => {
     if (isSuccessMultipleDelete) {
-      toast.success(t('Delete_multiple_service_success'))
-      handleGetListServices()
+      toast.success(t('Delete_banner_success'))
+      handleGetListBanners()
       dispatch(resetInitialState())
-      handleCloseConfirmDeleteMultipleService()
+      handleCloseConfirmDeleteMultipleBanner()
       setSelectedRow([])
     } else if (isErrorMultipleDelete && messageErrorMultipleDelete) {
-      toast.error(t('Delete_multiple_service_error'))
+      toast.error(t('Delete_banner_error'))
       dispatch(resetInitialState())
     }
   }, [isSuccessMultipleDelete, isErrorMultipleDelete, messageErrorMultipleDelete])
 
   useEffect(() => {
     if (isSuccessDelete) {
-      toast.success(t('Delete_service_success'))
-      handleGetListServices()
+      toast.success(t('Delete_banner_success'))
+      handleGetListBanners()
       dispatch(resetInitialState())
-      handleCloseConfirmDeleteService()
+      handleCloseConfirmDeleteBanner()
     } else if (isErrorDelete && messageErrorDelete) {
-      toast.error(t('Delete_service_error'))
+      toast.error(t('Delete_banner_error'))
       dispatch(resetInitialState())
     }
   }, [isSuccessDelete, isErrorDelete, messageErrorDelete])
@@ -315,23 +274,27 @@ const ServiceListPage: NextPage<TProps> = () => {
     <>
       {loading && <Spinner />}
       <ConfirmationDialog
-        open={openDeleteService.open}
-        handleClose={handleCloseConfirmDeleteService}
-        handleCancel={handleCloseConfirmDeleteService}
-        handleConfirm={handleDeleteService}
-        title={t('Title_delete_service')}
-        description={t('Confirm_delete_service')}
+        open={openDeleteBanner.open}
+        handleClose={handleCloseConfirmDeleteBanner}
+        handleCancel={handleCloseConfirmDeleteBanner}
+        handleConfirm={handleDeleteBanner}
+        title={t('Title_delete_banner')}
+        description={t('Confirm_delete_banner')}
       />
       <ConfirmationDialog
-        open={openDeleteMultipleService}
-        handleClose={handleCloseConfirmDeleteMultipleService}
-        handleCancel={handleCloseConfirmDeleteMultipleService}
-        handleConfirm={handleDeleteMultipleService}
-        title={t('Title_delete_multiple_service')}
-        description={t('Confirm_delete_multiple_service')}
+        open={openDeleteMultipleBanner}
+        handleClose={handleCloseConfirmDeleteMultipleBanner}
+        handleCancel={handleCloseConfirmDeleteMultipleBanner}
+        handleConfirm={handleDeleteMultipleBanner}
+        title={t('Title_delete_multiple_banner')}
+        description={t('Confirm_delete_multiple_banner')}
       />
-      <CreateEditService open={openCreateEdit.open} onClose={handleCloseCreateEdit} idService={openCreateEdit.id} />
 
+      {openCreateEdit.id ? (
+        <CreateEditBanner open={openCreateEdit.open} onClose={handleCloseCreateEdit} idBanner={openCreateEdit.id} />
+      ) : (
+        <CreateBanner open={openCreateEdit.open} onClose={handleCloseCreateEdit} idBanner={openCreateEdit.id} />
+      )}
       {isLoading && <Spinner />}
       <Box
         sx={{
@@ -372,7 +335,7 @@ const ServiceListPage: NextPage<TProps> = () => {
             />
           )}
           <CustomDataGrid
-            rows={services.data}
+            rows={banners.data}
             columns={columns}
             autoHeight
             sx={{
@@ -402,4 +365,4 @@ const ServiceListPage: NextPage<TProps> = () => {
   )
 }
 
-export default ServiceListPage
+export default BannerListPage

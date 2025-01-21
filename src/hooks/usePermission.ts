@@ -1,54 +1,54 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMemo } from 'react'
+import { useAuth } from 'src/hooks/useAuth'
+import { PERMISSIONS } from 'src/configs/permission'
 
-"use client"
-import { useEffect, useState } from "react"
-import { PERMISSIONS } from "src/configs/permission"
-import { useAuth } from "src/hooks/useAuth"
+type TActions = 'CREATE' | 'VIEW' | 'UPDATE' | 'DELETE'
 
-type TActions = "CREATE" | "VIEW" | "UPDATE" | "DELETE"
+export const usePermission = (key: string, actions: TActions[]) => {
+  const { user } = useAuth()
 
-export const usePermission = (key: string,actions: TActions[]) => {
-    const {user} = useAuth()
-    const defaultValues= {
-        VIEW: false,
-        CREATE: false,
-        UPDATE: false,
-        DELETE: false,
-    }
+  const defaultValues = {
+    VIEW: false,
+    CREATE: false,
+    UPDATE: false,
+    DELETE: false
+  }
 
-    const getObjectValue = (obj:any,key: string) => {
-        const keys = key.split(".")
-        let result= obj
-        if(keys && !!key.length) {
-            for(const k of keys) {
-                if(k in result) {
-                    result = result[k]
-                }else {
-                    return undefined
-                }
-            } 
+  // lấy được permission cuối cùng bằng cách truy cập theo permission của page
+  const getObjectValue = (obj: any, key: string) => {
+    const keys = key.split('.')
+    let result = obj
+    if (keys && key.length) {
+      for (const k of keys) {
+        if (k in result) {
+          result = result[k]
+        } else {
+          return undefined
         }
-
-        return result
+      }
     }
-   
-    const userPermission = user?.role?.permissions
 
-    const [permission, setPermission] = useState(defaultValues)
+    return result
+  }
 
-    useEffect(() => {
-        const mapPermission = getObjectValue(PERMISSIONS, key)
-        actions.forEach((mode) => {
-            if(userPermission?.includes(PERMISSIONS.ADMIN)) {
-                defaultValues[mode] = true
-            }else if(mapPermission[mode] && userPermission?.includes(mapPermission[mode])) {
-                defaultValues[mode] = true
-            }else {
-                defaultValues[mode] = false
-            }
-        })
-        setPermission(defaultValues)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user?.role])
+  const userPermission = user?.role?.permissions
 
-    return permission
+  const permission = useMemo(() => {
+    const mapPermission = getObjectValue(PERMISSIONS, key)
+
+    const calculatedPermission = { ...defaultValues }
+
+    actions.forEach(mode => {
+      if (userPermission?.includes(PERMISSIONS.ADMIN)) {
+        calculatedPermission[mode] = true
+      } else if (mapPermission[mode] && userPermission?.includes(mapPermission[mode])) {
+        calculatedPermission[mode] = true
+      }
+    })
+
+    return calculatedPermission
+  }, [key, actions, JSON.stringify(user?.role?.permissions)])
+
+  return permission
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { cancelOrderSpaOfMe, createOrderSpa, deleteOrderSpa, getAllOrderSpas, getAllOrderSpasByMe, updateOrderSpa, updateStatusOrderSpa } from 'src/services/order-spa'
-import { TParamsCreateOrderSpa, TParamsEditOrderSpa, TParamsGetOrderSpas, TParamsStatusOrderUpdate } from 'src/types/order-spa'
+import { cancelOrderSpaOfMe, createOrderSpa, deleteMultipleOrderSpa, deleteOrderSpa, getAllOrderSpas, getAllOrderSpasByMe, updateOrderSpa, updateStatusOrderSpa } from 'src/services/order-spa'
+import { TParamsCreateOrderSpa, TParamsDeleteMultipleOrderSpa, TParamsEditOrderSpa, TParamsGetOrderSpas, TParamsStatusOrderUpdate } from 'src/types/order-spa'
 
 // ** Services
 
@@ -50,6 +50,13 @@ export const deleteOrderSpaAsync = createAsyncThunk(`${serviceName}/delete`, asy
 
   return response
 })
+
+export const deleteMultipleOrderSpaAsync = createAsyncThunk(`${serviceName}/delete-multiple`, async (data: TParamsDeleteMultipleOrderSpa) => {
+  const response = await deleteMultipleOrderSpa(data)
+
+  return response
+})
+
 
 export const updateStatusOrderSpaAsync = createAsyncThunk(
   `${serviceName}/update-status`,

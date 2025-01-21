@@ -13,6 +13,7 @@ import { IBannerHome } from 'src/types/bannerHome'
 import { useTranslation } from 'react-i18next'
 import { TParamsFetchAbout } from 'src/types/about'
 import { displayValueByLanguage } from 'src/utils'
+import { TBanner } from 'src/types/banner'
 
 const settings = {
   dots: false,
@@ -28,12 +29,12 @@ const settings = {
 
 type TProps = {
   aboutUs: TParamsFetchAbout
+  banner: TBanner[]
 }
 
 const AboutSpa = (props: TProps) => {
   // ** State
-  const { aboutUs } = props
-  console.log('««««« aboutUs »»»»»', aboutUs)
+  const { aboutUs, banner } = props
   // ** Hooks
   const { t, i18n } = useTranslation()
 
@@ -183,7 +184,7 @@ const AboutSpa = (props: TProps) => {
             }}
           >
             <Slider {...settings} className='slider-banner'>
-              {bannerHome?.map((item: IBannerHome, index: number) => (
+              {banner?.map((item: TBanner, index: number) => (
                 <Box
                   key={index}
                   sx={{
@@ -197,7 +198,7 @@ const AboutSpa = (props: TProps) => {
                   <Image
                     style={{ objectFit: 'cover' }}
                     key={index}
-                    src={item.image}
+                    src={item.link}
                     alt='about us'
                     fill // Allows the image to stretch to the Box dimensions
                   />

@@ -9,7 +9,7 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Mui
-import { Box, Typography, Link, List, ListItem, ListItemText, Avatar, useTheme, Grid, Button } from '@mui/material'
+import { Box, Typography, useTheme, Grid, Button } from '@mui/material'
 import Image from 'next/image'
 
 // ** Redux

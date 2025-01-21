@@ -422,5 +422,19 @@
   "Dashboard": "Tổng quan",
   "Statistics": "Thống kê",
   "Appointment": "Đơn hàng",
-  "Revenue": "Tổng doanh thu"
+  "Revenue": "Tổng doanh thu",
+  "About-us": "Về chúng tôi",
+  "Create_order": "Tạo đơn hàng",
+  "Create_banner": "Tạo banner",
+  "Change_banner_image": "Thay đổi banner",
+  "Upload_banner_image": "Tải banner",
+  "Create_banner_success": "Tạo banner thành công",
+  "Update_banner_success": "Cập nhật banner thành công",
+  "Delete_banner_success": "Xoá banner thành công",
+  "Delete_banner_error": "Xoá banner lỗi",
+  "Contact": "Liên hệ",
+  "Support_Ready": "Chúng tôi luôn sẵn sàng hỗ trợ!",
+  "Contact_Info": "Nếu bạn cần hỗ trợ hoặc liên hệ với Urban Spa, vui lòng liên hệ theo thông tin bên dưới. Trân trọng cảm ơn.",
+  "Our_Location": "Vị trí của chúng tôi",
+  "Location_Description": "Urban Spa nằm trên con đường nhộn nhịp về đêm của trung tâm Hà Nội."
 }

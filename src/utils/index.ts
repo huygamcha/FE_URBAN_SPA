@@ -226,6 +226,7 @@ export const formatCurrency = (value: string | number) => {
 type TUploadMultipleImage = {
   image: string
 }
+
 export const uploadMultipleImage = async (imageCloudflare: TUploadMultipleImage) => {
   try {
     const promiseUploads = Object.keys(imageCloudflare).map(async (key: string) => {
@@ -251,4 +252,37 @@ export const uploadMultipleImage = async (imageCloudflare: TUploadMultipleImage)
   } catch (error) {
     throw error
   }
+}
+
+type TUploadMultipleImageBanner = {
+  links: string[]
+}
+
+export const uploadMultipleImageBanner = async (imageCloudflare: string[]) => {
+  try {
+    const results: string[] = await Promise.all(
+      imageCloudflare.map(async item => {
+        const response = await fetch(`${API_ENDPOINT.UPLOAD.IMAGE}`, {
+          method: 'POST',
+          body: item
+        })
+
+        const result = await response.json()
+
+        return result.data
+      })
+    )
+
+    return results
+  } catch (error) {
+    throw error
+  }
+}
+
+export const checkLanguage = (i18n: string, language: string) => {
+  if (i18n === language) {
+    return true
+  }
+
+  return false
 }

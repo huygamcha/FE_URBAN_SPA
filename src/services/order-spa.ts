@@ -6,7 +6,7 @@ import { API_ENDPOINT } from 'src/configs/api'
 
 // Axios
 import instanceAxios from 'src/helpers/axios'
-import { TParamsCreateOrderSpa, TParamsEditOrderSpa, TParamsGetOrderSpas, TParamsStatusOrderUpdate } from 'src/types/order-spa'
+import { TParamsCreateOrderSpa, TParamsDeleteMultipleOrderSpa, TParamsEditOrderSpa, TParamsGetOrderSpas, TParamsStatusOrderUpdate } from 'src/types/order-spa'
 
 export const getAllOrderSpasByMe = async (data: { params: TParamsGetOrderSpas }) => {
   try {
@@ -70,6 +70,22 @@ export const deleteOrderSpa = async (id: string) => {
     return error?.response?.data
   }
 }
+export const deleteMultipleOrderSpa = async (data: TParamsDeleteMultipleOrderSpa) => {
+  try {
+    const res = await instanceAxios.delete(`${API_ENDPOINT.APPOINTMENT.INDEX}/delete-many`, { data })
+    if (res?.data?.status === 'Success') {
+      return {
+        data: []
+      }
+    }
+
+    return {
+      data: null
+    }
+  } catch (error: any) {
+    return error?.response?.data
+  }
+}
 
 export const getDetailsOrderSpa = async (id: string) => {
   try {
@@ -80,6 +96,8 @@ export const getDetailsOrderSpa = async (id: string) => {
     return error?.response?.data
   }
 }
+
+
 
 export const getAllOrderSpas = async (data: { params: TParamsGetOrderSpas }) => {
   try {

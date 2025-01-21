@@ -29,7 +29,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 // config
 import { ROUTE_CONFIG } from 'src/configs/route'
-import { createUrlQuery } from 'src/utils'
+import { checkLanguage, createUrlQuery } from 'src/utils'
 import { useTranslation } from 'react-i18next'
 import i18nConfig from 'src/app/i18nConfig'
 import Image from 'next/image'
@@ -75,20 +75,11 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
 
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
-  const { openBookingForm, setOpenBookingForm } = useDrawer()
   // State for mobile menu toggle
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
 
   const toggleMobileMenu = (open: boolean) => {
     setMobileMenuOpen(open)
-  }
-
-  const handleNavigateLogin = () => {
-    if (pathName !== urlDefault) {
-      router.replace('/login' + '?' + createUrlQuery('returnUrl', pathName))
-    } else {
-      router.replace('/login')
-    }
   }
 
   return (
@@ -151,22 +142,28 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                   }
                 }}
               >
-                <Link href='#home'>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}`}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Home')}
                   </Typography>
                 </Link>
-                <Link href='#about'>
+                {/* <Link href='#about'>
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('About_Us')}
                   </Typography>
-                </Link>
-                <Link href='#package'>
+                </Link> */}
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}/packages`}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Package')}
                   </Typography>
                 </Link>
-                <Link href='#package'>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/contact`}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Contact')}
                   </Typography>
@@ -239,14 +236,16 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
           <List>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href='#home'>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}`}
+                >
                   <Typography color='title.main' variant='subtitle1'>
                     {t('Home')}
                   </Typography>
                 </Link>
               </ListItemText>
             </ListItem>
-            <ListItem onClick={() => toggleMobileMenu(false)}>
+            {/* <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Link href='#about'>
                   <Typography color='title.main' variant='subtitle1'>
@@ -254,25 +253,30 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                   </Typography>
                 </Link>
               </ListItemText>
-            </ListItem>
+            </ListItem> */}
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href='#about'>
-                  <Typography color='title.main' variant='subtitle1'>
-                    {t('Contact')}
-                  </Typography>
-                </Link>
-              </ListItemText>
-            </ListItem>
-            <ListItem onClick={() => toggleMobileMenu(false)}>
-              <ListItemText>
-                <Link href='#package'>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/packages`}
+                >
                   <Typography color='title.main' variant='subtitle1'>
                     {t('Package')}
                   </Typography>
                 </Link>
               </ListItemText>
             </ListItem>
+            <ListItem onClick={() => toggleMobileMenu(false)}>
+              <ListItemText>
+                <Link
+                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/contact`}
+                >
+                  <Typography color='title.main' variant='subtitle1'>
+                    {t('Contact')}
+                  </Typography>
+                </Link>
+              </ListItemText>
+            </ListItem>
+
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Button

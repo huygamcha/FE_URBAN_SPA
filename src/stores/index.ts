@@ -19,6 +19,7 @@ import notification from 'src/stores/notification'
 import packages from 'src/stores/package'
 import orderSpa from 'src/stores/order-spa'
 import services from 'src/stores/service'
+import banners from 'src/stores/banner'
 
 export const store = configureStore({
   reducer: {
@@ -38,7 +39,8 @@ export const store = configureStore({
     // spa
     packages,
     orderSpa,
-    services
+    services,
+    banners
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

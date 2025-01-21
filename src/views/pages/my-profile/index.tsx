@@ -318,7 +318,7 @@ const MyProfilePage: NextPage<TProps> = () => {
                                 : `rgba(${theme.palette.customColors.main}, 0.42)`
                             }}
                           >
-                            {t('Role')} <span style={{ color: theme.palette.error.main }}>*</span>
+                            {t('Role')} <span >*</span>
                           </label>
                           <CustomSelect
                             fullWidth

@@ -215,19 +215,20 @@ const Contact = () => {
                 border: '1px solid #ffd5a9',
                 width: 'max-content',
                 padding: '0.8rem 2rem',
-                borderRadius: '0.5rem'
+                borderRadius: '0.5rem',
+                background: '#ffffffeb'
               }}
               ref={(el: HTMLDivElement | null) => {
                 allRefs.current[4] = el
               }}
             >
               <Box>
-                <Typography variant='subtitle1' color='customColors.light'>
+                <Typography fontWeight='600' variant='subtitle1' color='common.black'>
                   {t('Opening_Daily')}
                 </Typography>
               </Box>
               <Box>
-                <Typography variant='subtitle1' color='common.white'>
+                <Typography variant='subtitle1' color='common.black'>
                   9:00 AM - 22:00 PM
                 </Typography>
               </Box>

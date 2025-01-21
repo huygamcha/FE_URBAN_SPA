@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client'
 // ** Next
 import { NextPage } from 'next'
@@ -8,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 // ** Mui
 import { Box, Chip, ChipProps, Grid, Typography, styled, useTheme } from '@mui/material'
-import { GridColDef, GridSortModel } from '@mui/x-data-grid'
+import { GridColDef, GridRowSelectionModel, GridSortModel } from '@mui/x-data-grid'
 
 // ** Redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -47,13 +48,16 @@ import { getAllCities } from 'src/services/city'
 // ** Types
 import { TParamsStatusOrderUpdate } from 'src/types/order-product'
 import { getCountOrderStatus } from 'src/services/report'
-import { deleteOrderSpaAsync, getAllOrderSpasAsync } from 'src/stores/order-spa/actions'
+import { deleteMultipleOrderSpaAsync, deleteOrderSpaAsync, getAllOrderSpasAsync } from 'src/stores/order-spa/actions'
 import { STATUS_ORDER_SPA } from 'src/configs/orderSpa'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import MoreButton from './components/MoreButton'
 import EditOrderSpa from './components/EditOrderSpa'
 import ConfirmationDialog from 'src/components/confirmation-dialog'
+import GridCreate from 'src/components/grid-create'
+import TableHeader from 'src/components/table-header'
+import { deleteMultipleOrderSpa } from 'src/services/order-spa'
 
 dayjs.extend(utc)
 
@@ -87,23 +91,23 @@ const OrderSpaListPage: NextPage<TProps> = () => {
   })
   const [sortBy, setSortBy] = useState('createdAt desc')
   const [searchBy, setSearchBy] = useState('')
-  const [optionCities, setOptionCities] = useState<{ label: string; value: string }[]>([])
-  const [citySelected, setCitySelected] = useState<string[]>([])
   const [statusSelected, setStatusSelected] = useState<string[]>([])
+  const [openDeleteMultipleOrder, setOpenDeleteMultipleOrder] = useState(false)
 
   const [loading, setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTION[0])
   const [page, setPage] = useState(1)
   const [filterBy, setFilterBy] = useState<Record<string, string | string[]>>({})
-  const [countOrderStatus, setCountOrderStatus] = useState<{
-    data: Record<number, number>
-    total: number
-  }>({} as any)
 
-  const isRendered = useRef<boolean>(false)
+  const [selectedRow, setSelectedRow] = useState<string[]>([])
 
   // ** Hooks
-  const { VIEW, UPDATE, DELETE } = usePermission('SYSTEM.MANAGE_ORDER.ORDER', ['CREATE', 'VIEW', 'UPDATE', 'DELETE'])
+  const { VIEW, UPDATE, DELETE, CREATE } = usePermission('SYSTEM.MANAGE_ORDER.ORDER', [
+    'CREATE',
+    'VIEW',
+    'UPDATE',
+    'DELETE'
+  ])
   const { i18n } = useTranslation()
 
   /// ** redux
@@ -117,7 +121,10 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     isErrorDelete,
     isSuccessDelete,
     messageErrorDelete,
-    typeError
+    typeError,
+    isSuccessMultipleDelete,
+    isErrorMultipleDelete,
+    messageErrorMultipleDelete
   } = useSelector((state: RootState) => state.orderSpa)
 
   // ** theme
@@ -154,6 +161,10 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     })
   }
 
+  const handleCloseConfirmDeleteMultipleOrder = () => {
+    setOpenDeleteMultipleOrder(false)
+  }
+
   const handleSort = (sort: GridSortModel) => {
     const sortOption = sort[0]
     if (sortOption) {
@@ -170,23 +181,35 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     })
   }
 
-  const handleUpdateStatusOrder = (data: TParamsStatusOrderUpdate) => {
-    // dispatch(updateStatusOrderSpaAsync(data))
-  }
-
   const handleDeleteOrderSpa = () => {
     dispatch(deleteOrderSpaAsync(openDeleteOrder.id))
+  }
+
+  const handleDeleteMultipleOrder = () => {
+    dispatch(
+      deleteMultipleOrderSpaAsync({
+        appointmentIds: selectedRow
+      })
+    )
   }
 
   const handleOnchangePagination = (page: number, pageSize: number) => {
     setPage(page)
     setPageSize(pageSize)
   }
+  const handleAction = (action: string) => {
+    switch (action) {
+      case 'delete': {
+        setOpenDeleteMultipleOrder(true)
+        break
+      }
+    }
+  }
 
   const columns: GridColDef[] = [
     {
       field: 'name',
-      headerName: t('name'),
+      headerName: t('Name'),
       hideSortIcons: true,
       flex: 1,
       minWidth: 200,
@@ -323,62 +346,25 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     )
   }
 
-  // fetch api
-  const fetchAllCities = async () => {
-    setLoading(true)
-    await getAllCities({ params: { limit: -1, page: -1 } })
-      .then(res => {
-        const data = res?.data.cities
-        if (data) {
-          setOptionCities(data?.map((item: { name: string; _id: string }) => ({ label: item.name, value: item._id })))
-        }
-        setLoading(false)
-      })
-      .catch(e => {
-        setLoading(false)
-      })
-  }
-
-  const fetchAllCountStatusOrder = async () => {
-    setLoading(true)
-    await getCountOrderStatus()
-      .then(res => {
-        const data = res?.data
-        setLoading(false)
-        setCountOrderStatus({
-          data: data?.data,
-          total: data?.total
-        })
-      })
-      .catch(e => {
-        setLoading(false)
-      })
-  }
+  useEffect(() => {
+    setFilterBy({ status: statusSelected })
+  }, [statusSelected])
 
   useEffect(() => {
-    if (isRendered.current) {
-      setFilterBy({ status: statusSelected })
-    }
-  }, [statusSelected, citySelected])
-
-  useEffect(() => {
-    fetchAllCities()
-    fetchAllCountStatusOrder()
-    isRendered.current = true
-  }, [])
-
-  useEffect(() => {
-    if (isRendered.current) {
-      handleGetListOrderSpas()
-    }
+    handleGetListOrderSpas()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy, searchBy, i18n.language, page, pageSize, filterBy])
 
   useEffect(() => {
     if (isSuccessEdit) {
-      toast.success(t('Update_order_product_success'))
+      if (!openEdit.id) {
+        toast.success(t('Create_order_success'))
+      } else {
+        toast.success(t('Update_order_success'))
+      }
       handleGetListOrderSpas()
       handleCloseEdit()
+      setSelectedRow([])
       dispatch(resetInitialState())
     } else if (isErrorEdit && messageErrorEdit && typeError) {
       const errorConfig = OBJECT_TYPE_ERROR_ROLE[typeError]
@@ -404,36 +390,25 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     }
   }, [isSuccessDelete, isErrorDelete, messageErrorDelete])
 
+  useEffect(() => {
+    if (isSuccessMultipleDelete) {
+      toast.success(t('Delete_multiple_order_success'))
+      handleGetListOrderSpas()
+      dispatch(resetInitialState())
+      handleCloseConfirmDeleteMultipleOrder()
+      setSelectedRow([])
+    } else if (isErrorMultipleDelete && messageErrorMultipleDelete) {
+      toast.error(t('Delete_multiple_order_error'))
+      dispatch(resetInitialState())
+    }
+  }, [isSuccessMultipleDelete, isErrorMultipleDelete, messageErrorMultipleDelete])
+
   const memoOptionStatus = useMemo(() => {
     return Object.values(STATUS_ORDER_SPA).map(item => ({
       label: t(item.label),
       value: item.value
     }))
   }, [])
-
-  // const dataListOrderStatus = [
-  //   {
-  //     icon: 'lets-icons:order-light',
-  //     status: 4
-  //   },
-  //   {
-  //     icon: 'ic:twotone-payment',
-  //     status: STATUS_ORDER_PRODUCT[0].value
-  //   },
-  //   {
-  //     status: STATUS_ORDER_PRODUCT[1].value,
-  //     icon: 'carbon:delivery'
-  //   },
-  //   {
-  //     icon: 'ic:baseline-done-all',
-  //     iconSize: '18',
-  //     status: STATUS_ORDER_PRODUCT[2].value
-  //   },
-  //   {
-  //     icon: 'line-md:cancel',
-  //     status: STATUS_ORDER_PRODUCT[3].value
-  //   }
-  // ]
 
   return (
     <>
@@ -445,6 +420,15 @@ const OrderSpaListPage: NextPage<TProps> = () => {
         handleConfirm={handleDeleteOrderSpa}
         title={t('Title_delete_order_product')}
         description={t('Confirm_delete_order_product')}
+      />
+
+      <ConfirmationDialog
+        open={openDeleteMultipleOrder}
+        handleClose={handleCloseConfirmDeleteMultipleOrder}
+        handleCancel={handleCloseConfirmDeleteMultipleOrder}
+        handleConfirm={handleDeleteMultipleOrder}
+        title={t('Title_delete_multiple_Order')}
+        description={t('Confirm_delete_multiple_Order')}
       />
 
       {/* 
@@ -476,18 +460,6 @@ const OrderSpaListPage: NextPage<TProps> = () => {
       >
         <Grid container sx={{ height: '100%', width: '100%' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, mb: 4, width: '100%' }}>
-            {/* <Box sx={{ width: '200px' }}>
-              <CustomSelect
-                fullWidth
-                onChange={e => {
-                  setCitySelected(e.target.value as string[])
-                }}
-                multiple
-                options={optionCities}
-                value={citySelected}
-                placeholder={t('City')}
-              />
-            </Box> */}
             <Box sx={{ width: '200px' }}>
               <CustomSelect
                 fullWidth
@@ -503,7 +475,26 @@ const OrderSpaListPage: NextPage<TProps> = () => {
             <Box sx={{ width: '200px' }}>
               <InputSearch value={searchBy} onChange={(value: string) => setSearchBy(value)} />
             </Box>
+            <GridCreate
+              disabled={!CREATE}
+              onClick={() => {
+                setOpenEdit({
+                  open: true,
+                  id: ''
+                })
+              }}
+            />
           </Box>
+
+          {selectedRow?.length > 0 && (
+            <TableHeader
+              numRow={selectedRow?.length}
+              onClear={() => setSelectedRow([])}
+              handleAction={handleAction}
+              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+            />
+          )}
+
           <CustomDataGrid
             rows={orderSpas.data}
             columns={columns}
@@ -514,6 +505,7 @@ const OrderSpaListPage: NextPage<TProps> = () => {
                 color: `${theme.palette.primary.main} !important`
               }
             }}
+            checkboxSelection
             sortingOrder={['desc', 'asc']}
             sortingMode='server'
             onSortModelChange={handleSort}
@@ -523,6 +515,9 @@ const OrderSpaListPage: NextPage<TProps> = () => {
               pagination: PaginationComponent
             }}
             disableColumnFilter
+            onRowSelectionModelChange={(row: GridRowSelectionModel) => {
+              setSelectedRow(row as string[])
+            }}
           />
         </Grid>
       </Box>

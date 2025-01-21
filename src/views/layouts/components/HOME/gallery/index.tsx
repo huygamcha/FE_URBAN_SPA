@@ -3,8 +3,15 @@ import Image from 'next/image'
 import { bannerHome } from 'src/app/data/bannerHome'
 import { Box, useTheme } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { TBanner } from 'src/types/banner'
 
-const Gallery = () => {
+type TProp = {
+  banner: TBanner[]
+}
+
+const Gallery = (props: TProp) => {
+  const { banner } = props
+
   const theme = useTheme()
   const { t, i18n } = useTranslation()
 
@@ -90,7 +97,7 @@ const Gallery = () => {
             paddingBottom: '5px'
           }}
         >
-          {bannerHome.map((src, index) => (
+          {banner.map((src : any, index) => (
             <Box
               key={index}
               sx={{
@@ -106,7 +113,7 @@ const Gallery = () => {
               }}
             >
               <Image
-                src={src.image}
+                src={src.link}
                 alt={`Gallery ${index}`}
                 style={{
                   objectFit: 'cover', // Ensures the image covers the container while maintaining its aspect ratio

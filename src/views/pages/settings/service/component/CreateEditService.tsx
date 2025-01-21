@@ -281,7 +281,7 @@ const CreateEditService = (props: TCreateEditService) => {
                             }}
                             color={theme.palette.common.black}
                           >
-                            {t('Category')} <span style={{ color: theme.palette.error.main }}>*</span>
+                            {t('Category')} *
                           </Typography>
                         </label>
                         <StyledTabs
@@ -324,7 +324,8 @@ const CreateEditService = (props: TCreateEditService) => {
                             sx={{
                               color: errors?.packageId
                                 ? theme.palette.error.main
-                                : `rgba(${theme.palette.customColors.main}, 0.42)`
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '0.8125rem'
                             }}
                           >
                             {errors?.packageId?.message}
@@ -342,6 +343,7 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
                         label={t('Name')}
                         error={Boolean(errors?.name)}
                         placeholder={t('Enter_Name')}
@@ -358,6 +360,7 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
                         placeholder={t('Enter_Name_Korean')}
                         label={t('Name_Korean')}
                         error={Boolean(errors?.nameKo)}
@@ -374,6 +377,8 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
+
                         label={t('Name_Japanese')}
                         placeholder={t('Enter_Name_Japanese')}
                         error={Boolean(errors?.nameJp)}
@@ -390,6 +395,8 @@ const CreateEditService = (props: TCreateEditService) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        required
+
                         label={t('Name_English')}
                         placeholder={t('Enter_Name_English')}
                         error={Boolean(errors?.nameEn)}
@@ -440,7 +447,7 @@ const CreateEditService = (props: TCreateEditService) => {
                   }}
                 >
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={5.5}>
                       <Controller
                         control={control}
                         name={`options.${index}.duration`}
@@ -456,7 +463,7 @@ const CreateEditService = (props: TCreateEditService) => {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={5.5}>
                       <Controller
                         control={control}
                         name={`options.${index}.price`}
@@ -471,7 +478,14 @@ const CreateEditService = (props: TCreateEditService) => {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'end'
+                      }}
+                      item
+                      xs={1}
+                    >
                       <IconButton onClick={() => remove(index)}>
                         <Icon icon='material-symbols:delete-outline' />
                       </IconButton>
@@ -480,7 +494,7 @@ const CreateEditService = (props: TCreateEditService) => {
                 </Box>
               ))}
               <Button variant='outlined' sx={{ mt: 2 }} onClick={() => append({ duration: '', price: 0 })}>
-                {t('Add Option')}
+                {t('Add_Option')}
               </Button>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4 }}>
