@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { TPackage } from 'src/types/package'
-import { useTheme,Grid, Typography, Box, keyframes, Button } from '@mui/material'
+import { useTheme, Grid, Typography, Box, keyframes, Button } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
 import { useRouter } from 'next/navigation'
@@ -34,8 +34,6 @@ const settings = {
 const Packages = (props: TProps) => {
   const { i18n, t } = useTranslation()
   const { packages } = props
-
-
 
   const isLg = useResponsiveScreen({ responsive: 'lg' })
 
@@ -202,7 +200,7 @@ const Packages = (props: TProps) => {
                           left: 0,
                           width: '100%',
                           height: '100%',
-                          backgroundColor: '#0000005e', // Semi-transparent overlay
+                          backgroundColor: '#3533335e', // Semi-transparent overlay
                           zIndex: 2, // Ensure overlay is above the image
                           display: 'flex',
                           justifyContent: 'center',
@@ -303,7 +301,7 @@ const Packages = (props: TProps) => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'rgba(0, 0, 0, 0.5)', // Black overlay with 50% opacity
+                    background: 'rgba(0, 0, 0, 0.2)', // Black overlay with 50% opacity
                     borderRadius: '0.5rem'
                   }}
                 />
