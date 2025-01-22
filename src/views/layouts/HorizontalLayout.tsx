@@ -149,11 +149,19 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     {t('Home')}
                   </Typography>
                 </Link>
-                {/* <Link href='#about'>
+                <Box
+                  sx={{
+                    cursor: 'pointer'
+                  }}
+                  onClick={e => {
+                    e.preventDefault() // Ngăn hành vi mặc định
+                    router.push('/#about') // Chuyển hướng đến trang gốc và cuộn đến ID
+                  }}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('About_Us')}
                   </Typography>
-                </Link> */}
+                </Box>
                 <Link
                   href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}/packages`}
                 >
@@ -245,15 +253,23 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 </Link>
               </ListItemText>
             </ListItem>
-            {/* <ListItem onClick={() => toggleMobileMenu(false)}>
+            <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link href='#about'>
+                <Box
+                  sx={{
+                    cursor: 'pointer'
+                  }}
+                  onClick={e => {
+                    e.preventDefault() // Ngăn hành vi mặc định
+                    router.push('/#about') // Chuyển hướng đến trang gốc và cuộn đến ID
+                  }}
+                >
                   <Typography color='title.main' variant='subtitle1'>
                     {t('About_Us')}
                   </Typography>
-                </Link>
+                </Box>
               </ListItemText>
-            </ListItem> */}
+            </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
                 <Link

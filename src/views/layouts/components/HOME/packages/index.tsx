@@ -280,6 +280,7 @@ const Packages = (props: TProps) => {
           <Slider className='mobile-package' {...settings}>
             {packages?.map((item: TPackage, index: number) => (
               <Box
+                onClick={() => handleDetail(item)}
                 key={index}
                 sx={{
                   position: 'relative',

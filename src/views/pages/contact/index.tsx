@@ -19,7 +19,7 @@ const ContactPage = () => {
       <Box overflow='hidden'>
         <Box
           sx={{
-            background: '#b38217'
+            background: '#440a09'
           }}
           padding='2% 5%'
         >
@@ -39,7 +39,14 @@ const ContactPage = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
                 <Box>
-                  <Typography textAlign='center' fontSize='1.5rem' fontWeight='500'>
+                  <Typography
+                    sx={{
+                      color: '#fff'
+                    }}
+                    textAlign='center'
+                    fontSize='1.5rem'
+                    fontWeight='500'
+                  >
                     {t('Support_Ready')}
                   </Typography>
                 </Box>
@@ -184,7 +191,7 @@ const ContactPage = () => {
               height={9}
               layout='responsive'
               alt='image'
-              src='https://cdn.kampa.vn/footerurbanspa.svg'
+              src='https://cdn.kampa.vn/footerurbanspa1.svg'
             />
           </Box>
         </Box>

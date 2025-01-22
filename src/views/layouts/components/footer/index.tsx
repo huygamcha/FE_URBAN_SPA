@@ -138,7 +138,7 @@ const Footer = () => {
               height={9}
               layout='responsive'
               alt='image'
-              src='https://cdn.kampa.vn/footerurbanspa.svg'
+              src='https://cdn.kampa.vn/footerurbanspa1.svg'
             />
           </Box>
         </Box>
