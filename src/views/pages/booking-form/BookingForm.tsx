@@ -137,7 +137,7 @@ const BookingForm = () => {
         note: data?.notes
       })
     )
-    // reset()
+    reset()
   }
 
   useEffect(() => {

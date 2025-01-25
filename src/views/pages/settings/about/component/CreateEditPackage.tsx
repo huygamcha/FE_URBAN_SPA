@@ -90,7 +90,7 @@ const CreateEditAbout = (props: TCreateEditAbout) => {
 
   const { isSuccess: isSuccessEdit, mutate: mutateEditAbout } = useMutationEditAbout({
     onSuccess: () => {
-      toast.success(t('Update_about_success'))
+      toast.success(t('Update_successfully'))
     },
     onError: err => {
       toast.error(t('Update_about_error'))

@@ -360,7 +360,7 @@ const OrderSpaListPage: NextPage<TProps> = () => {
       if (!openEdit.id) {
         toast.success(t('Create_order_success'))
       } else {
-        toast.success(t('Update_order_success'))
+        toast.success(t('Update_successfully'))
       }
       handleGetListOrderSpas()
       handleCloseEdit()

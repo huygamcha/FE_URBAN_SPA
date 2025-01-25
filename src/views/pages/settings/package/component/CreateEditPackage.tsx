@@ -203,7 +203,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
           </Box>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
             <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
-              <Grid container spacing={2}>
+              <Grid container spacing={4}>
                 <Grid item xs={6}>
                   {' '}
                   <Controller
@@ -241,7 +241,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                               sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
                             >
                               <Icon icon='ph:camera-thin' />
-                              {value ? t('Change__image') : t('Upload__image')}
+                              {value ? t('Change_image') : t('Upload_image')}
                             </Button>
                           </WrapperFileUpload>
                           {value && (
@@ -285,6 +285,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                         <CustomTextField
                           required
                           fullWidth
+                          // disabled={name === 'slug' ? true : false}
                           label={t(label)}
                           // onChange={onChange}
                           onChange={e => {
@@ -302,7 +303,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                           }}
                           onBlur={onBlur}
                           value={value}
-                          placeholder={t(`Enter_${label.toLowerCase().replace(/\s/g, '_')}`)}
+                          placeholder={t(`Enter_${label}`)}
                           error={Boolean(errors?.name)}
                           helperText={errors?.name?.message}
                         />
