@@ -79,9 +79,8 @@ const CreateEditBanner = (props: TCreateEditBanner) => {
 
   // handle
   const onSubmit = async (data: any) => {
-    const result = await uploadMultipleImage(imageCloudflare)
-
     if (!Object.keys(errors).length) {
+      const result = await uploadMultipleImage(imageCloudflare)
       dispatch(
         updateBannerAsync({
           ...data,
@@ -90,6 +89,7 @@ const CreateEditBanner = (props: TCreateEditBanner) => {
         })
       )
     }
+    setImageCloudflare({ image: '' })
   }
 
   // fetch
@@ -140,7 +140,13 @@ const CreateEditBanner = (props: TCreateEditBanner) => {
   return (
     <>
       {loading && <Spinner />}
-      <CustomModal open={open} onClose={onClose}>
+      <CustomModal
+        open={open}
+        onClose={() => {
+          onClose()
+          setImageCloudflare({ image: '' })
+        }}
+      >
         <Box
           sx={{
             padding: '20px',
