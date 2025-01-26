@@ -107,7 +107,11 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
 
   // handle
   const onSubmit = async (data: any) => {
-    const result = await uploadMultipleImage(imageCloudflare)
+    setLoading(true)
+    let resultImage
+    if (Object.values(imageCloudflare)[0]) {
+      resultImage = await uploadMultipleImage(imageCloudflare)
+    }
 
     if (!Object.keys(errors).length) {
       if (idPackage) {
@@ -115,7 +119,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         dispatch(
           updatePackageAsync({
             ...data,
-            image: result.image ? result.image : data?.image,
+            image: resultImage?.image ? resultImage?.image : data?.image,
             id: idPackage
           })
         )
@@ -123,15 +127,19 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         dispatch(
           createPackageAsync({
             ...data,
-            image: result.image ? result.image : data?.image
+            image: resultImage?.image ? resultImage?.image : data?.image
           })
         )
       }
     }
+
+    setImageCloudflare({ image: '' })
+    setLoading(false)
+    // onClose()
   }
 
   // fetch
-  const fetchDetailsPackage = async (id: string) => {
+  const fetchDetailPackage = async (id: string) => {
     setLoading(true)
     await getDetailsPackage(id)
       .then(res => {
@@ -173,17 +181,23 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
   }
 
   useEffect(() => {
-    if (!open) {
+    if (!idPackage) {
       reset({ ...defaultValues })
     } else if (idPackage && open) {
-      fetchDetailsPackage(idPackage)
+      fetchDetailPackage(idPackage)
     }
   }, [open, idPackage])
 
   return (
     <>
       {loading && <Spinner />}
-      <CustomModal open={open} onClose={onClose}>
+      <CustomModal
+        open={open}
+        onClose={() => {
+          onClose()
+          setImageCloudflare({ image: '' })
+        }}
+      >
         <Box
           sx={{
             padding: '20px',
@@ -205,7 +219,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
             <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
               <Grid container spacing={4}>
                 <Grid item xs={6}>
-                  {' '}
                   <Controller
                     name='image'
                     control={control}
