@@ -399,10 +399,12 @@
   "Confirm_delete_banner": "このバナーを削除してもよろしいですか？",
   "Delete_service_success": "サービスを削除しました",
   "Title_delete_package": "カテゴリ削除確認",
+  "Category": "カテゴリ",
   "Confirm_delete_package": "このカテゴリを削除してもよろしいですか？",
   "Title_delete_multiple_package": "複数カテゴリ削除確認",
   "Confirm_delete_multiple_package": "これらのカテゴリを削除してもよろしいですか？",
   "Delete_multiple_package_success": "複数のカテゴリを削除しました",
   "Upload_image": "画像をアップロード",
-  "Change_image": "画像を変更"
+  "Change_image": "画像を変更",
+  "Image_Size_Limit": "画像は10MBを超えてはいけません"
 }

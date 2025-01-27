@@ -397,10 +397,12 @@
   "Confirm_delete_banner": "Are you sure you want to delete this banner?",
   "Delete_service_success": "Service deleted successfully",
   "Title_delete_package": "Confirm delete category",
+  "Category": "Category",
   "Confirm_delete_package": "Are you sure you want to delete this category?",
   "Title_delete_multiple_package": "Confirm delete multiple categories",
   "Confirm_delete_multiple_package": "Are you sure you want to delete these categories?",
   "Delete_multiple_package_success": "Multiple categories deleted successfully",
   "Upload_image": "Upload image",
-  "Change_image": "Change image"
+  "Change_image": "Change image",
+  "Image_Size_Limit": "The image must not exceed 10MB"
 }

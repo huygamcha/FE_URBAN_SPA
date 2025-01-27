@@ -399,10 +399,12 @@
   "Confirm_delete_banner": "이 배너를 삭제하시겠습니까?",
   "Delete_service_success": "서비스가 성공적으로 삭제되었습니다",
   "Title_delete_package": "카테고리 삭제 확인",
+  "Category": "카테고리",
   "Confirm_delete_package": "이 카테고리를 삭제하시겠습니까?",
   "Title_delete_multiple_package": "여러 카테고리 삭제 확인",
   "Confirm_delete_multiple_package": "이 카테고리들을 삭제하시겠습니까?",
   "Delete_multiple_package_success": "여러 카테고리를 성공적으로 삭제했습니다",
   "Upload_image": "이미지 업로드",
-  "Change_image": "이미지 변경"
+  "Change_image": "이미지 변경",
+  "Image_Size_Limit": "이미지는 10MB를 초과할 수 없습니다"
 }

@@ -66,7 +66,8 @@ const CreateBanner = (props: TCreateEditBanner) => {
     getValues,
     formState: { errors },
     reset,
-    setValue
+    setValue,
+    setError
   } = useForm({
     defaultValues,
     mode: 'onBlur',
@@ -106,32 +107,38 @@ const CreateBanner = (props: TCreateEditBanner) => {
 
   // handleImage huygamcha
   const handleUploadAvatar = async (pics: File[]) => {
-    const arrayOfFile: FormData[] = []
+    const errorImage = pics.some(item => item.size > 10000000)
 
-    // sử lí đồng bộ
-    const filePreviews: string[] = await Promise.all(
-      pics.map(
-        pic =>
-          new Promise<string>((resolve, reject) => {
-            const data = new FormData()
-            data.append('file', pic)
-            arrayOfFile.push(data)
+    if (!errorImage) {
+      const arrayOfFile: FormData[] = []
 
-            const reader = new FileReader()
-            reader.readAsDataURL(pic)
-            reader.onload = e => resolve(e.target?.result as string)
-            reader.onerror = e => reject(e)
-          })
+      // sử lí đồng bộ
+      const filePreviews: string[] = await Promise.all(
+        pics.map(
+          pic =>
+            new Promise<string>((resolve, reject) => {
+              const data = new FormData()
+              data.append('file', pic)
+              arrayOfFile.push(data)
+
+              const reader = new FileReader()
+              reader.readAsDataURL(pic)
+              reader.onload = e => resolve(e.target?.result as string)
+              reader.onerror = e => reject(e)
+            })
+        )
       )
-    )
 
-    // Update the form with previews
-    filePreviews.forEach((preview, index) => {
-      setValue(`links.${index}`, preview)
-    })
+      // Update the form with previews
+      filePreviews.forEach((preview, index) => {
+        setValue(`links.${index}`, preview)
+      })
 
-    // Update cloudflare images
-    setImageCloudflare(prev => [...prev, ...arrayOfFile])
+      // Update cloudflare images
+      setImageCloudflare(prev => [...prev, ...arrayOfFile])
+    } else {
+      setError('links', { type: 'custom', message: t('Image_Size_Limit') })
+    }
   }
 
   const handleDelete = async (id: number) => {
@@ -217,7 +224,6 @@ const CreateBanner = (props: TCreateEditBanner) => {
                         <Box display='flex' alignItems='center' justifyContent='space-between'>
                           <WrapperFileUploadMultiple
                             uploadFunc={async files => {
-                              console.log(files)
                               await handleUploadAvatar(files) // Hàm xử lý upload
                             }}
                             objectAcceptFile={{

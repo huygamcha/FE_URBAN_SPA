@@ -98,7 +98,8 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     getValues,
     formState: { errors },
     reset,
-    setValue
+    setValue,
+    setError
   } = useForm({
     defaultValues,
     mode: 'onBlur',
@@ -163,21 +164,25 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
 
   // handleImage huygamcha
   const handleUploadAvatar = async (pics: File, field: string) => {
-    const data = new FormData()
-    data.append('file', pics)
-    setImageCloudflare(prev => ({
-      ...prev,
-      [field]: data
-    }))
+    if (pics?.size < 10000000) {
+      const data = new FormData()
+      data.append('file', pics)
+      setImageCloudflare(prev => ({
+        ...prev,
+        [field]: data
+      }))
 
-    // hiển thị ảnh để preview
-    // Use FileReader to read the file and display it
-    const reader = new FileReader()
-    reader.onload = (e: any) => {
-      setValue(field as keyof TDefaultValue, e.target.result)
+      // hiển thị ảnh để preview
+      // Use FileReader to read the file and display it
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        setValue(field as keyof TDefaultValue, e.target.result)
+      }
+      reader.readAsDataURL(pics)
+      // setImageURL(null)
+    } else {
+      setError('image', { type: 'custom', message: t('Image_Size_Limit') })
     }
-    reader.readAsDataURL(pics)
-    // setImageURL(null)
   }
 
   useEffect(() => {
@@ -240,6 +245,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                         <Box display='flex' alignItems='center' justifyContent='space-between'>
                           <WrapperFileUpload
                             uploadFunc={async file => {
+                              console.log('««««« file »»»»»', file)
                               const uploadedImageUrl = await handleUploadAvatar(file, 'image') // Hàm xử lý upload
                             }}
                             objectAcceptFile={{
