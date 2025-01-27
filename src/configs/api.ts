@@ -70,6 +70,6 @@ export const API_ENDPOINT = {
     INDEX: `${BASE_URL}/appointments`
   },
   UPLOAD: {
-    IMAGE: `https://kampa.vn/api/v1.0/upload-image`
+    IMAGE: `${BASE_URL}/upload-image`
   }
 }
