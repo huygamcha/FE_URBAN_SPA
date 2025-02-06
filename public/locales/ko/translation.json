@@ -243,7 +243,7 @@
   "UnLike_product_success": "제품 좋아요 취소 성공",
   "UnLike_product_error": "제품 좋아요 취소 실패",
   "My_product": "내 제품",
-"Product_viewed": "본 제품",
+  "Product_viewed": "본 제품",
   "Product_liked": "좋아요 한 제품",
   "Search_name_product": "제품 이름 검색",
   "Sum_money": "총 금액",
@@ -434,5 +434,16 @@
   "Update_service_success": "서비스 업데이트 성공",
   "Actions": "작업",
   "Search": "검색",
-  "Create_Service": "서비스 추가"
+  "Create_Service": "서비스 추가",
+  "Users": "사용자",
+  "Sales": "매출",
+  "Title_delete_order_product": "주문 삭제 확인",
+  "Confirm_delete_order_product": "이 주문을 삭제하시겠습니까?",
+  "Update_order_product_success": "주문 업데이트 성공",
+  "Update_order_product_error": "주문 업데이트 실패",
+  "Delete_order_product_success": "주문 삭제 성공",
+  "Delete_order_product_error": "주문 삭제 실패",
+  "Title_delete_multiple_Order": "여러 서비스 삭제 확인",
+  "Confirm_delete_multiple_Order": "이 서비스들을 삭제하시겠습니까?",
+  "Delete_multiple_order_success": "여러 주문 삭제 성공"
 }

@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next'
 
 interface TCustomSelect extends BaseSelectProps {
   options: { label: string; value: string }[]
+
+  isNotText?: boolean
 }
 
 const StyledSelect = styled(Select)<SelectProps>(({ theme }) => ({
@@ -56,7 +58,7 @@ const CustomPlaceHolder = styled(InputLabel)<InputLabelProps>(({ theme }) => ({
 const StyledMenuItem = styled(MenuItem)<MenuItemProps>(({ theme }) => ({}))
 
 const CustomSelect = (props: TCustomSelect) => {
-  const { value, label, onChange, fullWidth, placeholder, options, ...rest } = props
+  const { isNotText = false , value, label, onChange, fullWidth, placeholder, options, ...rest } = props
   const { t } = useTranslation()
 
   // MenuProps tùy chỉnh với style nền đỏ
@@ -98,7 +100,7 @@ const CustomSelect = (props: TCustomSelect) => {
           options?.map(opt => {
             return (
               <StyledMenuItem key={opt.value} value={opt.value}>
-                {opt.label}
+                {isNotText ?  opt.label : t(`${opt.label}`)}
               </StyledMenuItem>
             )
           })

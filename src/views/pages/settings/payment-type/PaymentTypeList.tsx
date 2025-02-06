@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -55,7 +55,7 @@ const PaymentTypeListPage: NextPage<TProps> = () => {
   const { t } = useTranslation()
 
   // State
-  const ObjectPaymentType:any = PAYMENT_TYPES()
+  const ObjectPaymentType: any = PAYMENT_TYPES()
 
   const [openCreateEdit, setOpenCreateEdit] = useState({
     open: false,
@@ -75,12 +75,7 @@ const PaymentTypeListPage: NextPage<TProps> = () => {
   const [selectedRow, setSelectedRow] = useState<string[]>([])
 
   // ** Hooks
-  const { VIEW, UPDATE, DELETE, CREATE } = usePermission('SETTING.payment_TYPE', [
-    'CREATE',
-    'VIEW',
-    'UPDATE',
-    'DELETE'
-  ])
+  const { VIEW, UPDATE, DELETE, CREATE } = usePermission('SETTING.payment_TYPE', ['CREATE', 'VIEW', 'UPDATE', 'DELETE'])
 
   /// ** redux
   const dispatch: AppDispatch = useDispatch()
@@ -193,7 +188,7 @@ const PaymentTypeListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{formatDate(row?.createdAt, {dateStyle: "short"})}</Typography>
+        return <Typography>{formatDate(row?.createdAt, { dateStyle: 'short' })}</Typography>
       }
     },
     {
@@ -358,7 +353,7 @@ const PaymentTypeListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

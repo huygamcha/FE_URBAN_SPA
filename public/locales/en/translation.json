@@ -434,5 +434,16 @@
   "Update_service_success": "Service updated successfully",
   "Create_category": "Add Category",
   "Edit_category": "Edit Category",
-  "Edit_Service": "Edit Service"
+  "Edit_Service": "Edit Service",
+  "Users": "Users",
+  "Sales": "Sales",
+  "Title_delete_order_product": "Confirm delete order",
+  "Confirm_delete_order_product": "Are you sure you want to delete this order?",
+  "Update_order_product_success": "Order updated successfully",
+  "Update_order_product_error": "Failed to update order",
+  "Delete_order_product_success": "Order deleted successfully",
+  "Delete_order_product_error": "Failed to delete order",
+  "Title_delete_multiple_Order": "Confirm delete multiple services",
+  "Confirm_delete_multiple_Order": "Are you sure you want to delete these services?",
+  "Delete_multiple_order_success": "Successfully deleted multiple orders"
 }

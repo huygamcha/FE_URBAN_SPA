@@ -436,5 +436,16 @@
   "Create_category_success": "カテゴリ作成成功",
   "Update_category_success": "カテゴリ更新成功",
   "Create_service_success": "サービス作成成功",
-  "Update_service_success": "サービス更新成功"
+  "Update_service_success": "サービス更新成功",
+  "Users": "ユーザー",
+  "Sales": "売上",
+  "Title_delete_order_product": "注文削除確認",
+  "Confirm_delete_order_product": "この注文を削除してもよろしいですか？",
+  "Update_order_product_success": "注文の更新に成功しました",
+  "Update_order_product_error": "注文の更新に失敗しました",
+  "Delete_order_product_success": "注文が削除されました",
+  "Delete_order_product_error": "注文の削除に失敗しました",
+  "Title_delete_multiple_Order": "複数のサービス削除確認",
+  "Confirm_delete_multiple_Order": "これらのサービスを削除してもよろしいですか？",
+  "Delete_multiple_order_success": "複数の注文が削除されました"
 }

@@ -593,6 +593,7 @@ const BookingForm = () => {
                       src='https://cdn.kampa.vn/urban-oasis-spa-logo.png'
                       width={80}
                       height={46}
+                      priority
                     />
                   </Link>
                 </Typography>

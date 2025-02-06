@@ -74,7 +74,7 @@ const MyOrderPage: NextPage<TProps> = () => {
       value: VALUE_OPTION_STATUS.WAIT_DELIVERY
     },
     {
-      label: t('Done'),
+      label: t('Completed'),
       value: VALUE_OPTION_STATUS.DONE
     },
     {

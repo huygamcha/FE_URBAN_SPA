@@ -24,6 +24,9 @@ const initialState = {
   isSuccessEdit: false,
   isErrorEdit: false,
   messageErrorEdit: '',
+  isSuccessUpdateStatus: false,
+  isErrorUpdateStatus: false,
+  messageErrorUpdateStatus: '',
   isSuccessDelete: false,
   isErrorDelete: false,
   messageErrorDelete: '',
@@ -60,6 +63,9 @@ export const orderSpaSlice = createSlice({
       state.isSuccessEdit = false
       state.isErrorEdit = true
       state.messageErrorEdit = ''
+      state.isSuccessUpdateStatus = false
+      state.isErrorUpdateStatus = true
+      state.messageErrorUpdateStatus = ''
       state.isSuccessDelete = false
       state.isErrorDelete = true
       state.messageErrorDelete = ''
@@ -140,10 +146,11 @@ export const orderSpaSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(updateStatusOrderSpaAsync.fulfilled, (state, action) => {
+      console.log('««««« action »»»»»', action)
       state.isLoading = false
-      state.isSuccessEdit = !!action.payload?.data?._id
-      state.isErrorEdit = !action.payload?.data?._id
-      state.messageErrorEdit = action.payload?.message
+      state.isSuccessUpdateStatus = !!action.payload?.data?._id
+      state.isErrorUpdateStatus = !action.payload?.data?._id
+      state.messageErrorUpdateStatus = action.payload?.message
       state.typeError = action.payload?.typeError
     })
 

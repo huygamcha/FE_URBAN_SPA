@@ -124,7 +124,10 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     typeError,
     isSuccessMultipleDelete,
     isErrorMultipleDelete,
-    messageErrorMultipleDelete
+    messageErrorMultipleDelete,
+    isSuccessUpdateStatus,
+    isErrorUpdateStatus,
+    messageErrorUpdateStatus
   } = useSelector((state: RootState) => state.orderSpa)
 
   // ** theme
@@ -132,15 +135,15 @@ const OrderSpaListPage: NextPage<TProps> = () => {
 
   const STATUS_ORDER_SPA_STYLE = {
     Pending: {
-      label: 'Chờ khách hàng',
+      label: 'Pending',
       background: theme.palette.warning.main
     },
     Completed: {
-      label: 'Đã thanh toán',
+      label: 'Completed',
       background: theme.palette.success.main
     },
     Cancelled: {
-      label: 'Huỷ đơn',
+      label: 'Cancelled',
       background: theme.palette.secondary.main
     }
   }
@@ -377,6 +380,18 @@ const OrderSpaListPage: NextPage<TProps> = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccessEdit, isErrorEdit, messageErrorEdit, typeError])
+
+  useEffect(() => {
+    console.log('««««« 123 »»»»»', 123)
+    if (isSuccessUpdateStatus) {
+      toast.success(t('Update_order_product_success'))
+      handleGetListOrderSpas()
+      dispatch(resetInitialState())
+    } else if (isErrorUpdateStatus && messageErrorUpdateStatus) {
+      toast.error(t('Update_order_product_error'))
+      dispatch(resetInitialState())
+    }
+  }, [isSuccessUpdateStatus, isErrorUpdateStatus, messageErrorUpdateStatus])
 
   useEffect(() => {
     if (isSuccessDelete) {

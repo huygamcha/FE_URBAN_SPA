@@ -2,10 +2,10 @@
 
 import { IconButton, Menu, MenuItem } from '@mui/material'
 import { MouseEvent, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import Icon from 'src/components/Icon'
 import { AppDispatch } from 'src/stores'
-import { updateStatusOrderProductAsync } from 'src/stores/order-product/actions'
 import { updateStatusOrderSpaAsync } from 'src/stores/order-spa/actions'
 import { TParamsStatusOrderUpdate } from 'src/types/order-spa'
 
@@ -17,6 +17,7 @@ type TProps = {
 const MoreButton = ({ memoOptionStatus, data }: TProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const dispatch: AppDispatch = useDispatch()
+  const {t, i18n} = useTranslation()
 
   const optionsOpen = Boolean(anchorEl)
 
@@ -60,7 +61,7 @@ const MoreButton = ({ memoOptionStatus, data }: TProps) => {
                 handleOptionsClose()
               }}
             >
-              {item.label}
+              {t(`${item.label}`)}
             </MenuItem>
           )
         })}

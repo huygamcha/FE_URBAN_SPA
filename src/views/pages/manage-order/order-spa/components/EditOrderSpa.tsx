@@ -43,15 +43,15 @@ import { LANGUAGES } from 'src/app/data/language'
 
 const STATUS_OF_SPA = [
   {
-    label: 'Chờ khách hàng',
+    label: 'Pending',
     value: 'Pending'
   },
   {
-    label: 'Hoàn thành',
+    label: 'Completed',
     value: 'Completed'
   },
   {
-    label: 'Huỷ đơn',
+    label: 'Cancelled',
     value: 'Cancelled'
   }
 ]
@@ -551,6 +551,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                           required
                           onChange={onChange}
                           options={visitTime}
+                          isNotText
                           error={Boolean(errors?.duration)}
                           onBlur={onBlur}
                           value={value}

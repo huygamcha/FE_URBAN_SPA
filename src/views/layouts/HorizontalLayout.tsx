@@ -126,7 +126,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 }}
                 href={ROUTE_CONFIG.HOME}
               >
-                <Image alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
+                <Image priority alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
               </Link>
             </Typography>
           </Box>
