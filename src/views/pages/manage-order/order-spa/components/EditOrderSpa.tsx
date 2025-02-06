@@ -402,6 +402,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                         fullWidth
                         required
                         label={t('Full_name')}
+                        placeholder={t('Enter_your_full_name')}
                         error={Boolean(errors?.name)}
                         helperText={errors?.name?.message}
                         {...field}
@@ -417,6 +418,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                       <CustomTextField
                         fullWidth
                         required
+                        placeholder={t('Enter_your_phone')}
                         label={t('Phone_number')}
                         error={Boolean(errors?.phoneNumber)}
                         helperText={errors?.phoneNumber?.message}
@@ -434,6 +436,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                         fullWidth
                         required
                         label={t('Email')}
+                        placeholder={t('Enter_email')}
                         error={Boolean(errors?.email)}
                         helperText={errors?.email?.message}
                         {...field}
@@ -488,6 +491,9 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                               '& fieldset': {
                                 borderColor: 'black' // Đường viền của fieldset luôn màu đen
                               }
+                            },
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'black !important'
                             }
                           }}
                         >
@@ -677,6 +683,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
                     render={({ field }) => (
                       <CustomTextField
                         fullWidth
+                        placeholder={t('Enter_your_notes')}
                         label={t('Note')}
                         error={Boolean(errors?.note)}
                         helperText={errors?.note?.message}

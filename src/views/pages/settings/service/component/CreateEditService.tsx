@@ -38,7 +38,7 @@ import { createServiceAsync, updateServiceAsync } from 'src/stores/service/actio
 import { useGetListPackages } from 'src/queries/packages'
 import { getDetailsService } from 'src/services/service'
 import { convertToRaw, EditorState } from 'draft-js'
-import { convertHTMLToDraft } from 'src/utils'
+import { convertHTMLToDraft, displayValueByLanguage } from 'src/utils'
 import draftToHtml from 'draftjs-to-html'
 import CustomEditor from 'src/components/custom-editor'
 
@@ -98,7 +98,7 @@ const CreateEditService = (props: TCreateEditService) => {
   const [loading, setLoading] = useState(false)
   const { open, onClose, idService } = props
   const theme = useTheme()
-  const { t } = useTranslation()
+  const { t,i18n } = useTranslation()
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -313,7 +313,7 @@ const CreateEditService = (props: TCreateEditService) => {
                                 }}
                                 key={opt._id}
                                 value={opt._id}
-                                label={t(`${opt.name}`)}
+                                label={displayValueByLanguage({language: i18n.language, value: opt, field: 'name'})}
                               />
                             )
                           })}
@@ -378,7 +378,6 @@ const CreateEditService = (props: TCreateEditService) => {
                       <CustomTextField
                         fullWidth
                         required
-
                         label={t('Name_Japanese')}
                         placeholder={t('Enter_Name_Japanese')}
                         error={Boolean(errors?.nameJp)}
@@ -396,7 +395,6 @@ const CreateEditService = (props: TCreateEditService) => {
                       <CustomTextField
                         fullWidth
                         required
-
                         label={t('Name_English')}
                         placeholder={t('Enter_Name_English')}
                         error={Boolean(errors?.nameEn)}
@@ -451,14 +449,24 @@ const CreateEditService = (props: TCreateEditService) => {
                       <Controller
                         control={control}
                         name={`options.${index}.duration`}
-                        render={({ field }) => (
+                        render={({ field: { onChange, onBlur, value } }) => (
                           <CustomTextField
+                            value={value}
                             fullWidth
+                            onChange={e => {
+                              const numValue = e.target.value.replace(/\D/g, '')
+                              onChange(numValue)
+                            }}
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[0-9]*',
+                              minLength: 1
+                            }}
                             label={t('Duration')}
                             placeholder={t('Enter_Duration')}
                             error={Boolean(errors?.options?.[index]?.duration)}
                             helperText={errors?.options?.[index]?.duration?.message}
-                            {...field}
+                            onBlur={onBlur}
                           />
                         )}
                       />
@@ -467,13 +475,24 @@ const CreateEditService = (props: TCreateEditService) => {
                       <Controller
                         control={control}
                         name={`options.${index}.price`}
-                        render={({ field }) => (
+                        render={({ field: { onChange, onBlur, value } }) => (
                           <CustomTextField
+                            value={value}
+                            onChange={e => {
+                              const numValue = e.target.value.replace(/\D/g, '')
+                              onChange(numValue)
+                            }}
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[0-9]*',
+                              minLength: 1
+                            }}
                             fullWidth
+                            placeholder={t('Enter_Price')}
                             label={t('Price')}
                             error={Boolean(errors?.options?.[index]?.price)}
                             helperText={errors?.options?.[index]?.price?.message}
-                            {...field}
+                            onBlur={onBlur}
                           />
                         )}
                       />
