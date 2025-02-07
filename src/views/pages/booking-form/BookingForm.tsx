@@ -29,6 +29,8 @@ import { ROUTE_CONFIG } from 'src/configs/route'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { visitTime } from 'src/app/data/visitTime'
+import { displayValueByLanguage } from 'src/utils'
+import Spinner from 'src/components/spinner'
 
 dayjs.extend(utc)
 
@@ -151,7 +153,10 @@ const BookingForm = () => {
   }, [allPackages, openBookingForm])
 
   return (
-    <Box
+
+    <>
+    {isPending && <Spinner />}
+        <Box
       sx={{
         padding: '2% 5%',
         position: 'relative',
@@ -257,7 +262,11 @@ const BookingForm = () => {
                                   }}
                                   key={opt._id}
                                   value={opt._id}
-                                  label={t(`${opt.name}`)}
+                                  label={displayValueByLanguage({
+                                    language: i18n.language,
+                                    value: opt,
+                                    field: 'name'
+                                  })}
                                 />
                               )
                             })}
@@ -634,7 +643,8 @@ const BookingForm = () => {
       >
         <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
       </Box>
-    </Box>
+    </Box></>
+
   )
 }
 
