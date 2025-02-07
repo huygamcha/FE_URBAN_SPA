@@ -30,7 +30,7 @@ const CardCountRevenue = (props: TProps) => {
   }, [data])
   const dataSets = [
     {
-      label: `${t('Doanh số')}`,
+      label: `${t('Sales')}`,
       backgroundColor: [
         theme.palette.error.main,
         theme.palette.warning.main,

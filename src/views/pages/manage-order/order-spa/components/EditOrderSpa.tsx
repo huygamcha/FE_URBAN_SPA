@@ -36,7 +36,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import dayjs from 'dayjs'
 import { getAllPackages } from 'src/services/packages'
 import { getAllServices } from 'src/services/service'
-import { formatCurrency } from 'src/utils'
+import { displayValueByLanguage, formatCurrency } from 'src/utils'
 import { visitTime } from 'src/app/data/visitTime'
 import { LANGUAGE_OPTIONS } from 'src/configs/i18n'
 import { LANGUAGES } from 'src/app/data/language'
@@ -92,14 +92,13 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
   const [optionServices, setOptionServices] = useState<Record<string, any[]>>({})
   const [optionOptions, setOptionOptions] = useState<Record<string, any[]>>({})
   const [optionItem, setOptionItem] = useState<Record<string, any>>({})
-  const firstRenderTotalPrice = useRef(true)
   const firstRenderService = useRef(true)
   const firstRenderOption = useRef(true)
 
   const { open, onClose, idOrder } = props
 
   const theme = useTheme()
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -222,8 +221,12 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
         const data = res?.data.packages
         if (data) {
           setOptionPackages(
-            data.map((item: { name: string; _id: string }) => ({
-              label: item.name,
+            data.map((item: { name: string; _id: string; nameKo: string; nameEn: string; nameJp: string }) => ({
+              label: displayValueByLanguage({
+                language: i18n.language,
+                value: item,
+                field: 'name'
+              }),
               value: item._id
             }))
           )
@@ -236,26 +239,26 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
   }
 
   const fetchAllServices = async (id: string) => {
-    setLoading(true)
-    await getAllServices({ params: { limit: -1, page: -1, packageId: id } })
-      .then(res => {
-        const data = res?.data?.services
-        if (data) {
-          // lấy danh sách dịch vụ theo danh mục
-          setOptionServices(prev => ({
-            ...prev,
-            [id]: data.map((item: { name: string; _id: string; options: any[] }) => ({
-              label: item.name,
+    await getAllServices({ params: { limit: -1, page: -1, packageId: id } }).then(res => {
+      const data = res?.data?.services
+      if (data) {
+        // lấy danh sách dịch vụ theo danh mục
+        setOptionServices(prev => ({
+          ...prev,
+          [id]: data.map(
+            (item: { name: string; nameKo: string; nameEn: string; nameJp: string; _id: string; options: any[] }) => ({
+              label: displayValueByLanguage({
+                language: i18n.language,
+                value: item,
+                field: 'name'
+              }),
               value: item._id,
               options: item.options
-            }))
-          }))
-        }
-        setLoading(false)
-      })
-      .catch(() => {
-        setLoading(false)
-      })
+            })
+          )
+        }))
+      }
+    })
   }
 
   const fetchAllOptions = async (serviceId: string, index: number) => {
@@ -265,7 +268,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
         ?.find((item: any) => item.value === serviceId)
         ?.options.map((item: { _id: string; duration: string; price: number }) => ({
           value: item._id,
-          label: `${item.duration} phút - ${formatCurrency(item.price)}`,
+          label: `${item.duration} ${t('minutes')} - ${formatCurrency(item.price)}`,
           duration: item.duration,
           price: item.price
         }))
@@ -371,7 +374,7 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
+      {loading && <Spinner />}
       <CustomModal open={open} onClose={onClose}>
         <Box
           sx={{

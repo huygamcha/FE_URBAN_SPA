@@ -292,7 +292,7 @@
   "Delete_order_product_error": "Xóa đơn hàng thất bại",
   "Title_delete_multiple_Order": "Xác nhận xoá nhiều dịch vụ",
   "Confirm_delete_multiple_Order": "Bạn có chắc xoá những dịch vụ này?",
-  "Delete_multiple_order_success":"Xoá nhiều đơn hàng thành công",
+  "Delete_multiple_order_success": "Xoá nhiều đơn hàng thành công",
   "Product_items": "Sản phẩm",
   "Total_price": "Tổng tiền",
   "Search": "Tìm kiếm",
@@ -460,5 +460,9 @@
   "Change_image": "Thay đổi ảnh",
   "Image_Size_Limit": "Ảnh không được vượt quá 10MB",
   "Users": "Người dùng",
-  "Sales": "Doanh số"
+  "Sales": "Doanh số",
+  "Invalid_email_format": "Sai định dạng email",
+  "Phone number must contain only numbers": "Số điện thoại phải chỉ chứa các chữ số",
+  "Phone number must be at least 9 digits": "Số điện thoại phải có ít nhất 9 chữ số",
+  "Minimum quantity is 1": "Số lượng tối thiểu là 1"
 }
