@@ -506,7 +506,7 @@ const OrderSpaListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
 

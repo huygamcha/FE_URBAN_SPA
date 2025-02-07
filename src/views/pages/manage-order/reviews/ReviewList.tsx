@@ -1,5 +1,4 @@
-
-"use client"
+'use client'
 // ** Next
 import { NextPage } from 'next'
 
@@ -44,7 +43,6 @@ import { PAGE_SIZE_OPTION } from 'src/configs/gridConfig'
 import { FILTER_REVIEW_CMS } from 'src/configs/reviews'
 
 type TProps = {}
-
 
 const ReviewListPage: NextPage<TProps> = () => {
   // ** Translate
@@ -162,25 +160,20 @@ const ReviewListPage: NextPage<TProps> = () => {
 
   const columns: GridColDef[] = [
     {
-      field: "firstName",
+      field: 'firstName',
       headerName: t('User'),
       hideSortIcons: true,
       flex: 1,
       renderCell: params => {
         const { row } = params
-        const fullName =
-          toFullName(
-            row?.user?.lastName || '',
-            row?.user?.middleName || '',
-            row?.user?.firstName || '',
-            i18n.language
-          )
-
-        return (
-          <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
-            {fullName}
-          </Typography>
+        const fullName = toFullName(
+          row?.user?.lastName || '',
+          row?.user?.middleName || '',
+          row?.user?.firstName || '',
+          i18n.language
         )
+
+        return <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{fullName}</Typography>
       }
     },
     {
@@ -191,11 +184,13 @@ const ReviewListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
-          <Tooltip title={row.product.name}>
-            <span>{row?.product?.name}</span>
-          </Tooltip>
-        </Typography>
+        return (
+          <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+            <Tooltip title={row.product.name}>
+              <span>{row?.product?.name}</span>
+            </Tooltip>
+          </Typography>
+        )
       }
     },
     {
@@ -228,7 +223,6 @@ const ReviewListPage: NextPage<TProps> = () => {
       sortable: false,
       align: 'left',
       renderCell: params => {
-
         return (
           <>
             <GridEdit
@@ -292,7 +286,6 @@ const ReviewListPage: NextPage<TProps> = () => {
         toast.error(t(errorConfig))
       } else {
         toast.error(t('Update_review_error'))
-
       }
       dispatch(resetInitialState())
     }
@@ -382,7 +375,7 @@ const ReviewListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

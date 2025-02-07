@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -73,23 +73,20 @@ const UserListPage: NextPage<TProps> = () => {
   // ** Translate
   const { t } = useTranslation()
 
-
   const mapUserType = {
     1: {
-      title: t("Facebook"),
-      icon: "logos:facebook",
-
+      title: t('Facebook'),
+      icon: 'logos:facebook'
     },
     2: {
-      title: t("Google"),
-      icon: "flat-color-icons:google",
-
+      title: t('Google'),
+      icon: 'flat-color-icons:google'
     },
     3: {
-      title: t("Email"),
-      icon: "logos:google-gmail",
+      title: t('Email'),
+      icon: 'logos:google-gmail',
       iconSize: 18
-    },
+    }
   }
 
   // State
@@ -118,7 +115,7 @@ const UserListPage: NextPage<TProps> = () => {
   const [selectedRow, setSelectedRow] = useState<TSelectedRow[]>([])
   const [filterBy, setFilterBy] = useState<Record<string, string | string[]>>({})
   const [countUserType, setCountUserType] = useState<{
-    data: Record<number, number>,
+    data: Record<number, number>
     totalUser: number
   }>({} as any)
 
@@ -180,7 +177,6 @@ const UserListPage: NextPage<TProps> = () => {
       setSortBy('createdAt desc')
     }
   }
-
 
   const handleCloseCreateEdit = useCallback(() => {
     setOpenCreateEdit({
@@ -294,11 +290,16 @@ const UserListPage: NextPage<TProps> = () => {
         const { row } = params
 
         return (
-          <>{row.userType && (
-            <Box>
-              <Icon icon={(mapUserType as any)[row.userType]?.icon} fontSize={(mapUserType as any)[row.userType]?.iconSize || 24} />
-            </Box>
-          )}</>
+          <>
+            {row.userType && (
+              <Box>
+                <Icon
+                  icon={(mapUserType as any)[row.userType]?.icon}
+                  fontSize={(mapUserType as any)[row.userType]?.iconSize || 24}
+                />
+              </Box>
+            )}
+          </>
         )
       }
     },
@@ -367,16 +368,18 @@ const UserListPage: NextPage<TProps> = () => {
 
   const fetchAllCountUserType = async () => {
     setLoading(true)
-    await getCountUserType().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountUserType({
-        data: data?.data,
-        totalUser: data?.total
+    await getCountUserType()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountUserType({
+          data: data?.data,
+          totalUser: data?.total
+        })
       })
-    }).catch(e => {
-      setLoading(false)
-    })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const fetchAllCities = async () => {
@@ -471,21 +474,21 @@ const UserListPage: NextPage<TProps> = () => {
 
   const dataListUser = [
     {
-      "icon": "tabler:user",
+      icon: 'tabler:user',
       userType: 4
     },
     {
-      "icon": "logos:facebook",
-      userType: CONFIG_USER_TYPE.FACEBOOK,
+      icon: 'logos:facebook',
+      userType: CONFIG_USER_TYPE.FACEBOOK
     },
     {
       userType: CONFIG_USER_TYPE.GOOGLE,
-      "icon": "flat-color-icons:google",
+      icon: 'flat-color-icons:google'
     },
     {
-      "icon": "logos:google-gmail",
-      iconSize: "18",
-      userType: CONFIG_USER_TYPE.DEFAULT,
+      icon: 'logos:google-gmail',
+      iconSize: '18',
+      userType: CONFIG_USER_TYPE.DEFAULT
     }
   ]
 
@@ -508,13 +511,9 @@ const UserListPage: NextPage<TProps> = () => {
         title={t('Title_delete_multiple_user')}
         description={t('Confirm_delete_multiple_user')}
       />
-      <CreateEditUser
-        open={openCreateEdit.open}
-        onClose={handleCloseCreateEdit}
-        idUser={openCreateEdit.id}
-      />
+      <CreateEditUser open={openCreateEdit.open} onClose={handleCloseCreateEdit} idUser={openCreateEdit.id} />
       {isLoading && <Spinner />}
-      <Box sx={{ backgroundColor: "inherit", width: '100%', mb: 4 }}>
+      <Box sx={{ backgroundColor: 'inherit', width: '100%', mb: 4 }}>
         <Grid container spacing={6} sx={{ height: '100%' }}>
           {dataListUser?.map((item: any, index: number) => {
             return (
@@ -536,7 +535,6 @@ const UserListPage: NextPage<TProps> = () => {
           borderRadius: '15px'
         }}
       >
-
         <Grid container sx={{ height: '100%', width: '100%' }}>
           {!selectedRow?.length && (
             <Box
@@ -609,7 +607,7 @@ const UserListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: memoDisabledDeleteUser || !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: memoDisabledDeleteUser || !DELETE }]}
             />
           )}
           <CustomDataGrid

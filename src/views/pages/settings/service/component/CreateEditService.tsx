@@ -266,6 +266,7 @@ const CreateEditService = (props: TCreateEditService) => {
                         <label
                           style={{
                             fontSize: '0.813rem',
+                            marginBottom: '0.5rem',
                             display: 'block',
                             color: errors?.packageId ? theme.palette.error.main : theme.palette.primary.main
                           }}

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -44,7 +44,6 @@ import { deleteCommentAsync, deleteMultipleCommentAsync, getAllCommentCMSAsync }
 import TableHeader from 'src/components/table-header'
 
 type TProps = {}
-
 
 const CommentListPage: NextPage<TProps> = () => {
   // ** Translate
@@ -157,26 +156,21 @@ const CommentListPage: NextPage<TProps> = () => {
 
   const columns: GridColDef[] = [
     {
-      field: i18n.language === "vi" ? "lastName" : "firstName",
+      field: i18n.language === 'vi' ? 'lastName' : 'firstName',
       headerName: t('User'),
       hideSortIcons: true,
       minWidth: 200,
       maxWidth: 200,
       renderCell: params => {
         const { row } = params
-        const fullName =
-          toFullName(
-            row?.user?.lastName || '',
-            row?.user?.middleName || '',
-            row?.user?.firstName || '',
-            i18n.language
-          )
-
-        return (
-          <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
-            {fullName}
-          </Typography>
+        const fullName = toFullName(
+          row?.user?.lastName || '',
+          row?.user?.middleName || '',
+          row?.user?.firstName || '',
+          i18n.language
         )
+
+        return <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{fullName}</Typography>
       }
     },
     {
@@ -187,11 +181,13 @@ const CommentListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography sx={{ overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>
-          <Tooltip title={row.product.name}>
-            <span>{row?.product?.name}</span>
-          </Tooltip>
-        </Typography>
+        return (
+          <Typography sx={{ overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+            <Tooltip title={row.product.name}>
+              <span>{row?.product?.name}</span>
+            </Tooltip>
+          </Typography>
+        )
       }
     },
     {
@@ -212,7 +208,6 @@ const CommentListPage: NextPage<TProps> = () => {
       sortable: false,
       align: 'left',
       renderCell: params => {
-
         return (
           <>
             <GridEdit
@@ -267,7 +262,6 @@ const CommentListPage: NextPage<TProps> = () => {
         toast.error(t(errorConfig))
       } else {
         toast.error(t('Update_comment_error'))
-
       }
       dispatch(resetInitialState())
     }
@@ -331,22 +325,19 @@ const CommentListPage: NextPage<TProps> = () => {
         }}
       >
         <Grid container sx={{ height: '100%', width: '100%' }}>
-          <Box
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, mb: 4, width: '100%' }}
-          >
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 4, mb: 4, width: '100%' }}>
             {!selectedRow?.length && (
               <Box sx={{ width: '200px' }}>
                 <InputSearch value={searchBy} onChange={(value: string) => setSearchBy(value)} />
               </Box>
             )}
-
           </Box>
           {selectedRow?.length > 0 && (
             <TableHeader
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

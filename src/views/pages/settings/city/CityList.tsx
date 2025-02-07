@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -171,7 +171,7 @@ const CityListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{formatDate(row?.createdAt, {dateStyle: "short"})}</Typography>
+        return <Typography>{formatDate(row?.createdAt, { dateStyle: 'short' })}</Typography>
       }
     },
     {
@@ -332,7 +332,7 @@ const CityListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

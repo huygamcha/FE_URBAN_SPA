@@ -42,12 +42,13 @@ import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import { deleteMultipleServiceAsync, deleteServiceAsync, getAllServicesAsync } from 'src/stores/service/actions'
 import CreateEditService from './component/CreateEditService'
 import { resetInitialState } from 'src/stores/service'
+import { displayValueByLanguage } from 'src/utils'
 
 type TProps = {}
 
 const ServiceListPage: NextPage<TProps> = () => {
   // ** Translate
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   // State
 
@@ -160,7 +161,11 @@ const ServiceListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography>{row?.packageId?.name}</Typography>
+        return (
+          <Typography>
+            {displayValueByLanguage({ language: i18n.language, value: row?.packageId, field: 'name' })}
+          </Typography>
+        )
       }
     },
     {
@@ -368,7 +373,7 @@ const ServiceListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

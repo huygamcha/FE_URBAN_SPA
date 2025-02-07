@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -47,7 +47,7 @@ import { getAllProductTypes } from 'src/services/product-type'
 
 // ** Utils
 import { formatNumberToLocal, formatFilter } from 'src/utils'
-import { formatDate } from "src/utils/date"
+import { formatDate } from 'src/utils/date'
 import { getCountProductStatus } from 'src/services/report'
 import CardCountProduct from 'src/views/pages/manage-product/product/component/CardCountProduct'
 
@@ -96,7 +96,7 @@ const ProductListPage: NextPage<TProps> = () => {
   const [filterBy, setFilterBy] = useState<Record<string, string | string[]>>({})
   const [loading, setLoading] = useState(false)
   const [countProductStatus, setCountProductStatus] = useState<{
-    data: Record<number, number>,
+    data: Record<number, number>
     total: number
   }>({} as any)
 
@@ -212,16 +212,18 @@ const ProductListPage: NextPage<TProps> = () => {
 
   const fetchAllCountProductStatus = async () => {
     setLoading(true)
-    await getCountProductStatus().then((res) => {
-      const data = res?.data
-      setLoading(false)
-      setCountProductStatus({
-        data: data?.data,
-        total: data?.total
+    await getCountProductStatus()
+      .then(res => {
+        const data = res?.data
+        setLoading(false)
+        setCountProductStatus({
+          data: data?.data,
+          total: data?.total
+        })
       })
-    }).catch(e => {
-      setLoading(false)
-    })
+      .catch(e => {
+        setLoading(false)
+      })
   }
 
   const columns: GridColDef[] = [
@@ -233,7 +235,11 @@ const ProductListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        return <Typography sx={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "100%" }}>{row?.name}</Typography>
+        return (
+          <Typography sx={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+            {row?.name}
+          </Typography>
+        )
       }
     },
     {
@@ -411,17 +417,17 @@ const ProductListPage: NextPage<TProps> = () => {
 
   const dataListProductStatus = [
     {
-      "icon": "la:product-hunt",
-      status: "2"
+      icon: 'la:product-hunt',
+      status: '2'
     },
     {
-      "icon": "material-symbols-light:public-off",
-      status: "0",
+      icon: 'material-symbols-light:public-off',
+      status: '0'
     },
     {
-      status: "1",
-      "icon": "material-symbols-light:public",
-    },
+      status: '1',
+      icon: 'material-symbols-light:public'
+    }
   ]
 
   return (
@@ -450,7 +456,7 @@ const ProductListPage: NextPage<TProps> = () => {
         optionTypes={optionTypes}
       />
       {isLoading && <Spinner />}
-      <Box sx={{ backgroundColor: "inherit", width: '100%', mb: 4 }}>
+      <Box sx={{ backgroundColor: 'inherit', width: '100%', mb: 4 }}>
         <Grid container spacing={6} sx={{ height: '100%' }}>
           {dataListProductStatus?.map((item: any, index: number) => {
             return (
@@ -520,7 +526,7 @@ const ProductListPage: NextPage<TProps> = () => {
               numRow={selectedRow?.length}
               onClear={() => setSelectedRow([])}
               handleAction={handleAction}
-              actions={[{ label: t('Xóa'), value: 'delete', disabled: !DELETE }]}
+              actions={[{ label: t('Delete'), value: 'delete', disabled: !DELETE }]}
             />
           )}
           <CustomDataGrid

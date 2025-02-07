@@ -9,7 +9,7 @@ const TextFieldStyled = styled(TextField)<TextFieldProps>(({ theme }) => {
       transform: 'none',
       lineHeight: 1.2,
       position: 'relative',
-      marginBottom: theme.spacing(1),
+      marginBottom: '0.5rem',
       // fontSize: theme.typography.body2.fontSize,
       fontSize: '0.9rem',
       fontWeight: '600',
