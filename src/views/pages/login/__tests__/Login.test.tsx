@@ -56,77 +56,82 @@ describe('Testing login page', () => {
     screen.getByText('Login')
   })
   // test('render correct login page', async () => {
-  //       renderComponent()
+  //   renderComponent()
 
-  //       expect(screen.getByText('Login')).toBeInTheDocument()
-  //       expect(screen.getByPlaceholderText('Enter_email')).toBeInTheDocument()
-  //       expect(screen.getByText('You_have_account')).toBeInTheDocument()
+  //   expect(screen.getByText('Login')).toBeInTheDocument()
+  //   expect(screen.getByPlaceholderText('Enter_email')).toBeInTheDocument()
+  //   expect(screen.getByText('You_have_account')).toBeInTheDocument()
   // })
 
   // test('Validate form when empty', async () => {
-  //       renderComponent()
-  //       const btnLogin = screen.getByText('Sign In')
-  //       const inputEmail = screen.getByPlaceholderText('Enter_email')
-  //       fireEvent.change(inputEmail, {target: {value : 'email@gmail.com'}})
-  //       fireEvent.click(btnLogin)
+  //   renderComponent()
+  //   const btnLogin = screen.getByText('Sign_in')
+  //   const inputEmail = screen.getByPlaceholderText('Enter_email')
+  //   fireEvent.change(inputEmail, { target: { value: 'email@gmail.com' } })
+  //   fireEvent.click(btnLogin)
 
-  //       await waitFor(() => {
-  //             expect(screen.getByText('Required_field')).toBeInTheDocument()
-  //       })
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Required_field')).toBeInTheDocument()
+  //   })
   // })
 
-  // test('Login success with email and password', async () => {
-  //       const email = 'email@gmail.com'
-  //       const password = 'Apple123@'
+  test('Login success with email and password', async () => {
+    const email = 'email@gmail.com'
+    const password = 'App'
 
-  //       renderComponent()
-  //       const btnLogin = screen.getByText('Sign In')
-  //       const inputEmail = screen.getByPlaceholderText('Enter_email')
-  //       const inputPassword = screen.getByPlaceholderText('Enter_password')
+    renderComponent()
+    const btnLogin = screen.getByText('Sign_in')
+    const inputEmail = screen.getByPlaceholderText('Enter_email')
+    const inputPassword = screen.getByPlaceholderText('Enter_password')
 
-  //       fireEvent.change(inputEmail, {target: {value : email}})
-  //       fireEvent.change(inputPassword, {target: {value : password}})
+    fireEvent.change(inputEmail, { target: { value: email } })
+    fireEvent.change(inputPassword, { target: { value: password } })
 
-  //       fireEvent.click(btnLogin)
+    fireEvent.click(btnLogin)
 
-  //       await waitFor(() => {
-  //             expect(mockLogin).toHaveBeenCalledWith(
-  //                   {
-  //                   email, password, rememberMe: true, deviceToken: ''
-  //             },
-  //             expect.any(Function)
-  //       )
-  //       })
-  // })
+    await waitFor(() => {
+      expect(mockLogin).toHaveBeenCalledWith(
+        {
+          email,
+          password,
+          rememberMe: true,
+          deviceToken: ''
+        },
+        expect.any(Function)
+      )
+    })
+  })
 
   // test('Login success with google', async () => {
-  //       const token = 'sdfygshjkdsjksjd'
-  //       const provider = 'google'
-  //       dataSession = {
-  //             ...dataSession,
-  //             accessToken: token,
-  //             provider
-  //       }
-  //       renderComponent()
-  //       const btnLogin = screen.getByTestId('btn-google')
-  //       fireEvent.click(btnLogin)
-  //       await waitFor(() => {
-  //             expect(mockLoginGoogle).toHaveBeenCalledWith(
-  //                   {
-  //                         idToken: token, rememberMe: true, deviceToken: ''
-  //             },
-  //             expect.any(Function)
-  //       )
-  //       })
+  //   const token = 'sdfygshjkdsjksjd'
+  //   const provider = 'google'
+  //   dataSession = {
+  //     ...dataSession,
+  //     accessToken: token,
+  //     provider
+  //   }
+  //   renderComponent()
+  //   const btnLogin = screen.getByTestId('btn-google')
+  //   fireEvent.click(btnLogin)
+  //   await waitFor(() => {
+  //     expect(mockLoginGoogle).toHaveBeenCalledWith(
+  //       {
+  //         idToken: token,
+  //         rememberMe: true,
+  //         deviceToken: ''
+  //       },
+  //       expect.any(Function)
+  //     )
+  //   })
   // })
 
   // test('navigate forgot password page', async () => {
-  //       renderComponent()
+  //   renderComponent()
 
-  //       const forgotPassword = screen.getByText('Forgot_password?')
-  //       fireEvent.click(forgotPassword)
-  //       await waitFor(() => {
-  //             expect(mockPushRouter).toHaveBeenCalledWith(`${ROUTE_CONFIG.FORGOT_PASSWORD}`)
-  //       })
+  //   const forgotPassword = screen.getByText('Forgot_password?')
+  //   fireEvent.click(forgotPassword)
+  //   await waitFor(() => {
+  //     expect(mockPushRouter).toHaveBeenCalledWith(`${ROUTE_CONFIG.FORGOT_PASSWORD}`)
+  //   })
   // })
 })

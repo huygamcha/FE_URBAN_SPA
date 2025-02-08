@@ -74,7 +74,7 @@ const BookingForm = () => {
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1 },
+    { limit: -1, page: -1, showName: true },
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
@@ -614,8 +614,8 @@ const BookingForm = () => {
                   </Typography>
                 </Box>
 
-                {/* Information Section */}
-                <Box>
+                {/* Sticky Information Section */}
+                <Box sx={{ position: 'sticky', top: 16, maxWidth: 'calc(100% - 90px)' }}>
                   <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
                     Urban Spa & Massage
                   </Typography>

@@ -3,6 +3,8 @@ export type TParamsGetPackages = {
   page?: number
   search?: string
   order?: string
+  // ở phần đặt lịch chỉ lấy trường trường name
+  showName?: boolean
 }
 
 export type TParamsCreatePackage = {

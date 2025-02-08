@@ -464,5 +464,6 @@
   "Invalid_email_format": "Sai định dạng email",
   "Phone number must contain only numbers": "Số điện thoại phải chỉ chứa các chữ số",
   "Phone number must be at least 9 digits": "Số điện thoại phải có ít nhất 9 chữ số",
-  "Minimum quantity is 1": "Số lượng tối thiểu là 1"
+  "Minimum quantity is 1": "Số lượng tối thiểu là 1",
+  "Sign_in": "Đăng nhập"
 }

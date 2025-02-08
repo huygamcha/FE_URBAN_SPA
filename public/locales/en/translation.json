@@ -449,5 +449,6 @@
   "Delete_order_product_error": "Failed to delete order",
   "Title_delete_multiple_Order": "Confirm delete multiple services",
   "Confirm_delete_multiple_Order": "Are you sure you want to delete these services?",
-  "Delete_multiple_order_success": "Successfully deleted multiple orders"
+  "Delete_multiple_order_success": "Successfully deleted multiple orders",
+  "Sign_in": "Sign in"
 }
