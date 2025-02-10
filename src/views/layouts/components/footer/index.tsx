@@ -13,25 +13,25 @@ const Footer = () => {
   const { t } = useTranslation()
   const router = useRouter()
 
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = 'https://cdn.trustindex.io/loader.js?52151ea40d3703517466e78e411'
-    script.defer = true
-    script.async = true
+  // useEffect(() => {
+  //   const script = document.createElement('script')
+  //   script.src = 'https://cdn.trustindex.io/loader.js?52151ea40d3703517466e78e411'
+  //   script.defer = true
+  //   script.async = true
 
-    // Chèn script vào phần tử có ID "google-reviews"
-    const targetElement = document.getElementById('google-reviews')
-    if (targetElement) {
-      targetElement.appendChild(script)
-    }
+  //   // Chèn script vào phần tử có ID "google-reviews"
+  //   const targetElement = document.getElementById('google-reviews')
+  //   if (targetElement) {
+  //     targetElement.appendChild(script)
+  //   }
 
-    // Cleanup: Xóa script khi component bị unmount
-    // return () => {
-    //   if (targetElement) {
-    //     targetElement.removeChild(script)
-    //   }
-    // }
-  }, []) // Chỉ chạy một lần khi component được mount
+  //   // Cleanup: Xóa script khi component bị unmount
+  //   // return () => {
+  //   //   if (targetElement) {
+  //   //     targetElement.removeChild(script)
+  //   //   }
+  //   // }
+  // }, []) // Chỉ chạy một lần khi component được mount
 
   return (
     <>
@@ -55,7 +55,7 @@ const Footer = () => {
           }}
         >
           <CustomerImages />
-          <div id='google-reviews'></div>
+          {/* <div id='google-reviews'></div> */}
           <Box
             sx={{
               position: 'relative',
