@@ -12,52 +12,52 @@ interface Props {
   params: { packageId: string }
 }
 
-const getPackages = async (search: string) => {
-  try {
-    let packages: TPackage = {
-      _id: '',
-      slug: '',
-      name: '',
-      nameEn: '',
-      nameKo: '',
-      nameJp: '',
-      image: '',
-      description: '',
-      descriptionKo: '',
-      descriptionJp: '',
-      descriptionEn: '',
-      services: []
-    }
-    await getAllPackages({ params: { limit: -1, page: -1, search: search } }).then(res => {
-      packages = res?.data.packages[0]
-    })
+// const getPackages = async (search: string) => {
+//   try {
+//     let packages: TPackage = {
+//       _id: '',
+//       slug: '',
+//       name: '',
+//       nameEn: '',
+//       nameKo: '',
+//       nameJp: '',
+//       image: '',
+//       description: '',
+//       descriptionKo: '',
+//       descriptionJp: '',
+//       descriptionEn: '',
+//       services: []
+//     }
+//     await getAllPackages({ params: { limit: -1, page: -1, search: search } }).then(res => {
+//       packages = res?.data.packages[0]
+//     })
 
-    return {
-      packages
-    }
-  } catch (error) {
-    return {
-      packages: {
-        _id: '',
-        slug: '',
-        name: '',
-        nameEn: '',
-        nameKo: '',
-        nameJp: '',
-        image: '',
-        description: '',
-        descriptionKo: '',
-        descriptionJp: '',
-        descriptionEn: '',
-        services: []
-      }
-    }
-  }
-}
+//     return {
+//       packages
+//     }
+//   } catch (error) {
+//     return {
+//       packages: {
+//         _id: '',
+//         slug: '',
+//         name: '',
+//         nameEn: '',
+//         nameKo: '',
+//         nameJp: '',
+//         image: '',
+//         description: '',
+//         descriptionKo: '',
+//         descriptionJp: '',
+//         descriptionEn: '',
+//         services: []
+//       }
+//     }
+//   }
+// }
 
 export default async function Home({ params }: Props) {
-  const { packageId } = params
-  const { packages } = await getPackages(packageId)
+  // const { packageId } = params
+  // const { packages } = await getPackages(packageId)
 
   return (
     <AuthLayoutWrapper
@@ -65,7 +65,8 @@ export default async function Home({ params }: Props) {
       authGuard={false}
       getLayout={(page: ReactNode) => <LayoutNotApp>{page}</LayoutNotApp>}
     >
-      <PackagePage packages={packages} />
+      {/* <PackagePage packages={packages} /> */}
+      <PackagePage />
     </AuthLayoutWrapper>
   )
 }

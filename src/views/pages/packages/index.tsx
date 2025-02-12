@@ -5,7 +5,7 @@
 import { NextPage } from 'next'
 
 // ** React
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Mui
@@ -21,7 +21,7 @@ import Image from 'next/image'
 // ** Services
 
 // ** Utils
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { TPackage } from 'src/types/package'
@@ -29,20 +29,40 @@ import { displayValueByLanguage, formatCurrency } from 'src/utils'
 import { useDrawer } from 'src/hooks/useDrawer'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
 import { ROUTE_CONFIG } from 'src/configs/route'
+import { getAllPackages } from 'src/services/packages'
+import Spinner from 'src/components/spinner'
 
 type TProps = {
-  packages: TPackage
+  packages?: TPackage
 }
 
 const PackagePage: NextPage<TProps> = props => {
+  // ** Hook
+  const [packageItem, setPackageItem] = useState<TPackage>({
+    _id: '',
+    slug: '',
+    name: '',
+    nameEn: '',
+    nameKo: '',
+    nameJp: '',
+    image: '',
+    description: '',
+    descriptionKo: '',
+    descriptionJp: '',
+    descriptionEn: '',
+    services: []
+  })
+  const [loading, setLoading] = useState<boolean>(false)
+
   // ** Translate
   const { t, i18n } = useTranslation()
+  const { packageId } = useParams()
 
   // ** Hook
   const ref = useRef<HTMLElement | null>(null)
 
   // ** Props
-  const { packages } = props
+  // const { packages } = props
 
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
@@ -52,43 +72,61 @@ const PackagePage: NextPage<TProps> = props => {
   const router = useRouter()
 
   // ** Context
-  const { openBookingForm, setOpenBookingForm } = useDrawer()
+  // const { openBookingForm, setOpenBookingForm } = useDrawer()
 
   const handleBooking = () => {
-    router.push(`${ROUTE_CONFIG.BOOKING.INDEX}/${packages.slug}`)
+    router.push(`${ROUTE_CONFIG.BOOKING.INDEX}/${packageItem?.slug}`)
     // ;() => router.push(ROUTE_CONFIG.BOOKING.INDEX)
   }
 
   // fetch api
   // ** fetch api
   // ** Scroll to ref on initial load
-  useEffect(() => {
-    if (ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (ref.current) {
+  //     ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  //   }
+  // }, [])
 
   // Prevent body scrolling when modal is open
-  useEffect(() => {
-    if (!isLg) {
-      if (openBookingForm) {
-        document.body.style.overflow = 'hidden'
-        document.body.style.position = 'fixed'
-        document.body.style.width = '100%'
-      } else {
-        document.body.style.overflow = 'auto'
-        document.body.style.position = 'static'
-      }
+  // useEffect(() => {
+  //   if (!isLg) {
+  //     if (openBookingForm) {
+  //       document.body.style.overflow = 'hidden'
+  //       document.body.style.position = 'fixed'
+  //       document.body.style.width = '100%'
+  //     } else {
+  //       document.body.style.overflow = 'auto'
+  //       document.body.style.position = 'static'
+  //     }
 
-      return () => {
-        document.body.style.overflow = 'auto'
-        document.body.style.position = 'static'
+  //     return () => {
+  //       document.body.style.overflow = 'auto'
+  //       document.body.style.position = 'static'
+  //     }
+  //   }
+  // }, [openBookingForm])
+
+  useEffect(() => {
+    if (packageId) {
+      setLoading(true)
+      const getPackages = async (search: string) => {
+        try {
+          await getAllPackages({ params: { limit: -1, page: -1, search: search } }).then(res => {
+            setPackageItem(res?.data.packages[0])
+            setLoading(false)
+          })
+        } catch (error) {
+          throw new Error()
+        }
       }
+      getPackages(packageId as string)
     }
-  }, [openBookingForm])
+  }, [packageId])
 
   return (
     <>
+      {loading && <Spinner />}
       <Box
         sx={{ padding: '2% 5%', position: 'relative', zIndex: 1, [theme.breakpoints.down('md')]: { padding: '0%' } }}
       >
@@ -131,7 +169,7 @@ const PackagePage: NextPage<TProps> = props => {
                 color='text.secondary'
                 gutterBottom
               >
-                {displayValueByLanguage({ language: i18n.language, value: packages, field: 'name' })}
+                {displayValueByLanguage({ language: i18n.language, value: packageItem, field: 'name' })}
               </Typography>
 
               <Grid container spacing={5}>
@@ -145,7 +183,7 @@ const PackagePage: NextPage<TProps> = props => {
                       }}
                     >
                       <Image
-                        src={packages.image}
+                        src={packageItem?.image}
                         alt='packages image'
                         width={626}
                         height={417}
@@ -161,11 +199,11 @@ const PackagePage: NextPage<TProps> = props => {
                 </Grid>
                 <Grid item xs={12} lg={6}>
                   <Box border='1px solid #492828' borderRadius='8px' p='1rem' pt='0rem'>
-                    {packages.services.map((item, index) => (
+                    {packageItem?.services.map((item, index) => (
                       <Box
                         py='1rem'
                         key={index}
-                        borderBottom={index !== packages.services.length - 1 ? '1px solid #492828' : 'none'}
+                        borderBottom={index !== packageItem?.services.length - 1 ? '1px solid #492828' : 'none'}
                       >
                         <Typography
                           sx={{
@@ -191,7 +229,11 @@ const PackagePage: NextPage<TProps> = props => {
                             pb: '0.5rem',
                             color: '#575757',
                             fontWeight: '500',
-                            fontSize: '0.9rem'
+                            fontSize: '0.9rem',
+                            '& p': {
+                              fontFamily:
+                                'Montserrat, Inter, "Playfair Display", "Public Sans", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+                            }
                           }}
                           dangerouslySetInnerHTML={{
                             __html: displayValueByLanguage({

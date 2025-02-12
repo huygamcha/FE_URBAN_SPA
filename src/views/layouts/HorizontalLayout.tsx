@@ -71,8 +71,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   const { i18n, t } = useTranslation()
   const currentLang = i18n.language
 
-  console.log('««««« pathName »»»»»', pathName, currentLang, router)
-
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
   // State for mobile menu toggle
