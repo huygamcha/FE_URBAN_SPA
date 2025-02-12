@@ -36,6 +36,7 @@ export const ROUTE_CONFIG = {
   DASHBOARD: '/dashboard',
   APPOINTMENTS: '/appointments',
   PACKAGE: '/packages',
+  CONTACT: 'contact',
   BOOKING: {
     INDEX: '/booking'
   }

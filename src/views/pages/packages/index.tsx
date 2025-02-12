@@ -149,6 +149,7 @@ const PackagePage: NextPage<TProps> = props => {
                         alt='packages image'
                         width={626}
                         height={417}
+                        priority
                         layout='responsive' // Sử dụng layout responsive
                         style={{
                           borderRadius: '8px',
@@ -210,7 +211,7 @@ const PackagePage: NextPage<TProps> = props => {
                                 fontWeight: 'bold' // Chữ đậm
                               }}
                             >
-                              Thời gian
+                              {t('Time')}
                             </Typography>
                             <Typography
                               sx={{
@@ -219,7 +220,7 @@ const PackagePage: NextPage<TProps> = props => {
                                 fontWeight: 'bold' // Chữ đậm
                               }}
                             >
-                              Giá tiền
+                              {t('Price')}
                             </Typography>
                           </Box>
                         </Box>
@@ -288,7 +289,7 @@ const PackagePage: NextPage<TProps> = props => {
             fontSize: '0px'
           }}
         >
-          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
+          <Image priority width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
         </Box>
       </Box>
     </>

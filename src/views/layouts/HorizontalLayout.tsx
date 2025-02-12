@@ -70,8 +70,8 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   const pathName = usePathname()
   const { i18n, t } = useTranslation()
   const currentLang = i18n.language
-  const urlDefault = currentLang === i18nConfig.defaultLocale ? '/' : `/${currentLang}`
-  const urlLogin = currentLang === i18nConfig.defaultLocale ? '/login' : `/${currentLang}/login`
+
+  console.log('««««« pathName »»»»»', pathName, currentLang, router)
 
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
@@ -126,7 +126,13 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 }}
                 href={ROUTE_CONFIG.HOME}
               >
-                <Image priority alt='logo urban' src='https://cdn.kampa.vn/urban-oasis-spa-logo.png' width={80} height={46} />
+                <Image
+                  priority
+                  alt='logo urban'
+                  src='https://cdn.kampa.vn/urban-oasis-spa-logo.png'
+                  width={80}
+                  height={46}
+                />
               </Link>
             </Typography>
           </Box>
@@ -142,9 +148,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                   }
                 }}
               >
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}`}
-                >
+                <Link href={ROUTE_CONFIG.HOME}>
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Home')}
                   </Typography>
@@ -154,7 +158,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     cursor: 'pointer'
                   }}
                   onClick={e => {
-                    e.preventDefault() // Ngăn hành vi mặc định
                     router.push('/#about') // Chuyển hướng đến trang gốc và cuộn đến ID
                   }}
                 >
@@ -162,16 +165,12 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     {t('About_Us')}
                   </Typography>
                 </Box>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '' : `/${i18n.language}`}/packages`}
-                >
+                <Link href={ROUTE_CONFIG.PACKAGE}>
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Package')}
                   </Typography>
                 </Link>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/contact`}
-                >
+                <Link href={ROUTE_CONFIG.CONTACT}>
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Contact')}
                   </Typography>
@@ -260,7 +259,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     cursor: 'pointer'
                   }}
                   onClick={e => {
-                    e.preventDefault() // Ngăn hành vi mặc định
                     router.push('/#about') // Chuyển hướng đến trang gốc và cuộn đến ID
                   }}
                 >
@@ -272,9 +270,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/packages`}
-                >
+                <Link href={ROUTE_CONFIG.PACKAGE}>
                   <Typography color='title.main' variant='subtitle1'>
                     {t('Package')}
                   </Typography>
@@ -283,9 +279,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
             </ListItem>
             <ListItem onClick={() => toggleMobileMenu(false)}>
               <ListItemText>
-                <Link
-                  href={`${process.env.NEXT_PUBLIC_SITE}${checkLanguage(i18n.language, 'vi') ? '/' : `/${i18n.language}`}/contact`}
-                >
+                <Link href={ROUTE_CONFIG.CONTACT}>
                   <Typography color='title.main' variant='subtitle1'>
                     {t('Contact')}
                   </Typography>

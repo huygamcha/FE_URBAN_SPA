@@ -45,6 +45,6 @@ export default async function Home() {
 }
 
 // Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
-// export const dynamic = 'force-dynamic'
-// export const revalidate = 10
-// export const maxDuration = 60
+export const dynamic = 'force-static'
+export const revalidate = 10
+export const maxDuration = 60

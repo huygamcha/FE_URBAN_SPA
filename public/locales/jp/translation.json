@@ -6,6 +6,7 @@
   "Create_category": "カテゴリ追加",
   "Edit_Service": "サービス編集",
   "Total_price": "合計金額",
+  "Time": "時間",
   "Phone number must contain only numbers": "電話番号は数字のみで構成する必要があります",
   "Phone number must be at least 9 digits": "電話番号は最低9桁である必要があります",
   "Minimum quantity is 1": "最小数量は1です",
