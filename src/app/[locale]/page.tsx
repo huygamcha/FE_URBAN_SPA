@@ -78,8 +78,7 @@ export const metadata: Metadata = {
     title: 'UrbanSpa',
     description:
       'Bán hàng điện tử, điện thoại, máy tính bảng, khóa học nextjs 14 reactjs typescript pro 2024 by Lập trình thật dễ - Xây dựng website bán hàng',
-    type: 'website',
-    url: `https://convert-app-router.vercel.app/home`
+    type: 'website'
   },
   twitter: {
     title: 'UrbanSpa',
@@ -109,6 +108,6 @@ export default async function Home() {
 }
 
 // Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
-// export const dynamic = 'force-dynamic'
-// export const revalidate = 10
-// export const maxDuration = 60
+export const dynamic = 'force-static'
+export const revalidate = 120
+export const maxDuration = 180
