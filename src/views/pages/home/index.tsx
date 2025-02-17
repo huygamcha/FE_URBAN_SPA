@@ -35,6 +35,7 @@ import { TParamsFetchAbout } from 'src/types/about'
 import { TBanner } from 'src/types/banner'
 import { useEffect, useState } from 'react'
 import { getAllPackages } from 'src/services/packages'
+import Spinner from 'src/components/spinner'
 
 type TProps = {
   aboutUs: TParamsFetchAbout
@@ -43,15 +44,17 @@ type TProps = {
 
 const HomePage: NextPage<TProps> = props => {
   // ** Props
-  const {  aboutUs, banner } = props
+  const { aboutUs, banner } = props
   const { t, i18n } = useTranslation()
   const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [allPackages, setAllPackages] = useState<TPackage[]>([])
 
   useEffect(() => {
     const getPackages = async () => {
       try {
+        setLoading(true)
         let packages: TPackage[] = []
         await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
           packages = res?.data?.packages
@@ -60,13 +63,14 @@ const HomePage: NextPage<TProps> = props => {
       } catch (error) {
         console.log('««««« error »»»»»', error)
       }
+      setLoading(false)
     }
     getPackages()
   }, [])
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
+      {loading && <Spinner />}
       {/* <ChatBotAI /> */}
       {/* <ControlCalendar /> */}
       {allPackages?.length && (
