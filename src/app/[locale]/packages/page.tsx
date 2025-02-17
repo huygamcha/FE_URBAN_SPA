@@ -10,7 +10,6 @@ import { TPackage } from 'src/types/package'
 
 // layouts
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
-import HomePage from 'src/views/pages/home'
 import ListPackagePage from 'src/views/pages/packages/ListPackagePage'
 
 const getPackages = async () => {

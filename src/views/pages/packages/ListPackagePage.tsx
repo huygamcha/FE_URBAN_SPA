@@ -25,14 +25,9 @@ import { useRouter } from 'next/navigation'
 // calender
 
 import '@schedule-x/theme-default/dist/index.css'
-import ControlCalendar from 'src/components/CustomizingCalendar/CustomizingCalendar'
 import { Box } from '@mui/material'
-import Gallery from 'src/views/layouts/components/HOME/gallery'
-import AboutSpa from 'src/views/layouts/components/HOME/about'
 import Image from 'next/image'
 import Packages from 'src/views/layouts/components/HOME/packages'
-import { TParamsFetchAbout } from 'src/types/about'
-import { TBanner } from 'src/types/banner'
 
 type TProps = {
   packages: TPackage[]

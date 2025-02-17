@@ -12,23 +12,6 @@ import { TPackage } from 'src/types/package'
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
 import HomePage from 'src/views/pages/home'
 
-const getPackages = async () => {
-  try {
-    let packages: TPackage[] = []
-    await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
-      packages = res?.data?.packages
-    })
-
-    return {
-      packages
-    }
-  } catch (error) {
-    return {
-      packages: []
-    }
-  }
-}
-
 const getBanner = async () => {
   try {
     let banner: TBanner[] = []
@@ -88,7 +71,6 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const { packages } = await getPackages()
   const { aboutUs } = await getAboutUs()
   const { banner } = await getBanner()
 
@@ -102,12 +84,10 @@ export default async function Home() {
         </LayoutNotApp>
       )}
     >
-      <HomePage banner={banner} aboutUs={aboutUs} packages={packages} />
+      <HomePage banner={banner} aboutUs={aboutUs} />
     </AuthLayoutWrapper>
   )
 }
 
 // Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
 export const dynamic = 'force-static'
-export const revalidate = 120
-export const maxDuration = 180
