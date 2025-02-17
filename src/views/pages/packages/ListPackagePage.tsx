@@ -49,7 +49,7 @@ const ListPackagePage = () => {
   return (
     <>
       {isPending && <Spinner />}
-      <ListPackageShow packages={allPackages} />
+      {allPackages?.length && <ListPackageShow packages={allPackages} />}
     </>
   )
 }
