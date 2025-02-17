@@ -12,33 +12,14 @@ import { TPackage } from 'src/types/package'
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
 import ListPackagePage from 'src/views/pages/packages/ListPackagePage'
 
-const getPackages = async () => {
-  try {
-    let packages: TPackage[] = []
-    await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
-      packages = res?.data?.packages
-    })
-
-    return {
-      packages
-    }
-  } catch (error) {
-    return {
-      packages: []
-    }
-  }
-}
-
 export default async function Home() {
-  const { packages } = await getPackages()
-
   return (
     <AuthLayoutWrapper
       guestGuard={false}
       authGuard={false}
       getLayout={(page: ReactNode) => <LayoutNotApp isHiddenBanner={true}>{page}</LayoutNotApp>}
     >
-      <ListPackagePage packages={packages} />
+      <ListPackagePage />
     </AuthLayoutWrapper>
   )
 }

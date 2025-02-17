@@ -36,6 +36,7 @@ import { TBanner } from 'src/types/banner'
 import { useEffect, useState } from 'react'
 import { getAllPackages } from 'src/services/packages'
 import Spinner from 'src/components/spinner'
+import { useGetListPackages } from 'src/queries/packages'
 
 type TProps = {
   aboutUs: TParamsFetchAbout
@@ -47,30 +48,40 @@ const HomePage: NextPage<TProps> = props => {
   const { aboutUs, banner } = props
   const { t, i18n } = useTranslation()
   const router = useRouter()
-  const [loading, setLoading] = useState<boolean>(false)
 
-  const [allPackages, setAllPackages] = useState<TPackage[]>([])
+  // const [allPackages, setAllPackages] = useState<TPackage[]>([])
 
-  useEffect(() => {
-    const getPackages = async () => {
-      try {
-        setLoading(true)
-        let packages: TPackage[] = []
-        await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
-          packages = res?.data?.packages
-          setAllPackages(packages)
-        })
-      } catch (error) {
-        console.log('««««« error »»»»»', error)
-      }
-      setLoading(false)
+  // useEffect(() => {
+  //   const getPackages = async () => {
+  //     try {
+  //       setLoading(true)
+  //       let packages: TPackage[] = []
+  //       await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
+  //         packages = res?.data?.packages
+  //         setAllPackages(packages)
+  //       })
+  //     } catch (error) {
+  //       console.log('««««« error »»»»»', error)
+  //     }
+  //     setLoading(false)
+  //   }
+  //   getPackages()
+  // }, [])
+
+  // ** React query
+  const { data: allPackages, isPending } = useGetListPackages(
+    { limit: -1, page: -1 },
+    {
+      select: data => data?.packages,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      staleTime: 10000
     }
-    getPackages()
-  }, [])
+  )
 
   return (
     <>
-      {loading && <Spinner />}
+      {isPending && <Spinner />}
       {/* <ChatBotAI /> */}
       {/* <ControlCalendar /> */}
       {allPackages?.length && (

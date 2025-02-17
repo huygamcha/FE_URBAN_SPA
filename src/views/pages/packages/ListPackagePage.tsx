@@ -28,36 +28,26 @@ import '@schedule-x/theme-default/dist/index.css'
 import { Box } from '@mui/material'
 import Image from 'next/image'
 import Packages from 'src/views/layouts/components/HOME/packages'
+import { useGetListPackages } from 'src/queries/packages'
+import ListPackageShow from './components/ListPackageShow'
+import Spinner from 'src/components/spinner'
 
-type TProps = {
-  packages: TPackage[]
-}
-
-const ListPackagePage: NextPage<TProps> = props => {
+const ListPackagePage = () => {
   // ** Props
-  const { packages } = props
-  const { t, i18n } = useTranslation()
-  const router = useRouter()
+  const { data: allPackages, isPending } = useGetListPackages(
+    { limit: -1, page: -1 },
+    {
+      select: data => data?.packages,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      staleTime: 10000
+    }
+  )
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
-      <div id='package'></div>
-      <Box sx={{ padding: '2% 5%', position: 'relative', zIndex: 1 }}>
-        <Packages packages={packages} />
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
-            zIndex: 1,
-            fontSize: '0px'
-          }}
-        >
-          <Image width={16} height={9} layout='responsive' alt='image' src='https://cdn.kampa.vn/sen.svg' />
-        </Box>
-      </Box>
+      {isPending && <Spinner />}
+      <ListPackageShow packages={allPackages} />
     </>
   )
 }
