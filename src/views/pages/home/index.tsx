@@ -70,12 +70,12 @@ const HomePage: NextPage<TProps> = props => {
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1 },
+    { limit: -1, page: -1 , showImage : true},
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-      staleTime: 10000
+      staleTime: 5 * 60 * 1000
     }
   )
 

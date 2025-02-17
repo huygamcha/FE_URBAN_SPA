@@ -5,6 +5,8 @@ export type TParamsGetPackages = {
   order?: string
   // ở phần đặt lịch chỉ lấy trường trường name
   showName?: boolean
+  // chỉ lấy image
+  showImage?: boolean
 }
 
 export type TParamsCreatePackage = {
