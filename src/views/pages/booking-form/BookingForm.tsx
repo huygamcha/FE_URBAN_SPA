@@ -74,7 +74,7 @@ const BookingForm = () => {
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1, showName: true },
+    { limit: -1, page: -1, showImage: true },
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
