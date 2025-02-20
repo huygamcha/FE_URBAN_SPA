@@ -27,6 +27,7 @@ import { IBannerHome } from 'src/types/bannerHome'
 import Footer from './components/footer'
 import { useTranslation } from 'react-i18next'
 import { TBanner } from 'src/types/banner'
+import SocialMedia from './components/social-media'
 
 type TProps = {
   children: React.ReactNode
@@ -155,6 +156,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false, bann
         >
           {children}
         </Container>
+        <SocialMedia />
         <Footer />
       </Box>
     </Box>

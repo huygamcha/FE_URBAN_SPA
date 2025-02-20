@@ -147,39 +147,50 @@ const Contact = () => {
             >
               <Box sx={{ cursor: 'pointer' }}>
                 <Box mt='0.375rem'>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://blog.naver.com/kampavn'>
+                  <Link
+                    style={{ paddingRight: '1rem', borderRadius: '1rem' }}
+                    target='_blank'
+                    href='http://pf.kakao.com/_pslkxj'
+                  >
                     <Image
-                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_blog.svg'
+                      // sx={{ borderRadius: '1rem' }}
+                      style={{ borderRadius: '0.2rem' }}
+                      src='https://cdn.kampa.vn/urban-spa-kakaotalk.svg'
                       width={25}
                       height={25}
-                      alt='naver'
+                      alt='kakaotalk'
                     />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                  <Link
+                    style={{ paddingRight: '1rem', borderRadius: '1rem' }}
+                    target='_blank'
+                    href='https://api.whatsapp.com/send?phone=84868144408'
+                  >
                     <Image
-                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_cafe.svg'
+                      style={{ borderRadius: '0.2rem' }}
+                      src='https://cdn.kampa.vn/urban-spa-what-app.webp'
                       width={25}
                       height={25}
-                      alt='cafe'
+                      alt='what-app'
                     />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com'>
-                    <Image
-                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_facebook.svg'
-                      width={25}
-                      height={25}
-                      alt='fb'
-                    />
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://line.me/ti/p/Vhzjhml6kY'>
+                    <Image src='https://cdn.kampa.vn/urban-spa-line.svg' width={25} height={25} alt='what-app' />
                   </Link>
-                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com'>
+
+                  {/* <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
+                    <Image src='https://cdn.kampa.vn/urban-spa-fb.webp' width={25} height={25} alt='cafe' />
+                  </Link> */}
+
+                  {/* <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
                       width={25}
                       height={25}
                       alt='ig'
                     />
-                  </Link>
-                  <Link
+                  </Link> */}
+                  {/* <Link
                     style={{ paddingRight: '1rem' }}
                     target='_blank'
                     href='https://www.youtube.com/watch?v=GQjEjprY0WE&t=1s'
@@ -190,7 +201,7 @@ const Contact = () => {
                       height={22}
                       alt='cafe'
                     />
-                  </Link>
+                  </Link> */}
                   <Link target='_blank' href='https://zalo.me/0868144408'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
