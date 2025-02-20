@@ -5,13 +5,13 @@ import { useState } from 'react'
 import '../../../css/socialMedia.css'
 
 const SocialMedia = () => {
-  const [toggle, setToggle] = useState<boolean>(false)
+  // const [toggle, setToggle] = useState<boolean>(false)
 
-  const handleNav = () => {
-    setToggle(!toggle)
-  }
+  // const handleNav = () => {
+  //   setToggle(!toggle)
+  // }
 
-  console.log('««««« toggle »»»»»', toggle)
+  // console.log('««««« toggle »»»»»', toggle)
 
   return (
     <>
@@ -62,7 +62,7 @@ const SocialMedia = () => {
               />
             </Link>
           </Box>
-          <Box onClick={handleNav}>
+          {/* <Box onClick={handleNav}>
             <span aria-hidden='true' className='csaas-svg'>
               <svg viewBox='0 0 52 52' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <ellipse cx='26' cy='26' rx='26' ry='26' fill='#008032'></ellipse>
@@ -82,7 +82,7 @@ const SocialMedia = () => {
                 ></rect>
               </svg>
             </span>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </>
