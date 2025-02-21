@@ -50,7 +50,7 @@ const SocialMedia = () => {
               />
             </Link>
 
-            <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.facebook.com/hanoiurbanoasisspa'>
+            <Link style={{ margin: '0.5rem 0px' }} target='_blank' href='https://www.facebook.com/hanoiurbanoasisspa'>
               <Image
                 style={{ borderRadius: '5rem' }}
                 src='https://cdn.kampa.vn/urban-spa-fb.webp'
