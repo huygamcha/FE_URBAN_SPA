@@ -175,12 +175,16 @@ const Contact = () => {
                     />
                   </Link>
                   <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://line.me/ti/p/Vhzjhml6kY'>
-                    <Image src='https://cdn.kampa.vn/urban-spa-line.svg' width={25} height={25} alt='what-app' />
+                    <Image src='https://cdn.kampa.vn/urban-spa-line.svg' width={25} height={25} alt='line' />
                   </Link>
 
-                  {/* <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cafe.naver.com/vietnamtrip'>
-                    <Image src='https://cdn.kampa.vn/urban-spa-fb.webp' width={25} height={25} alt='cafe' />
-                  </Link> */}
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://cdn.kampa.vn/urban-spa-fb.webp'>
+                    <Image src='https://cdn.kampa.vn/urban-spa-fb.webp' width={25} height={25} alt='fb' />
+                  </Link>
+
+                  <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://zalo.me/0868144408'>
+                    <Image src='https://cdn.kampa.vn/urban-spa-zalo.svg.webp' width={25} height={25} alt='zalo' />
+                  </Link>
 
                   {/* <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com'>
                     <Image
@@ -202,14 +206,14 @@ const Contact = () => {
                       alt='cafe'
                     />
                   </Link> */}
-                  <Link target='_blank' href='https://zalo.me/0868144408'>
+                  {/* <Link target='_blank' href='https://zalo.me/0868144408'>
                     <Image
                       src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
                       width={25}
                       height={25}
                       alt='zalo'
                     />
-                  </Link>
+                  </Link> */}
                 </Box>
               </Box>
             </Box>
