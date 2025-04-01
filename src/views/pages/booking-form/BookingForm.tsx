@@ -155,7 +155,6 @@ const BookingForm = () => {
 
   return (
     <>
-      {isPending && <Spinner />}
       <Box
         sx={{
           padding: '2% 5%',

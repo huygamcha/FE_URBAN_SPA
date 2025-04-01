@@ -126,7 +126,6 @@ const PackagePage: NextPage<TProps> = props => {
 
   return (
     <>
-      {loading && <Spinner />}
       <Box
         sx={{ padding: '2% 5%', position: 'relative', zIndex: 1, [theme.breakpoints.down('md')]: { padding: '0%' } }}
       >

@@ -286,3 +286,9 @@ export const checkLanguage = (i18n: string, language: string) => {
 
   return false
 }
+
+export const accessLink = (language : string, link: string) => {
+  if (language === 'vi') return link
+
+  return `/${language}${link}`
+}

@@ -68,7 +68,7 @@ const ControlCalendar = () => {
 
   return (
     <>
-      {isPending && <Spinner />}
+      {/* {isPending && <Spinner />} */}
       <Box
         sx={{
           '& .rbc-calendar': {

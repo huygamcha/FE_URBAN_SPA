@@ -37,11 +37,10 @@ const ListPackagePage = () => {
     }
   )
 
-  console.log('««««« allPackages »»»»»', allPackages)
 
   return (
     <>
-      {isPending && <Spinner />}
+      {/* {isPending && <Spinner />} */}
       {allPackages?.length && <ListPackageShow packages={allPackages} />}
     </>
   )

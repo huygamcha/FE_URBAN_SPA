@@ -427,7 +427,7 @@ const OrderSpaListPage: NextPage<TProps> = () => {
 
   return (
     <>
-      {loading && <Spinner />}
+      {/* {loading && <Spinner />} */}
       <ConfirmationDialog
         open={openDeleteOrder.open}
         handleClose={handleCloseConfirmDeleteOrder}

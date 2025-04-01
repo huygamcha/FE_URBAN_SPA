@@ -1,26 +1,81 @@
-name: Vercel Preview Deployment
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+# Update to match your values: branch_name, app_name, SSH key name on GitHub from previous step if changed, server ip, username, port, and server Node pathname (using 'which pm2' on server to get path)
+
+name: Deploy Fe Urban Spa
+
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-     - merged
   push:
     branches:
-      - main
+      - main # Change to your specific branch
+      # - deployprod  # Additional branch for deployment
+
 jobs:
-  Deploy-Preview:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check Node.js version
+        run: node -v
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.1
+        with:
+          ssh-private-key: ${{ secrets.FE_URBAN_SPA }}
+
+      - name: Deploy to DigitalOcean
+        env:
+          HOST: 45.76.188.215
+          USERNAME: root
+          TARGET_DIR: /var/www/FE_URBAN_SPA
+          APP_NAME: FE/URBAN_SPA  #should match the name of the server block
+          PORT: 6002
+          NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
+          NEXT_PUBLIC_SITE: ${{ secrets.NEXT_PUBLIC_SITE }}
+          GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          FACEBOOK_CLIENT_ID: ${{ secrets.FACEBOOK_CLIENT_ID }}
+          FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+          NEXT_AUTH_SECRET: ${{ secrets.NEXT_AUTH_SECRET }}
+          FIREBASE_KEY_PAIR: ${{ secrets.FIREBASE_KEY_PAIR }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          #if multiple deploys are needed from different branches
+          #TARGET_DIR: ${{ github.ref == 'refs/heads/deploytest' && '/var/www/folder_name' || github.ref == 'refs/heads/deployprod' && '/var/www/another-location' }}
+          #APP_NAME: ${{ github.ref == 'refs/heads/deploytest' && 'folder_name' || github.ref == 'refs/heads/deployprod' && 'folder_name_2' }}
+          #PORT: ${{ github.ref == 'refs/heads/deploytest' && '3000' || github.ref == 'refs/heads/deployprod' && '3001' }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $USERNAME@$HOST << EOF
+            export PATH=/usr/bin:$PATH #'which pm2' command on terminal will give the right path
+            cd $TARGET_DIR
+            git pull origin ${GITHUB_REF#refs/heads/}
+            # Tạo file .env từ các secrets
+            echo "NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST}" >> .env
+            echo "NEXT_PUBLIC_SITE=${NEXT_PUBLIC_SITE}" >> .env
+            echo "GOOGLE_SECRET=${GOOGLE_SECRET}" >> .env
+            echo "GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}" >> .env
+            echo "FACEBOOK_CLIENT_ID=${FACEBOOK_CLIENT_ID}" >> .env
+            echo "FACEBOOK_SECRET=${FACEBOOK_SECRET}" >> .env
+            echo "NEXT_AUTH_SECRET=${NEXT_AUTH_SECRET}" >> .env
+            echo "FIREBASE_KEY_PAIR=${FIREBASE_KEY_PAIR}" >> .env
+            echo "SITE_URL=${SITE_URL}" >> .env
+            echo "NEXTAUTH_URL=${NEXTAUTH_URL}" >> .env
+            git pull 
+            npm install
+            npm run build
+
+
+            if pm2 list | grep -q $APP_NAME; then
+              echo "Restarting application: $APP_NAME"
+              pm2 restart $APP_NAME
+            else
+              echo "Starting application: $APP_NAME"
+              pm2 start npm --name $APP_NAME -- start -- --port=$PORT
+            fi            
+            pm2 save
+          EOF

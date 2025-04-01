@@ -3,6 +3,7 @@
 // ** Next
 import { NextPage } from 'next'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+import { motion } from 'framer-motion'
 
 // ** React
 
@@ -70,7 +71,7 @@ const HomePage: NextPage<TProps> = props => {
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1 , showImage : true},
+    { limit: -1, page: -1, showImage: true },
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
@@ -81,7 +82,6 @@ const HomePage: NextPage<TProps> = props => {
 
   return (
     <>
-      {isPending && <Spinner />}
       {/* <ChatBotAI /> */}
       {/* <ControlCalendar /> */}
       {allPackages?.length && (

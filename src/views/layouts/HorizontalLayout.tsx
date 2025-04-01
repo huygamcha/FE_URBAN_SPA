@@ -29,7 +29,7 @@ import { usePathname, useRouter } from 'next/navigation'
 
 // config
 import { ROUTE_CONFIG } from 'src/configs/route'
-import { checkLanguage, createUrlQuery } from 'src/utils'
+import { accessLink, checkLanguage, createUrlQuery } from 'src/utils'
 import { useTranslation } from 'react-i18next'
 import i18nConfig from 'src/app/i18nConfig'
 import Image from 'next/image'
@@ -79,6 +79,8 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   const toggleMobileMenu = (open: boolean) => {
     setMobileMenuOpen(open)
   }
+
+  console.log('««««« ROUTE_CONFIG »»»»»', currentLang)
 
   return (
     // <AppBar position='absolute' open={open}>
@@ -146,35 +148,72 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                   }
                 }}
               >
-                <Link href={ROUTE_CONFIG.HOME}>
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    '&:hover .MuiTypography-root': {
+                      opacity: 0.8
+                    }
+                  }}
+                  onClick={e => {
+                    router.push(accessLink(i18n.language, ''))
+                  }}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Home')}
                   </Typography>
-                </Link>
+                </Box>
+
                 <Box
                   sx={{
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    '&:hover .MuiTypography-root': {
+                      opacity: 0.8
+                    }
                   }}
                   onClick={e => {
-                    router.push('/#about') // Chuyển hướng đến trang gốc và cuộn đến ID
+                    router.push(accessLink(i18n.language, '/#about'))
                   }}
                 >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('About_Us')}
                   </Typography>
                 </Box>
-                <Link href={ROUTE_CONFIG.PACKAGE}>
+
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    '&:hover .MuiTypography-root': {
+                      opacity: 0.8
+                    }
+                  }}
+                  onClick={e => {
+                    router.push(accessLink(i18n.language, ROUTE_CONFIG.PACKAGE))
+                  }}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Package')}
                   </Typography>
-                </Link>
-                <Link href={ROUTE_CONFIG.CONTACT}>
+                </Box>
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    '&:hover .MuiTypography-root': {
+                      opacity: 0.8
+                    }
+                  }}
+                  onClick={e => {
+                    router.push(accessLink(i18n.language, ROUTE_CONFIG.CONTACT))
+                  }}
+                >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>
                     {t('Contact')}
                   </Typography>
-                </Link>
+                </Box>
                 <Button
-                  onClick={() => router.push(ROUTE_CONFIG.BOOKING.INDEX)}
+                  onClick={e => {
+                    router.push(accessLink(i18n.language, ROUTE_CONFIG.BOOKING.INDEX))
+                  }}
                   variant='outlined'
                   sx={{
                     borderRadius: '99px',
