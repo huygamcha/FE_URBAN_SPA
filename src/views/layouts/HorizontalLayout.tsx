@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 // ** Mui
 import { styled } from '@mui/material/styles'
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
+import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
@@ -17,10 +17,7 @@ import IconButton from '@mui/material/IconButton'
 // components
 import Icon from 'src/components/Icon'
 import UserDropdown from 'src/views/layouts/components/user-dropdown'
-import ModeToggle from 'src/views/layouts/components/mode-toggle'
 import LanguageDropdown from 'src/views/layouts/components/language-dropdown'
-import CartProduct from 'src/views/layouts/components/cart-product'
-import NotificationDropdown from 'src/views/layouts/components/notification-dropdown'
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
@@ -29,13 +26,10 @@ import { usePathname, useRouter } from 'next/navigation'
 
 // config
 import { ROUTE_CONFIG } from 'src/configs/route'
-import { accessLink, checkLanguage, createUrlQuery } from 'src/utils'
+import { accessLink, checkLanguage } from 'src/utils'
 import { useTranslation } from 'react-i18next'
-import i18nConfig from 'src/app/i18nConfig'
 import Image from 'next/image'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
-import BookingForm from '../pages/booking-form/BookingForm'
-import { useDrawer } from 'src/hooks/useDrawer'
 
 const drawerWidth: number = 240
 
@@ -71,6 +65,17 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   const { i18n, t } = useTranslation()
   const currentLang = i18n.language
 
+  const links = [
+    { label: 'Home', path: '/' },
+    { label: 'About_Us', path: '/#about' },
+    { label: 'Package', path: ROUTE_CONFIG.PACKAGE },
+    { label: 'Contact', path: ROUTE_CONFIG.CONTACT }
+  ]
+
+  console.log('««««« pathName »»»»»', pathName, currentLang)
+
+  const isActive = (target: string) => pathName === target || pathName.includes(target)
+
   // ** Context
   const isLg = useResponsiveScreen({ responsive: 'lg' })
   // State for mobile menu toggle
@@ -79,7 +84,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
   const toggleMobileMenu = (open: boolean) => {
     setMobileMenuOpen(open)
   }
-
 
   return (
     // <AppBar position='absolute' open={open}>
@@ -142,73 +146,54 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 display='flex'
                 alignItems='center'
                 sx={{
-                  '& a:hover .MuiTypography-root': {
-                    opacity: 0.8
+                  position: 'relative',
+                  '& .MuiTypography-root': {
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      left: 0,
+                      bottom: '-4px',
+                      width: '0%',
+                      height: '2px',
+                      background: '#fff',
+                      transition: 'width 0.3s ease'
+                    }
+                  },
+                  '& .MuiTypography-root:hover': {
+                    opacity: 0.8,
+                    '&::after': {
+                      width: '100%'
+                    }
                   }
                 }}
               >
-                <Box
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover .MuiTypography-root': {
-                      opacity: 0.8
-                    }
-                  }}
-                  onClick={e => {
-                    router.push(accessLink(i18n.language, '/'))
-                  }}
-                >
-                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
-                    {t('Home')}
-                  </Typography>
-                </Box>
+                {links.map((item, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      cursor: 'pointer',
+                      '& .MuiTypography-root::after': {
+                        width:
+                          index === 0
+                            ? `${item.path}${currentLang === 'vi' ? '' : `${currentLang}`}` === pathName
+                              ? '100%'
+                              : '0%'
+                            : isActive(item.path)
+                              ? '100%'
+                              : '0%'
+                      }
+                    }}
+                    onClick={e => {
+                      router.push(accessLink(i18n.language, `${item.path}`))
+                    }}
+                  >
+                    <Typography variant='subtitle2' color='common.white' fontWeight='500'>
+                      {t(`${item.label}`)}
+                    </Typography>
+                  </Box>
+                ))}
 
-                <Box
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover .MuiTypography-root': {
-                      opacity: 0.8
-                    }
-                  }}
-                  onClick={e => {
-                    router.push(accessLink(i18n.language, '/#about'))
-                  }}
-                >
-                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
-                    {t('About_Us')}
-                  </Typography>
-                </Box>
-
-                <Box
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover .MuiTypography-root': {
-                      opacity: 0.8
-                    }
-                  }}
-                  onClick={e => {
-                    router.push(accessLink(i18n.language, ROUTE_CONFIG.PACKAGE))
-                  }}
-                >
-                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
-                    {t('Package')}
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    cursor: 'pointer',
-                    '&:hover .MuiTypography-root': {
-                      opacity: 0.8
-                    }
-                  }}
-                  onClick={e => {
-                    router.push(accessLink(i18n.language, ROUTE_CONFIG.CONTACT))
-                  }}
-                >
-                  <Typography variant='subtitle2' color='common.white' fontWeight='500'>
-                    {t('Contact')}
-                  </Typography>
-                </Box>
                 <Button
                   onClick={e => {
                     router.push(accessLink(i18n.language, ROUTE_CONFIG.BOOKING.INDEX))
