@@ -80,7 +80,6 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
     setMobileMenuOpen(open)
   }
 
-  console.log('««««« ROUTE_CONFIG »»»»»', currentLang)
 
   return (
     // <AppBar position='absolute' open={open}>
@@ -156,7 +155,7 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                     }
                   }}
                   onClick={e => {
-                    router.push(accessLink(i18n.language, ''))
+                    router.push(accessLink(i18n.language, '/'))
                   }}
                 >
                   <Typography variant='subtitle2' color='common.white' fontWeight='500'>

@@ -308,7 +308,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
             })
           )
 
-          console.log('All data fetched successfully name')
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -334,7 +333,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
             })
           )
 
-          console.log('All data fetched successfully service')
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -360,7 +358,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
             handleSetOptionItem(item.optionId, index)
           })
 
-          console.log('All data fetched successfully option')
         } catch (error) {
           console.error('Error fetching data:', error)
         }

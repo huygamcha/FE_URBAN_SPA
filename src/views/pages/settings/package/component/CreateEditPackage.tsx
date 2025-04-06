@@ -245,7 +245,6 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                         <Box display='flex' alignItems='center' justifyContent='space-between'>
                           <WrapperFileUpload
                             uploadFunc={async file => {
-                              console.log('««««« file »»»»»', file)
                               const uploadedImageUrl = await handleUploadAvatar(file, 'image') // Hàm xử lý upload
                             }}
                             objectAcceptFile={{

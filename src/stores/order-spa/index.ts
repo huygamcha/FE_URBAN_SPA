@@ -146,7 +146,6 @@ export const orderSpaSlice = createSlice({
       state.isLoading = true
     })
     builder.addCase(updateStatusOrderSpaAsync.fulfilled, (state, action) => {
-      console.log('««««« action »»»»»', action)
       state.isLoading = false
       state.isSuccessUpdateStatus = !!action.payload?.data?._id
       state.isErrorUpdateStatus = !action.payload?.data?._id

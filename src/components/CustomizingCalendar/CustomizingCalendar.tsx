@@ -35,7 +35,6 @@ const ControlCalendar = () => {
     }
   )
 
-  console.log('««««« allAppointments »»»»»', allAppointments)
   const handleChange = (e: any) => {
     if (Array.isArray(e)) {
       if (e.length === 7) {
@@ -47,7 +46,6 @@ const ControlCalendar = () => {
           end: endDate
         }))
       } else {
-        console.log('««««« e »»»»»', e)
         const startDate = moment(e[0]).format('YYYY-MM-DD')
         setDuration(prev => ({
           ...prev,

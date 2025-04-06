@@ -61,7 +61,6 @@ const Dashboard = () => {
   const [countOrderStatus, setCountOrderStatus] = useState<Record<number, number>>({} as any)
   const [listProductPopular, setListProductPopular] = useState<TPackage[]>([])
 
-  console.log('««««« countRevenues »»»»»', countRevenues)
 
   // ** Fetch API
   const fetchAllCountRecords = async () => {

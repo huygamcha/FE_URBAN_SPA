@@ -11,7 +11,6 @@ const SocialMedia = () => {
   //   setToggle(!toggle)
   // }
 
-  // console.log('««««« toggle »»»»»', toggle)
 
   return (
     <>

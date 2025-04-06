@@ -52,7 +52,6 @@ const LanguageDropdown = (props: TProps) => {
   }
 
   const handleOnchangeLang = (lang: string) => {
-    console.log('««««« here »»»»»', currentLang);
     if (currentLang === i18nConfig.defaultLocale) {
       router.push('/' + lang + currentPathName)
     } else {

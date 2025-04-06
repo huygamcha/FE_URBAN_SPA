@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   title: 'UrbanSpa',
   description:
     'Bán hàng điện tử, điện thoại, máy tính bảng, khóa học nextjs 14 reactjs typescript pro 2024 by Lập trình thật dễ - Xây dựng website bán hàng',
-  keywords: `Lập trình thật dễ - ReactJS, NextJS 14, Typescript, Lập trình thật dễ`,
+  keywords: `LkC`,
   openGraph: {
     title: 'UrbanSpa',
     description:
