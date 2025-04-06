@@ -185,35 +185,6 @@ const Contact = () => {
                   <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://zalo.me/0868144408'>
                     <Image src='https://cdn.kampa.vn/urban-spa-zalo.svg.webp' width={25} height={25} alt='zalo' />
                   </Link>
-
-                  {/* <Link style={{ paddingRight: '1rem' }} target='_blank' href='https://www.instagram.com'>
-                    <Image
-                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/social_instragram.svg'
-                      width={25}
-                      height={25}
-                      alt='ig'
-                    />
-                  </Link> */}
-                  {/* <Link
-                    style={{ paddingRight: '1rem' }}
-                    target='_blank'
-                    href='https://www.youtube.com/watch?v=GQjEjprY0WE&t=1s'
-                  >
-                    <Image
-                      src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
-                      width={32}
-                      height={22}
-                      alt='cafe'
-                    />
-                  </Link> */}
-                  {/* <Link target='_blank' href='https://zalo.me/0868144408'>
-                    <Image
-                      src='https://pub-172edbed9e21458e8e1f85de78accde8.r2.dev/Icon_of_Zalo.svg.webp'
-                      width={25}
-                      height={25}
-                      alt='zalo'
-                    />
-                  </Link> */}
                 </Box>
               </Box>
             </Box>

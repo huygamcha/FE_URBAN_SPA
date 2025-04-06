@@ -1,28 +1,19 @@
 'use client'
 
-import React, { useEffect } from 'react'
-import { Container, Box, Grid, Typography, Link, Divider, Button } from '@mui/material'
+import React from 'react'
+import { Box, Grid, Typography, Link } from '@mui/material'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-import { ROUTE_CONFIG } from 'src/configs/route'
 import { useRouter } from 'next/navigation'
-import Contact from 'src/views/layouts/components/footer/components/Contact'
-// import FacebookIcon from '@mui/icons-material/Facebook'
-// import InstagramIcon from '@mui/icons-material/Instagram'
 
 const ContactPage = () => {
   const { t } = useTranslation()
   const router = useRouter()
 
   return (
-    <>
+    <Box overflow='hidden'>
       <Box overflow='hidden'>
-        <Box
-          sx={{
-            background: '#440a09'
-          }}
-          padding='2% 5%'
-        >
+        <Box sx={{ background: '#440a09' }} padding='2% 5%'>
           <Box
             sx={{
               flexGrow: 1,
@@ -39,60 +30,78 @@ const ContactPage = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
                 <Box>
-                  <Typography
-                    sx={{
-                      color: '#fff'
-                    }}
-                    textAlign='center'
-                    fontSize='1.5rem'
-                    fontWeight='500'
-                  >
+                  <Typography sx={{ color: '#fff' }} textAlign='center' fontSize='1.5rem' fontWeight='500'>
                     {t('Support_Ready')}
                   </Typography>
                 </Box>
                 <Box>
-                  <Typography
-                    fontSize='1rem'
-                    textAlign='center'
-                    sx={{
-                      color: '#fff'
-                    }}
-                  >
+                  <Typography fontSize='1rem' textAlign='center' sx={{ color: '#fff' }}>
                     {t('Contact_Info')}
                   </Typography>
                 </Box>
 
                 <Box pt='1rem' display='flex' justifyContent='center'>
-                  <Box sx={{ cursor: 'pointer' }}>
-                    <Box mt='0.375rem'>
+                  <Box sx={{ cursor: 'pointer', display: 'flex' }}>
+                    <Box mt='0.375rem' sx={{ display: 'flex' }}>
                       <Link
                         style={{ paddingRight: '1rem' }}
                         target='_blank'
                         href='https://www.facebook.com/hanoiurbanoasisspa'
+                        sx={{
+                          animation: 'slideUpFadeIn 0.5s ease-in forwards',
+                          animationDelay: '0.1s',
+                          opacity: 0,
+                          '@keyframes slideUpFadeIn': {
+                            '0%': {
+                              transform: 'translateY(20px)',
+                              opacity: 0
+                            },
+                            '100%': {
+                              transform: 'translateY(0)',
+                              opacity: 1
+                            }
+                          }
+                        }}
                       >
                         <Image src='https://cdn.kampa.vn/fb-spa.webp' width={40} height={40} alt='fb' />
                       </Link>
-                      <Link style={{ paddingRight: '1rem' }} target='_blank' href=''>
-                        <Image src='https://cdn.kampa.vn/kakaotalk-spa.svg' width={40} height={40} alt='ig' />
-                      </Link>
-                      {/* <Link
+
+                      <Link
                         style={{ paddingRight: '1rem' }}
                         target='_blank'
-                        href='https://www.youtube.com/watch?v=GQjEjprY0WE&t=1s'
+                        href=''
+                        sx={{
+                          animation: 'slideUpFadeIn 0.5s ease-in forwards',
+                          animationDelay: '0.3s',
+                          opacity: 0
+                        }}
                       >
-                        <Image
-                          src='https://pub-50bb58cfabdd4b93abb4e154d0eada9e.r2.dev/youtubeic.webp'
-                          width={32}
-                          height={22}
-                          alt='cafe'
-                        />
-                      </Link> */}
-                      <Link style={{ paddingRight: '1rem' }} target='_blank' href=''>
-                        <Image src='https://cdn.kampa.vn/line-spa.png' width={40} height={40} alt='zalo' />
+                        <Image src='https://cdn.kampa.vn/kakaotalk-spa.svg' width={40} height={40} alt='kakao' />
                       </Link>
 
-                      <Link target='_blank' href=''>
-                        <Image src='https://cdn.kampa.vn/what-app-spa.webp' width={40} height={40} alt='zalo' />
+                      <Link
+                        style={{ paddingRight: '1rem' }}
+                        target='_blank'
+                        href=''
+                        sx={{
+                          animation: 'slideUpFadeIn 0.5s ease-in forwards',
+                          animationDelay: '0.5s',
+                          opacity: 0
+                        }}
+                      >
+                        <Image src='https://cdn.kampa.vn/line-spa.png' width={40} height={40} alt='line' />
+                      </Link>
+
+                      <Link
+                        target='_blank'
+                        href=''
+                        sx={{
+                          animation: 'slideUpFadeIn 0.5s ease-in forwards',
+                          animationDelay: '0.7s',
+                          opacity: 0
+                        }}
+                      >
+                        <Image src='https://cdn.kampa.vn/what-app-spa.webp' width={40} height={40} alt='whatsapp' />
                       </Link>
                     </Box>
                   </Box>
@@ -102,9 +111,15 @@ const ContactPage = () => {
           </Box>
         </Box>
       </Box>
+
       <Box overflow='hidden'>
         <Box
           sx={{
+            animation: 'fadeIn 0.5s ease-in',
+            '@keyframes fadeIn': {
+              '0%': { opacity: 0 },
+              '100%': { opacity: 1 }
+            },
             position: 'relative',
             zIndex: 1,
             background: theme => theme.palette.customBackground.secondary
@@ -126,30 +141,54 @@ const ContactPage = () => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} md={12}>
-                <Box>
-                  <Typography
-                    textAlign='center'
-                    fontSize='1.5rem'
-                    fontWeight='500'
-                    sx={{
-                      color: 'rgb(179, 130, 22)'
-                    }}
-                  >
+                {/* Slide from top + fade in */}
+                <Box
+                  sx={{
+                    animation: 'slideDownFadeIn 1s ease-in',
+                    '@keyframes slideDownFadeIn': {
+                      '0%': {
+                        transform: 'translateY(-20px)',
+                        opacity: 0
+                      },
+                      '100%': {
+                        transform: 'translateY(0)',
+                        opacity: 1
+                      }
+                    }
+                  }}
+                >
+                  <Typography textAlign='center' fontSize='1.5rem' fontWeight='500' sx={{ color: 'rgb(179, 130, 22)' }}>
                     {t('Our_Location')}
                   </Typography>
                 </Box>
+
                 <Box>
-                  <Typography
-                    fontSize='1rem'
-                    textAlign='center'
-                    sx={{
-                      color: 'rgb(179, 130, 22)'
-                    }}
-                  >
+                  <Typography fontSize='1rem' textAlign='center' sx={{ color: 'rgb(179, 130, 22)' }}>
                     {t('Location_Description')}
                   </Typography>
                 </Box>
-                <Box mt='1rem' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='center'>
+
+                {/* Slide and fade iframe */}
+                <Box
+                  mt='1rem'
+                  display='flex'
+                  flexDirection='column'
+                  alignItems='flex-start'
+                  justifyContent='center'
+                  sx={{
+                    animation: 'slideDownFadeInFast 0.6s ease-in',
+                    '@keyframes slideDownFadeInFast': {
+                      '0%': {
+                        transform: 'translateY(-20px)',
+                        opacity: 0
+                      },
+                      '100%': {
+                        transform: 'translateY(0)',
+                        opacity: 1
+                      }
+                    }
+                  }}
+                >
                   <a
                     style={{
                       color: '#020b27',
@@ -162,6 +201,7 @@ const ContactPage = () => {
                     target='_blank'
                     rel='noreferrer'
                   ></a>
+
                   <iframe
                     src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d29792.312891707443!2d105.849959!3d21.031121!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abbfd1259fed%3A0xb1507bcd1cc0981a!2sUrban%20Oasis%20Spa!5e0!3m2!1sko!2sus!4v1736442871997!5m2!1sko!2sus'
                     width='100%'
@@ -176,6 +216,7 @@ const ContactPage = () => {
               </Grid>
             </Grid>
           </Box>
+
           <Box
             sx={{
               position: 'absolute',
@@ -196,7 +237,7 @@ const ContactPage = () => {
           </Box>
         </Box>
       </Box>
-    </>
+    </Box>
   )
 }
 
