@@ -1,12 +1,6 @@
 import { Metadata } from 'next'
 import { ReactNode } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
-import { getDetailAbout } from 'src/services/about'
-import { getAllBanners } from 'src/services/banners'
-import { getAllPackages } from 'src/services/packages'
-import { TParamsFetchAbout } from 'src/types/about'
-import { TBanner } from 'src/types/banner'
-import { TPackage } from 'src/types/package'
 
 // layouts
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'

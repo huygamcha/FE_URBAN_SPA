@@ -76,36 +76,7 @@ const PackagePage: NextPage<TProps> = props => {
 
   const handleBooking = () => {
     router.push(`${ROUTE_CONFIG.BOOKING.INDEX}/${packageItem?.slug}`)
-    // ;() => router.push(ROUTE_CONFIG.BOOKING.INDEX)
   }
-
-  // fetch api
-  // ** fetch api
-  // ** Scroll to ref on initial load
-  // useEffect(() => {
-  //   if (ref.current) {
-  //     ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  //   }
-  // }, [])
-
-  // Prevent body scrolling when modal is open
-  // useEffect(() => {
-  //   if (!isLg) {
-  //     if (openBookingForm) {
-  //       document.body.style.overflow = 'hidden'
-  //       document.body.style.position = 'fixed'
-  //       document.body.style.width = '100%'
-  //     } else {
-  //       document.body.style.overflow = 'auto'
-  //       document.body.style.position = 'static'
-  //     }
-
-  //     return () => {
-  //       document.body.style.overflow = 'auto'
-  //       document.body.style.position = 'static'
-  //     }
-  //   }
-  // }, [openBookingForm])
 
   useEffect(() => {
     if (packageId) {
@@ -127,7 +98,12 @@ const PackagePage: NextPage<TProps> = props => {
   return (
     <>
       <Box
-        sx={{ padding: '2% 5%', position: 'relative', zIndex: 1, [theme.breakpoints.down('md')]: { padding: '0%' } }}
+        sx={{
+          padding: '2% 5%',
+          position: 'relative',
+          zIndex: 1,
+          [theme.breakpoints.down('md')]: { padding: '0%' }
+        }}
       >
         <Box
           sx={{
@@ -162,7 +138,18 @@ const PackagePage: NextPage<TProps> = props => {
                 sx={{
                   fontSize: '2rem',
                   fontWeight: 600,
-                  fontFamily: 'Playfair Display,sans-serif'
+                  fontFamily: 'Playfair Display,sans-serif',
+                  animation: 'slideDownFadeIn 1s ease-in',
+                  '@keyframes slideDownFadeIn': {
+                    '0%': {
+                      transform: 'translateY(-20px)',
+                      opacity: 0
+                    },
+                    '100%': {
+                      transform: 'translateY(0)',
+                      opacity: 1
+                    }
+                  }
                 }}
                 textAlign='center'
                 color='text.secondary'
@@ -173,7 +160,21 @@ const PackagePage: NextPage<TProps> = props => {
 
               <Grid container spacing={5}>
                 <Grid item xs={12} lg={6}>
-                  <Box>
+                  <Box
+                    sx={{
+                      animation: 'slideDownFadeIn 1s ease-in',
+                      '@keyframes slideDownFadeIn': {
+                        '0%': {
+                          transform: 'translateY(-20px)',
+                          opacity: 0
+                        },
+                        '100%': {
+                          transform: 'translateY(0)',
+                          opacity: 1
+                        }
+                      }
+                    }}
+                  >
                     <Box
                       sx={{
                         overflow: 'hidden',
@@ -197,7 +198,25 @@ const PackagePage: NextPage<TProps> = props => {
                   </Box>
                 </Grid>
                 <Grid item xs={12} lg={6}>
-                  <Box border='1px solid #492828' borderRadius='8px' p='1rem' pt='0rem'>
+                  <Box
+                    sx={{
+                      animation: 'slideDownFadeIn 1s ease-in',
+                      '@keyframes slideDownFadeIn': {
+                        '0%': {
+                          transform: 'translateY(-20px)',
+                          opacity: 0
+                        },
+                        '100%': {
+                          transform: 'translateY(0)',
+                          opacity: 1
+                        }
+                      }
+                    }}
+                    border='1px solid #492828'
+                    borderRadius='8px'
+                    p='1rem'
+                    pt='0rem'
+                  >
                     {packageItem?.services.map((item, index) => (
                       <Box
                         py='1rem'
@@ -301,7 +320,24 @@ const PackagePage: NextPage<TProps> = props => {
                       </Box>
                     ))}
                   </Box>
-                  <Box mt='1rem' display='flex' justifyContent='start'>
+                  <Box
+                    sx={{
+                      animation: 'slideDownFadeIn 1s ease-in',
+                      '@keyframes slideDownFadeIn': {
+                        '0%': {
+                          transform: 'translateY(-20px)',
+                          opacity: 0
+                        },
+                        '100%': {
+                          transform: 'translateY(0)',
+                          opacity: 1
+                        }
+                      }
+                    }}
+                    mt='1rem'
+                    display='flex'
+                    justifyContent='start'
+                  >
                     <Button onClick={handleBooking} variant='contained'>
                       {t('Booking_now')}
                     </Button>
