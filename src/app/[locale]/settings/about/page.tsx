@@ -3,11 +3,9 @@ import { NextPage } from 'next'
 
 // ** Config
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
-import AboutListPage from 'src/views/pages/settings/about/PackagePage'
+import AboutListPage from 'src/views/pages/settings/about/AboutPage'
 
 // ** Pages
-import CityListPage from 'src/views/pages/settings/city/CityList'
-import PackageListPage from 'src/views/pages/settings/package/PackagePage'
 
 type TProps = {}
 

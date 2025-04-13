@@ -41,6 +41,28 @@ const StyleWrapperEditor = styled(Box)<TStyleWrapperEditor>(({ theme, error }) =
   }
 }))
 
+export function uploadCallback(
+  file: File,
+  uploadedImages: { file: File; localSrc: string }[],
+  setUploadedImages: (images: { file: File; localSrc: string }[]) => void
+) {
+  const imageObject = {
+    file: file,
+    localSrc: URL.createObjectURL(file)
+  }
+
+  // const updatedImages = [...uploadedImages, imageObject]
+  // setUploadedImages(updatedImages)
+
+  // We need to return a promise with the image src
+  // the img src we will use here will be what's needed
+  // to preview it in the browser. This will be different than what
+  // we will see in the index.md file we generate.
+  return new Promise(resolve => {
+    resolve({ data: { link: imageObject.localSrc } })
+  })
+}
+
 const CustomEditor = (props: TProps) => {
   const { error, label, helperText, ...rests } = props
 
@@ -59,7 +81,32 @@ const CustomEditor = (props: TProps) => {
       >
         {label}
       </InputLabel>
-      <ReactDraftWysiwyg handlePastedText={() => false} {...rests} />
+      <ReactDraftWysiwyg
+        toolbar={{
+          image: {
+            previewImage: true,
+            uploadCallback: (file: File) => {
+              return new Promise((resolve, reject) => {
+                const reader = new FileReader()
+                reader.onloadend = () => {
+                  resolve({
+                    data: {
+                      url: reader.result
+                    }
+                  })
+                }
+
+                reader.onerror = reason => reject(reason)
+
+                reader.readAsDataURL(file)
+              })
+            },
+            alt: { present: true, mandatory: true }
+          }
+        }}
+        handlePastedText={() => false}
+        {...rests}
+      />
       {helperText && (
         <FormHelperText
           sx={{
