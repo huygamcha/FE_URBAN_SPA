@@ -20,7 +20,7 @@ const Packages = (props: TProps) => {
   const isLg = useResponsiveScreen({ responsive: 'lg' })
   const router = useRouter()
   const theme = useTheme()
-  const allRefs = useRef<Array<HTMLDivElement | null>>([])
+  const allRefs = useRef<Array<HTMLDivElement | HTMLSpanElement | null>>([])
 
   const handleDetail = (item: TPackage) => {
     router.push(`${ROUTE_CONFIG.PACKAGE}/${item.slug}`)
@@ -63,7 +63,7 @@ const Packages = (props: TProps) => {
       <Box>
         <Typography
           ref={el => {
-            allRefs.current[0] = el;
+            allRefs.current[0] = el
           }}
           sx={{
             height: '6px',
@@ -107,7 +107,7 @@ const Packages = (props: TProps) => {
                   <Box
                     onClick={() => handleDetail(pkg)}
                     ref={el => {
-                      allRefs.current[currentRefIndex] = el
+                      allRefs.current[currentRefIndex] = el as HTMLDivElement | HTMLSpanElement | null
                     }}
                     sx={{
                       opacity: 0,
@@ -234,7 +234,7 @@ const Packages = (props: TProps) => {
                           <Typography>{t('Promotional_price')}</Typography>
                         </Box>
 
-                        {item.options.map((option, idx) => (
+                        {item.options.map((option: any, idx: number) => (
                           <Box
                             key={idx}
                             sx={{
