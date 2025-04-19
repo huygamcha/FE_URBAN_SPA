@@ -62,7 +62,9 @@ const Packages = (props: TProps) => {
     >
       <Box>
         <Typography
-          ref={el => (allRefs.current[0] = el)}
+          ref={el => {
+            allRefs.current[0] = el;
+          }}
           sx={{
             height: '6px',
             background: theme.palette.common.white,
