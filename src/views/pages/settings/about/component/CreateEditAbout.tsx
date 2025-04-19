@@ -151,7 +151,7 @@ const CreateEditAbout = (props: TCreateEditAbout) => {
               <Grid container spacing={4}>
                 {/* Editor Fields */}
                 {descriptionFields.map(({ name, label }) => (
-                  <Grid item md={6} xs={12} key={name}>
+                  <Grid item md={12} xs={12} key={name}>
                     <Controller
                       control={control}
                       render={({ field: { onChange, onBlur, value } }) => (

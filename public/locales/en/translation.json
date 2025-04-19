@@ -451,5 +451,7 @@
   "Title_delete_multiple_Order": "Confirm delete multiple services",
   "Confirm_delete_multiple_Order": "Are you sure you want to delete these services?",
   "Delete_multiple_order_success": "Successfully deleted multiple orders",
-  "Sign_in": "Sign in"
+  "Sign_in": "Sign in",
+  "List_price": "List price",
+  "Promotional_price": "Promotional price"
 }

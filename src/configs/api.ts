@@ -1,3 +1,5 @@
+import { BLOCKED_PAGES } from 'next/dist/shared/lib/constants'
+
 export const BASE_URL = `${process.env.NEXT_PUBLIC_API_HOST}/api/v1.0`
 
 export const API_ENDPOINT = {
@@ -19,6 +21,9 @@ export const API_ENDPOINT = {
     },
     BANNER: {
       INDEX: `${BASE_URL}/banners`
+    },
+    BLOG: {
+      INDEX: `${BASE_URL}/blogs`
     },
     ABOUT: {
       INDEX: `${BASE_URL}/about-us`

@@ -28,7 +28,7 @@ import Spinner from 'src/components/spinner'
 const ListPackagePage = () => {
   // ** Props
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1, showImage: true },
+    { limit: -1, page: -1,},
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,

@@ -111,6 +111,11 @@ export const VerticalItems = () => {
           title: t('Banner'),
           icon: 'material-symbols-light:gallery-thumbnail-outline-rounded',
           path: ROUTE_CONFIG.SETTINGS.BANNER
+        },
+        {
+          title: t('Blog'),
+          icon: 'lineicons:blogger',
+          path: ROUTE_CONFIG.SETTINGS.BLOG
         }
         // {
         //   title: t('City'),

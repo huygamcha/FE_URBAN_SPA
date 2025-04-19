@@ -223,6 +223,19 @@ export const formatCurrency = (value: string | number) => {
   })}`
 }
 
+export const uploadImageToCloud = async (formData: FormData) => {
+  try {
+    const response = await fetch(`${API_ENDPOINT.UPLOAD.IMAGE}`, {
+      method: 'POST',
+      body: formData
+    })
+    const result = await response.json()
+
+    return result
+  } catch (error) {
+    throw error
+  }
+}
 type TUploadMultipleImage = {
   image: string
 }

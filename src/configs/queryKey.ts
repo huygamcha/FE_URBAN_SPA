@@ -11,4 +11,10 @@ export const queryKeys = {
   update_about: 'update_about',
   detail_about: 'detail_about',
 
+  blog_create: 'blog_create',
+  blog_detail: 'blog_detail',
+  blog_list: 'blog_list',
+  blog_update: 'blog_update',
+  blog_delete: 'blog_delete',
+  blog_multiple_delete: 'blog_multiple_delete'
 }
