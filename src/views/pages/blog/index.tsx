@@ -99,7 +99,7 @@ const BlogListPage = ({ blogs }: Props) => {
               }
             }}
           >
-            {t('News')}
+            {t('Blog')}
           </Typography>
 
           <Grid container spacing={4}>
@@ -143,7 +143,14 @@ const BlogListPage = ({ blogs }: Props) => {
                         fontSize: '1.25rem',
                         fontWeight: 'bold',
                         borderTopLeftRadius: '1rem',
-                        borderTopRightRadius: '1rem'
+                        borderTopRightRadius: '1rem',
+
+                        // 👇 Cần thiết để line-clamp hoạt động
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical'
                       }}
                     >
                       {displayValueByLanguage({ language: i18n.language, value: blog, field: 'name' })}
