@@ -62,7 +62,7 @@ const Packages = (props: TProps) => {
     >
       <Box>
         <Typography
-          ref={el => {
+          ref={(el: HTMLDivElement | null) => {
             allRefs.current[0] = el
           }}
           sx={{

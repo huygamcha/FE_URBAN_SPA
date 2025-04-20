@@ -20,7 +20,7 @@ type TBlog = {
   descriptionJp: string
   slug: string
   thumbnail: string
-  createAt: string
+  createdAt: string
 }
 
 type Props = {
@@ -69,7 +69,7 @@ const BlogListPage = ({ blogs }: Props) => {
         >
           <Box>
             <Typography
-              ref={el => {
+              ref={(el: HTMLDivElement | null) => {
                 allRefs.current[0] = el
               }}
               sx={{
@@ -109,7 +109,9 @@ const BlogListPage = ({ blogs }: Props) => {
               return (
                 <Grid item xs={12} sm={6} md={4} key={blog._id}>
                   <Box
-                    ref={el => (allRefs.current[currentRefIndex] = el)}
+                    ref={(el: HTMLDivElement | null) => {
+                      allRefs.current[currentRefIndex] = el
+                    }}
                     onClick={() => router.push(`${ROUTE_CONFIG.BLOG}/${blog.slug}`)}
                     sx={{
                       opacity: 0,
