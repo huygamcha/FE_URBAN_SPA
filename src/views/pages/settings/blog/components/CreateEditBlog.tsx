@@ -1,7 +1,7 @@
 'use client'
 
 // ** React
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Form
@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 // ** Mui
-import { Box, Button, IconButton, Typography, useTheme } from '@mui/material'
+import { Box, Button, FormHelperText, Grid, IconButton, Typography, useTheme } from '@mui/material'
 
 // ** Components
 import Icon from 'src/components/Icon'
@@ -23,13 +23,15 @@ import CustomEditor from 'src/components/custom-editor'
 import { queryKeys } from 'src/configs/queryKey'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { stringToSlug } from 'src/utils'
+import { stringToSlug, uploadImageToCloud, uploadMultipleImage } from 'src/utils'
 import { convertHTMLToDraft } from 'src/utils'
 import { createBlog, getDetailsBlog } from 'src/services/blog'
 import { TParamsCreateBlog } from 'src/types/blog'
 import { useMutationEditBlog } from 'src/queries/blog'
 import draftToHtml from 'draftjs-to-html'
 import { EditorState, convertToRaw } from 'draft-js'
+import WrapperFileUpload from 'src/components/wrapper-file-upload'
+import Image from 'next/image'
 
 interface TCreateEditBlog {
   open: boolean
@@ -42,6 +44,7 @@ interface TCreateEditBlog {
 const CreateEditBlog = (props: TCreateEditBlog) => {
   const { t } = useTranslation()
   const theme = useTheme()
+  const [imageCloudflare, setImageCloudflare] = useState<{ thumbnail: any }>({ thumbnail: '' })
 
   const { open, onClose, idBlog, sortBy, searchBy } = props
   const queryClient = useQueryClient()
@@ -90,6 +93,8 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
     nameKo: '',
     nameEn: '',
     nameJp: '',
+    thumbnail: '',
+    slug: '',
     description: EditorState.createEmpty(),
     descriptionKo: EditorState.createEmpty(),
     descriptionEn: EditorState.createEmpty(),
@@ -104,7 +109,9 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
     description: yup.object().required(),
     descriptionKo: yup.object().required(),
     descriptionEn: yup.object().required(),
-    descriptionJp: yup.object().required()
+    descriptionJp: yup.object().required(),
+    slug: yup.string().required(),
+    thumbnail: yup.string().required()
   })
 
   const {
@@ -112,20 +119,29 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
     control,
     formState: { errors },
     reset,
-    getValues
+    getValues,
+    setValue,
+    setError
   } = useForm({
     defaultValues,
     mode: 'onBlur',
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    let resultImage
+    if (Object.values(imageCloudflare)[0]) {
+      resultImage = await uploadImageToCloud(imageCloudflare.thumbnail)
+    }
+    console.log('««««« resultImage »»»»»', resultImage)
+
     const payload = {
       ...data,
       description: draftToHtml(convertToRaw(data.description.getCurrentContent())),
       descriptionKo: draftToHtml(convertToRaw(data.descriptionKo.getCurrentContent())),
       descriptionEn: draftToHtml(convertToRaw(data.descriptionEn.getCurrentContent())),
-      descriptionJp: draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent()))
+      descriptionJp: draftToHtml(convertToRaw(data.descriptionJp.getCurrentContent())),
+      thumbnail: resultImage?.data ? resultImage?.data : data?.thumbnail
     }
 
     if (idBlog) {
@@ -133,6 +149,7 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
     } else {
       mutateCreateBlog(payload)
     }
+    setImageCloudflare({ thumbnail: '' })
   }
 
   const fetchDetailsBlog = async (id: string) => {
@@ -155,6 +172,29 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
     }
   })
 
+  // handleImage huygamcha
+  const handleUploadAvatar = async (pics: File, field: string) => {
+    if (pics?.size < 10000000) {
+      const data = new FormData()
+      data.append('file', pics)
+      setImageCloudflare((prev: any) => ({
+        ...prev,
+        [field]: data
+      }))
+
+      // hiển thị ảnh để preview
+      // Use FileReader to read the file and display it
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        setValue('thumbnail', e.target.result)
+      }
+      reader.readAsDataURL(pics)
+      // setImageURL(null)
+    } else {
+      setError('thumbnail', { type: 'custom', message: t('Image_Size_Limit') })
+    }
+  }
+
   useEffect(() => {
     if (!open) {
       reset(defaultValues)
@@ -168,6 +208,8 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
         nameKo: blogsDetails?.nameKo || '',
         nameEn: blogsDetails?.nameEn || '',
         nameJp: blogsDetails?.nameJp || '',
+        slug: blogsDetails?.slug || '',
+        thumbnail: blogsDetails?.thumbnail || '',
         description: convertHTMLToDraft(blogsDetails?.description),
         descriptionKo: convertHTMLToDraft(blogsDetails?.descriptionKo),
         descriptionEn: convertHTMLToDraft(blogsDetails?.descriptionEn),
@@ -179,7 +221,13 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
   return (
     <>
       {(isLoadingCreate || isLoadingDetails || isLoadingEdit) && <Spinner />}
-      <CustomModal open={open} onClose={onClose}>
+      <CustomModal
+        open={open}
+        onClose={() => {
+          onClose()
+          setImageCloudflare({ thumbnail: '' })
+        }}
+      >
         <Box
           sx={{
             padding: '1.25rem',
@@ -198,75 +246,163 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
           </Box>
 
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
-            <Box
-              sx={{
-                width: '100%',
-                backgroundColor: theme.palette.background.paper,
-                padding: '1.875rem 1.25rem',
-                borderRadius: '15px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 4
-              }}
-            >
-              {/* Name fields */}
-              {[
-                { name: 'name', label: t('Name_blog'), required: true },
-                { name: 'nameKo', label: t('Name_blog_ko'), required: true },
-                { name: 'nameEn', label: t('Name_blog_en') },
-                { name: 'nameJp', label: t('Name_blog_jp') }
-              ].map(({ name, label, required }) => (
-                <Controller
-                  key={name}
-                  control={control}
-                  rules={{ required }}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <CustomTextField
-                      required={required}
-                      fullWidth
-                      label={label}
-                      onChange={onChange}
-                      onBlur={onBlur}
-                      value={value}
-                      placeholder={label}
-                      error={Boolean(errors?.[name as keyof typeof errors])}
-                      helperText={errors?.[name as keyof typeof errors]?.message}
-                    />
-                  )}
-                  name={name as keyof typeof defaultValues}
-                />
-              ))}
+            {/* Phần tải ảnh lên */}
+            <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
+              {' '}
+              <Grid container spacing={4}>
+                <Grid item xs={6}>
+                  <Controller
+                    name='thumbnail'
+                    control={control}
+                    rules={{
+                      required: true
+                    }}
+                    render={({ field: { onChange, value } }) => (
+                      <>
+                        {/* Phần hiển thị ảnh */}
+                        <Box sx={{ position: 'relative' }}>
+                          {value && (
+                            <Box>
+                              <Image src={value} layout='responsive' width={16} height={9} alt='image' />
+                            </Box>
+                          )}
+                        </Box>
 
-              {/* Description fields with CustomEditor */}
-              {[
-                { name: 'description', label: t('Description') },
-                { name: 'descriptionKo', label: t('Description_ko') },
-                { name: 'descriptionEn', label: t('Description_en') },
-                { name: 'descriptionJp', label: t('Description_jp') }
-              ].map(({ name, label }) => (
-                <Controller
-                  key={name}
-                  control={control}
-                  render={({ field: { onChange, onBlur, value } }) => (
-                    <CustomEditor
-                      onEditorStateChange={onChange}
-                      onBlur={onBlur}
-                      editorState={value as EditorState}
-                      label={label}
-                      placeholder={label}
-                      error={Boolean(errors?.[name as keyof typeof errors])}
-                      helperText={errors?.[name as keyof typeof errors]?.message}
-                    />
-                  )}
-                  name={name as keyof typeof defaultValues}
-                />
-              ))}
-            </Box>
+                        {/* Phần tải ảnh lên */}
+                        <Box display='flex' alignItems='center' justifyContent='space-between'>
+                          <WrapperFileUpload
+                            uploadFunc={async file => {
+                              const uploadedImageUrl = await handleUploadAvatar(file, 'thumbnail') // Hàm xử lý upload
+                            }}
+                            objectAcceptFile={{
+                              'image/jpeg': ['.jpg', '.jpeg'],
+                              'image/webp': ['.webp'],
+                              'image/png': ['.png'],
+                              'image/svg': ['.svg']
+                            }}
+                          >
+                            <Button
+                              variant='outlined'
+                              sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
+                            >
+                              <Icon icon='ph:camera-thin' />
+                              {value ? t('Change_image') : t('Upload_image')}
+                            </Button>
+                          </WrapperFileUpload>
+                          {value && (
+                            <IconButton
+                              onClick={() => {
+                                onChange('')
+                                setImageCloudflare((prev: any) => ({
+                                  ...prev,
+                                  thumbnail: ''
+                                }))
+                              }} // Xóa ảnh
+                            >
+                              <Icon icon='material-symbols-light:delete-outline' />
+                            </IconButton>
+                          )}
+                        </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                {!idBlog ? t('Create') : t('Update')}
-              </Button>
+                        {errors?.thumbnail?.message && (
+                          <FormHelperText
+                            sx={{
+                              color: errors?.thumbnail
+                                ? theme.palette.error.main
+                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                              fontSize: '1rem'
+                            }}
+                          >
+                            {errors?.thumbnail?.message}
+                          </FormHelperText>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+              </Grid>
+              <Box
+                sx={{
+                  width: '100%',
+                  backgroundColor: theme.palette.background.paper,
+                  padding: '1.875rem 0rem',
+                  borderRadius: '15px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 4
+                }}
+              >
+                {/* Name fields */}
+                {[
+                  { name: 'name', label: t('Name_blog'), required: true },
+                  { name: 'nameKo', label: t('Name_blog_ko'), required: true },
+                  { name: 'nameEn', label: t('Name_blog_en') },
+                  { name: 'nameJp', label: t('Name_blog_jp') },
+                  { name: 'slug', label: t('Slug'), required: true }
+                ].map(({ name, label, required }) => (
+                  <Controller
+                    key={name}
+                    control={control}
+                    rules={{ required }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <CustomTextField
+                        required={required}
+                        fullWidth
+                        label={label}
+                        onChange={
+                          name !== 'nameEn'
+                            ? onChange
+                            : e => {
+                                const value = e.target.value
+                                const replaced = stringToSlug(value)
+                                onChange(value)
+                                reset({
+                                  ...getValues(),
+                                  slug: replaced
+                                })
+                              }
+                        }
+                        onBlur={onBlur}
+                        value={value}
+                        placeholder={label}
+                        error={Boolean(errors?.[name as keyof typeof errors])}
+                        helperText={errors?.[name as keyof typeof errors]?.message}
+                      />
+                    )}
+                    name={name as keyof typeof defaultValues}
+                  />
+                ))}
+
+                {/* Description fields with CustomEditor */}
+                {[
+                  { name: 'description', label: t('Description') },
+                  { name: 'descriptionKo', label: t('Description_ko') },
+                  { name: 'descriptionEn', label: t('Description_en') },
+                  { name: 'descriptionJp', label: t('Description_jp') }
+                ].map(({ name, label }) => (
+                  <Controller
+                    key={name}
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <CustomEditor
+                        onEditorStateChange={onChange}
+                        onBlur={onBlur}
+                        editorState={value as EditorState}
+                        label={label}
+                        placeholder={label}
+                        error={Boolean(errors?.[name as keyof typeof errors])}
+                        helperText={errors?.[name as keyof typeof errors]?.message}
+                      />
+                    )}
+                    name={name as keyof typeof defaultValues}
+                  />
+                ))}
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+                  {!idBlog ? t('Create') : t('Update')}
+                </Button>
+              </Box>
             </Box>
           </form>
         </Box>

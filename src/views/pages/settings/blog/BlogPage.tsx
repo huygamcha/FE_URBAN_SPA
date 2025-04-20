@@ -224,6 +224,13 @@ const BlogListPage: NextPage<TProps> = () => {
       renderCell: params => <Typography>{params.row?.nameJp}</Typography>
     },
     {
+      field: 'slug',
+      headerName: t('slug'),
+      flex: 1,
+      minWidth: 150,
+      renderCell: params => <Typography>{params.row?.slug}</Typography>
+    },
+    {
       field: 'action',
       headerName: t('Actions'),
       minWidth: 150,
@@ -269,7 +276,6 @@ const BlogListPage: NextPage<TProps> = () => {
       />
     )
   }
-  console.log('««««« blogsList »»»»»', blogsList)
 
   return (
     <>

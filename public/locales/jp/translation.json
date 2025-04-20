@@ -451,5 +451,6 @@
   "Confirm_delete_multiple_Order": "これらのサービスを削除してもよろしいですか？",
   "Delete_multiple_order_success": "複数の注文が削除されました",
   "List_price": "定価",
-  "Promotional_price": "プロモーション価格"
+  "Promotional_price": "プロモーション価格",
+  "Blog": "ニュース"
 }

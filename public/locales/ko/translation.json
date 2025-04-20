@@ -451,5 +451,6 @@
   "Confirm_delete_multiple_Order": "이 서비스들을 삭제하시겠습니까?",
   "Delete_multiple_order_success": "여러 주문 삭제 성공",
   "List_price": "정가",
-  "Promotional_price": "할인 가격"
+  "Promotional_price": "할인 가격",
+  "Blog": "뉴스"
 }

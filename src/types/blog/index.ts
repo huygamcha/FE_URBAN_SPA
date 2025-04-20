@@ -14,6 +14,8 @@ export type TParamsCreateBlog = {
   descriptionKo: string
   descriptionEn: string
   descriptionJp: string
+  slug: string
+  thumbnail: string
 }
 
 export type TParamsEditBlog = {
@@ -26,6 +28,8 @@ export type TParamsEditBlog = {
   descriptionKo: string
   descriptionEn: string
   descriptionJp: string
+  slug: string
+  thumbnail: string
 }
 
 export type TParamsDeleteBlog = {

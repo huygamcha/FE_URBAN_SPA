@@ -23,7 +23,8 @@ export const API_ENDPOINT = {
       INDEX: `${BASE_URL}/banners`
     },
     BLOG: {
-      INDEX: `${BASE_URL}/blogs`
+      INDEX: `${BASE_URL}/blogs`,
+      SLUG: `${BASE_URL}/blogs/slug`
     },
     ABOUT: {
       INDEX: `${BASE_URL}/about-us`

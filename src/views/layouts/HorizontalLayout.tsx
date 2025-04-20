@@ -69,10 +69,9 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
     { label: 'Home', path: '/' },
     { label: 'About_Us', path: '/#about' },
     { label: 'Package', path: ROUTE_CONFIG.PACKAGE },
-    { label: 'Contact', path: ROUTE_CONFIG.CONTACT }
+    { label: 'Contact', path: ROUTE_CONFIG.CONTACT },
+    { label: 'Blog', path: ROUTE_CONFIG.BLOG }
   ]
-
-  console.log('««««« pathName »»»»»', pathName, currentLang)
 
   const isActive = (target: string) => pathName === target || pathName.includes(target)
 
@@ -303,6 +302,16 @@ const HorizontalLayout: NextPage<TProps> = ({ open, toggleDrawer, isHideMenu }) 
                 <Link href={ROUTE_CONFIG.CONTACT}>
                   <Typography color='title.main' variant='subtitle1'>
                     {t('Contact')}
+                  </Typography>
+                </Link>
+              </ListItemText>
+            </ListItem>
+
+            <ListItem onClick={() => toggleMobileMenu(false)}>
+              <ListItemText>
+                <Link href={ROUTE_CONFIG.BLOG}>
+                  <Typography color='title.main' variant='subtitle1'>
+                    {t('Blog')}
                   </Typography>
                 </Link>
               </ListItemText>

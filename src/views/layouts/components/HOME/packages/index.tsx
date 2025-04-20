@@ -119,7 +119,8 @@ const Packages = (props: TProps) => {
                       transition: 'all 1s cubic-bezier(0.17, 0.55, 0.55, 1)',
                       '&.show': {
                         opacity: 1,
-                        transform: 'translateY(0)'
+                        transform: 'translateY(0)',
+                        height: '280px'
                       },
                       '&:hover': {
                         transform: 'scale(0.96)',
@@ -142,8 +143,6 @@ const Packages = (props: TProps) => {
                       {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
                     </Box>
 
-                    {/* Content */}
-                    {/* Content */}
                     <Box
                       sx={{
                         display: {
@@ -163,7 +162,7 @@ const Packages = (props: TProps) => {
                             sm: '40%' // original width on desktop
                           },
                           height: {
-                            xs: 'auto', // can be dynamic or fixed with aspectRatio
+                            xs: '150px', // can be dynamic or fixed with aspectRatio
                             sm: '150px'
                           },
                           aspectRatio: {
@@ -200,7 +199,12 @@ const Packages = (props: TProps) => {
                               sm: '0.8rem',
                               md: '0.9rem',
                               lg: '1rem'
-                            }
+                            },
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
                           }}
                           dangerouslySetInnerHTML={{
                             __html: displayValueByLanguage({
