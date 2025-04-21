@@ -51,6 +51,7 @@ interface TCreateEditService {
 type TOption = {
   duration: string
   price: number
+  discountPrice: number
 }
 
 type TDefaultValue = {
@@ -98,7 +99,7 @@ const CreateEditService = (props: TCreateEditService) => {
   const [loading, setLoading] = useState(false)
   const { open, onClose, idService } = props
   const theme = useTheme()
-  const { t,i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -134,7 +135,8 @@ const CreateEditService = (props: TCreateEditService) => {
           options:
             data.options?.map((option: any) => ({
               duration: option.duration || '',
-              price: option.price || 0
+              price: option.price || 0,
+              discountPrice: option.discountPrice || 0
             })) || []
         }
         reset(mappedData)
@@ -160,7 +162,8 @@ const CreateEditService = (props: TCreateEditService) => {
     options: yup.array().of(
       yup.object().shape({
         duration: yup.string().required(t('Required_field')),
-        price: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
+        price: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field')),
+        discountPrice: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
       })
     )
   })
@@ -175,7 +178,7 @@ const CreateEditService = (props: TCreateEditService) => {
     descriptionKo: EditorState.createEmpty(),
     descriptionEn: EditorState.createEmpty(),
     descriptionJp: EditorState.createEmpty(),
-    options: [{ duration: '', price: 0 }]
+    options: [{ duration: '', price: 0, discountPrice: 0 }]
   }
 
   const {
@@ -314,7 +317,7 @@ const CreateEditService = (props: TCreateEditService) => {
                                 }}
                                 key={opt._id}
                                 value={opt._id}
-                                label={displayValueByLanguage({language: i18n.language, value: opt, field: 'name'})}
+                                label={displayValueByLanguage({ language: i18n.language, value: opt, field: 'name' })}
                               />
                             )
                           })}
@@ -446,7 +449,7 @@ const CreateEditService = (props: TCreateEditService) => {
                   }}
                 >
                   <Grid container spacing={2}>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={11 / 3}>
                       <Controller
                         control={control}
                         name={`options.${index}.duration`}
@@ -472,7 +475,7 @@ const CreateEditService = (props: TCreateEditService) => {
                         )}
                       />
                     </Grid>
-                    <Grid item xs={5.5}>
+                    <Grid item xs={11 / 3}>
                       <Controller
                         control={control}
                         name={`options.${index}.price`}
@@ -498,6 +501,32 @@ const CreateEditService = (props: TCreateEditService) => {
                         )}
                       />
                     </Grid>
+                    <Grid item xs={11 / 3}>
+                      <Controller
+                        control={control}
+                        name={`options.${index}.discountPrice`}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            value={value}
+                            onChange={e => {
+                              const numValue = e.target.value.replace(/\D/g, '')
+                              onChange(numValue)
+                            }}
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[0-9]*',
+                              minLength: 1
+                            }}
+                            fullWidth
+                            placeholder={t('Enter_discountPrice')}
+                            label={t('discountPrice')}
+                            error={Boolean(errors?.options?.[index]?.discountPrice)}
+                            helperText={errors?.options?.[index]?.discountPrice?.message}
+                            onBlur={onBlur}
+                          />
+                        )}
+                      />
+                    </Grid>
                     <Grid
                       sx={{
                         display: 'flex',
@@ -513,7 +542,11 @@ const CreateEditService = (props: TCreateEditService) => {
                   </Grid>
                 </Box>
               ))}
-              <Button variant='outlined' sx={{ mt: 2 }} onClick={() => append({ duration: '', price: 0 })}>
+              <Button
+                variant='outlined'
+                sx={{ mt: 2 }}
+                onClick={() => append({ duration: '', price: 0, discountPrice: 0 })}
+              >
                 {t('Add_Option')}
               </Button>
             </Box>

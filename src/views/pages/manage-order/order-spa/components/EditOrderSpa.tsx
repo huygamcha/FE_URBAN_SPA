@@ -266,11 +266,11 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
       ...prev,
       [serviceId]: optionServices[getValues(`allServices.${index}.packageId`)]
         ?.find((item: any) => item.value === serviceId)
-        ?.options.map((item: { _id: string; duration: string; price: number }) => ({
+        ?.options.map((item: { _id: string; duration: string; price: number; discountPrice: number }) => ({
           value: item._id,
-          label: `${item.duration} ${t('minutes')} - ${formatCurrency(item.price)}`,
+          label: `${item.duration} ${t('minutes')} - ${formatCurrency(item?.discountPrice ? item.discountPrice : item.price)}`,
           duration: item.duration,
-          price: item.price
+          price: item?.discountPrice ? item.discountPrice : item.price
         }))
     }))
   }
@@ -307,7 +307,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
               await fetchAllServices(item.packageId)
             })
           )
-
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -332,7 +331,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
               await fetchAllOptions(item.serviceId, index)
             })
           )
-
         } catch (error) {
           console.error('Error fetching data:', error)
         }
@@ -357,7 +355,6 @@ const EditOrderSpa = (props: TCreateEditOrderSpa) => {
           result.map((item, index) => {
             handleSetOptionItem(item.optionId, index)
           })
-
         } catch (error) {
           console.error('Error fetching data:', error)
         }

@@ -122,7 +122,7 @@ const Packages = (props: TProps) => {
                       '&.show': {
                         opacity: 1,
                         transform: 'translateY(0)',
-                        minHeight: '280px',
+                        minHeight: '300px',
                         maxHeight: '550px'
                       },
                       '&:hover': {
@@ -295,7 +295,7 @@ const Packages = (props: TProps) => {
                                     }
                                   }}
                                 >
-                                  {formatCurrency(option.price)}
+                                  {formatCurrency(option?.discountPrice || option.price)}
                                 </Typography>
 
                                 <Box
@@ -315,7 +315,7 @@ const Packages = (props: TProps) => {
                                     justifyContent: 'center'
                                   }}
                                 >
-                                  20%
+                                  {Math.floor(((option?.price - option?.discountPrice) / option?.price) * 100) || 0}%
                                 </Box>
                               </Box>
                             </Box>

@@ -126,5 +126,4 @@ export default async function Home() {
   )
 }
 
-// Home.title = "Danh sách sản phẩm của cửa hàng Lập trình thật dễ"
 export const dynamic = 'force-static'

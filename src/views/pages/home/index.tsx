@@ -3,7 +3,6 @@
 // ** Next
 import { NextPage } from 'next'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { motion } from 'framer-motion'
 
 // ** React
 
@@ -20,13 +19,11 @@ import { motion } from 'framer-motion'
 // ** Utils
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { TPackage } from 'src/types/package'
 import { useTranslation } from 'react-i18next'
 import { useRouter } from 'next/navigation'
 // calender
 
 import '@schedule-x/theme-default/dist/index.css'
-import ControlCalendar from 'src/components/CustomizingCalendar/CustomizingCalendar'
 import { Box } from '@mui/material'
 import Gallery from 'src/views/layouts/components/HOME/gallery'
 import AboutSpa from 'src/views/layouts/components/HOME/about'
@@ -34,9 +31,6 @@ import Image from 'next/image'
 import Packages from 'src/views/layouts/components/HOME/packages'
 import { TParamsFetchAbout } from 'src/types/about'
 import { TBanner } from 'src/types/banner'
-import { useEffect, useState } from 'react'
-import { getAllPackages } from 'src/services/packages'
-import Spinner from 'src/components/spinner'
 import { useGetListPackages } from 'src/queries/packages'
 
 type TProps = {
@@ -50,28 +44,9 @@ const HomePage: NextPage<TProps> = props => {
   const { t, i18n } = useTranslation()
   const router = useRouter()
 
-  // const [allPackages, setAllPackages] = useState<TPackage[]>([])
-
-  // useEffect(() => {
-  //   const getPackages = async () => {
-  //     try {
-  //       setLoading(true)
-  //       let packages: TPackage[] = []
-  //       await getAllPackages({ params: { limit: -1, page: -1 } }).then(res => {
-  //         packages = res?.data?.packages
-  //         setAllPackages(packages)
-  //       })
-  //     } catch (error) {
-  //       console.log('««««« error »»»»»', error)
-  //     }
-  //     setLoading(false)
-  //   }
-  //   getPackages()
-  // }, [])
-
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1, showImage: true },
+    { limit: -1, page: -1 },
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
