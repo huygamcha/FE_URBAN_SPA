@@ -156,7 +156,7 @@ export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
           <Typography color='error'>{t('Không thể tải các bài viết liên quan')}</Typography>
         ) : (
           <Grid container spacing={4}>
-            {relatedBlogs.map((blog, index) => {
+            {relatedBlogs.map((blog :any, index:number) => {
               const currentIndex = refIndex.current++
 
               return (
