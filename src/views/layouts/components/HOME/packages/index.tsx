@@ -120,7 +120,8 @@ const Packages = (props: TProps) => {
                       '&.show': {
                         opacity: 1,
                         transform: 'translateY(0)',
-                        height: '280px'
+                        minHeight: '280px',
+                        maxHeight: '550px'
                       },
                       '&:hover': {
                         transform: 'scale(0.96)',

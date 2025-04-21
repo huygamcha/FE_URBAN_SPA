@@ -33,7 +33,7 @@ jobs:
           HOST: 45.76.188.215
           USERNAME: root
           TARGET_DIR: /var/www/FE_URBAN_SPA
-          APP_NAME: FE/URBAN_SPA  #should match the name of the server block
+          APP_NAME: FE/URBAN_SPA #should match the name of the server block
           PORT: 6002
           NEXT_PUBLIC_API_HOST: ${{ secrets.NEXT_PUBLIC_API_HOST }}
           NEXT_PUBLIC_SITE: ${{ secrets.NEXT_PUBLIC_SITE }}
@@ -66,7 +66,7 @@ jobs:
             echo "SITE_URL=${SITE_URL}" >> .env
             echo "NEXTAUTH_URL=${NEXTAUTH_URL}" >> .env
             git pull 
-            npm install
+            npm install -f
             npm run build
 
             if pm2 list | grep -q $APP_NAME; then
