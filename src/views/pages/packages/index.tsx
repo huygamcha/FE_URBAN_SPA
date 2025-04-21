@@ -282,6 +282,15 @@ const PackagePage: NextPage<TProps> = props => {
                             >
                               {t('Price')}
                             </Typography>
+                            <Typography
+                              sx={{
+                                width: 'calc(100% / 3)', // Chiều rộng
+                                color: 'common.black', // Màu sắc (dùng palette của Material-UI)
+                                fontWeight: 'bold' // Chữ đậm
+                              }}
+                            >
+                              {t('Promotional_price')}
+                            </Typography>
                           </Box>
                         </Box>
 
@@ -314,6 +323,41 @@ const PackagePage: NextPage<TProps> = props => {
                               >
                                 {formatCurrency(option.price)}
                               </Typography>
+                              <Box
+                                sx={{
+                                  position: 'relative',
+                                  width: 'max-content'
+                                }}
+                              >
+                                <Typography
+                                  sx={{
+                                    width: 'calc(100% / 3)', // Chiều rộng
+                                    fontWeight: 'bold', // Chữ đậm
+                                    color: '#d32f2f'
+                                  }}
+                                >
+                                  {formatCurrency(option?.discountPrice ? option.discountPrice : option.price)}
+                                </Typography>
+                                <Box
+                                  sx={{
+                                    position: 'absolute',
+                                    top: '-10px',
+                                    right: '-25px',
+                                    backgroundColor: '#d32f2f',
+                                    color: 'white',
+                                    fontWeight: 600,
+                                    fontSize: '0.5rem',
+                                    borderRadius: '50%',
+                                    width: '22px',
+                                    height: '22px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}
+                                >
+                                  {Math.floor(((option?.price - option?.discountPrice) / option?.price) * 100) || 0}%
+                                </Box>
+                              </Box>
                             </Box>
                           ))}
                         </Box>
