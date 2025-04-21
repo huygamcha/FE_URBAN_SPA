@@ -5,7 +5,7 @@ import { TPackage } from 'src/types/package'
 import { useTheme, Grid, Typography, Box } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage, formatCurrency } from 'src/utils'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ROUTE_CONFIG } from 'src/configs/route'
 import Image from 'next/image'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
@@ -20,6 +20,8 @@ const Packages = (props: TProps) => {
   const isLg = useResponsiveScreen({ responsive: 'lg' })
   const router = useRouter()
   const theme = useTheme()
+  const pathname = usePathname()
+  const isActive = (path: string) => pathname.startsWith(path)
   const allRefs = useRef<Array<HTMLDivElement | HTMLSpanElement | null>>([])
 
   const handleDetail = (item: TPackage) => {
