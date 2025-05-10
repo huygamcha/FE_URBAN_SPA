@@ -261,7 +261,7 @@ const Packages = (props: TProps) => {
                                 }
                               }}
                             >
-                              {option.duration} {t('minutes')}
+                              {option?.duration ? `${option?.duration} ${t('minutes')}` : ''}
                             </Typography>
                             <Typography
                               sx={{

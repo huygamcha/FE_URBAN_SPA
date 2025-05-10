@@ -312,7 +312,7 @@ const PackagePage: NextPage<TProps> = props => {
                                   color: 'common.black' // Màu sắc (dùng palette của Material-UI)
                                 }}
                               >
-                                {option.duration} {t('minutes')}
+                                {option?.duration ? `${option?.duration} ${t('minutes')}` : ''}
                               </Typography>
                               <Typography
                                 sx={{

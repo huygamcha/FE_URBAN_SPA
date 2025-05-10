@@ -161,7 +161,7 @@ const CreateEditService = (props: TCreateEditService) => {
     packageId: yup.string().required(t('Required_field')),
     options: yup.array().of(
       yup.object().shape({
-        duration: yup.string().required(t('Required_field')),
+        duration: yup.string(),
         price: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field')),
         discountPrice: yup.number().typeError(t('Must_be_a_number')).required(t('Required_field'))
       })
