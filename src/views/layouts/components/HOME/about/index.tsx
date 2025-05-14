@@ -12,6 +12,7 @@ import { TParamsFetchAbout } from 'src/types/about'
 import { displayValueByLanguage } from 'src/utils'
 import { TBanner } from 'src/types/banner'
 import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
+import IconifyIcon from 'src/components/Icon'
 
 const settings = {
   dots: false,
@@ -188,21 +189,63 @@ const AboutSpa = (props: TProps) => {
                         __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
                       }}
                     ></Box>
-                    <Box mt={1} sx={{ display: 'flex', justifyContent: 'center' }}>
-                      <Typography
-                        sx={{
-                          fontWeight: '600',
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => setExpanded(prev => !prev)}
-                      >
-                        {expanded ? t('View_less') : t('View_more')}
-                      </Typography>
+                    <Box
+                      mt={1}
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {expanded ? (
+                        <>
+                          <IconifyIcon fontSize='15px' icon='iconoir:fast-arrow-top' />
+                          <Typography
+                            sx={{
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              paddingLeft: '0.5rem'
+                            }}
+                            onClick={() => setExpanded(prev => !prev)}
+                          >
+                            {t('View_less')}
+                          </Typography>
+                        </>
+                      ) : (
+                        <>
+                          <IconifyIcon fontSize='15px' icon='iconoir:fast-arrow-bottom' />
+                          <Typography
+                            sx={{
+                              fontWeight: '600',
+                              cursor: 'pointer',
+                              paddingLeft: '0.5rem'
+                            }}
+                            onClick={() => setExpanded(prev => !prev)}
+                          >
+                            {t('View_more')}
+                          </Typography>
+                        </>
+                      )}
                     </Box>
                   </>
                 )}
               </Box>
             </Box>
+            <Box
+              sx={{
+                bottom: 0,
+                left: 0,
+                right: 0,
+                color: '#020b27',
+                cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: '500',
+                letterSpacing: '.005em',
+                position: 'absolute',
+                width: '100%',
+                height: '50px'
+              }}
+            ></Box>
           </Box>
         </Grid>
         {isLg ? (

@@ -452,5 +452,7 @@
   "Delete_multiple_order_success": "여러 주문 삭제 성공",
   "List_price": "정가",
   "Promotional_price": "할인 가격",
-  "Blog": "뉴스"
+  "Blog": "뉴스",
+  "View_more": "더보기",
+  "View_less": "콤팩트"
 }

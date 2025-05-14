@@ -452,5 +452,7 @@
   "Delete_multiple_order_success": "複数の注文が削除されました",
   "List_price": "定価",
   "Promotional_price": "プロモーション価格",
-  "Blog": "ニュース"
+  "Blog": "ニュース",
+  "View_more": "もっと見る",
+  "View_less": "少なくする"
 }
