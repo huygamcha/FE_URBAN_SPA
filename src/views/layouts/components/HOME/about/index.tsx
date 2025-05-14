@@ -205,38 +205,42 @@ const AboutSpa = (props: TProps) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={0} md={6}>
-          <Box
-            sx={{
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              fontSize: '0px'
-            }}
-          >
-            <Slider {...settings} className='slider-banner'>
-              {banner?.map((item: TBanner, index: number) => (
-                <Box
-                  key={index}
-                  sx={{
-                    width: '100%',
-                    height: { xs: '545px', sm: '745px' }, // Responsive heights for mobile and larger screens
-                    position: 'relative', // Needed for Next.js <Image />
-                    borderRadius: '1.5rem',
-                    overflow: 'hidden'
-                  }}
-                >
-                  <Image
-                    style={{ objectFit: 'cover' }}
+        {isLg ? (
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                fontSize: '0px'
+              }}
+            >
+              <Slider {...settings} className='slider-banner'>
+                {banner?.map((item: TBanner, index: number) => (
+                  <Box
                     key={index}
-                    src={item.link}
-                    alt='about us'
-                    fill // Allows the image to stretch to the Box dimensions
-                  />
-                </Box>
-              ))}
-            </Slider>
-          </Box>
-        </Grid>
+                    sx={{
+                      width: '100%',
+                      height: { xs: '545px', sm: '745px' }, // Responsive heights for mobile and larger screens
+                      position: 'relative', // Needed for Next.js <Image />
+                      borderRadius: '1.5rem',
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <Image
+                      style={{ objectFit: 'cover' }}
+                      key={index}
+                      src={item.link}
+                      alt='about us'
+                      fill // Allows the image to stretch to the Box dimensions
+                    />
+                  </Box>
+                ))}
+              </Slider>
+            </Box>
+          </Grid>
+        ) : (
+          ''
+        )}
       </Grid>
     </Box>
   )
