@@ -205,7 +205,7 @@ const AboutSpa = (props: TProps) => {
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={0} md={6}>
           <Box
             sx={{
               borderRadius: '1rem',

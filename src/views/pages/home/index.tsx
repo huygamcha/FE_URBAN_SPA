@@ -83,13 +83,7 @@ const HomePage: NextPage<TProps> = props => {
               </Box>
             </Box>
           </Box>
-          {isLg ? (
-            <Box>
-              <Gallery banner={banner} />
-            </Box>
-          ) : (
-            ''
-          )}
+          <Gallery banner={banner} />
           <div id='package'></div>
           <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
             <ListItemPackageHome packages={allPackages} />

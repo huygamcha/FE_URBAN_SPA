@@ -315,7 +315,12 @@ const Packages = (props: TProps) => {
                                     justifyContent: 'center'
                                   }}
                                 >
-                                  {Math.floor(((option?.price - option?.discountPrice) / option?.price) * 100) || 0}%
+                                  {Math.floor(
+                                    ((option?.price - (option?.discountPrice ? option?.discountPrice : option.price)) /
+                                      option?.price) *
+                                      100
+                                  ) || 0}
+                                  %
                                 </Box>
                               </Box>
                             </Box>
