@@ -28,6 +28,7 @@ import '@schedule-x/theme-default/dist/index.css'
 import { Box } from '@mui/material'
 import Image from 'next/image'
 import Packages from 'src/views/layouts/components/HOME/packages'
+import ListItemPackagePage from './packages/ListItemPackagePage'
 
 type TProps = {
   packages: TPackage[]
@@ -36,15 +37,12 @@ type TProps = {
 const ListPackageShow: NextPage<TProps> = props => {
   // ** Props
   const { packages } = props
-  const { t, i18n } = useTranslation()
-  const router = useRouter()
 
   return (
     <>
-      {/* {loading && <Spinner />} */}
       <div id='package'></div>
       <Box sx={{ padding: '2% 5%', position: 'relative', zIndex: 1 }}>
-        <Packages packages={packages} />
+        <ListItemPackagePage packages={packages} />
         <Box
           sx={{
             position: 'absolute',

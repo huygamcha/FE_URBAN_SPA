@@ -32,6 +32,8 @@ import Packages from 'src/views/layouts/components/HOME/packages'
 import { TParamsFetchAbout } from 'src/types/about'
 import { TBanner } from 'src/types/banner'
 import { useGetListPackages } from 'src/queries/packages'
+import ListItemPackageHome from '../packages/components/packages/ListItemPackageHome'
+import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
 
 type TProps = {
   aboutUs: TParamsFetchAbout
@@ -43,6 +45,7 @@ const HomePage: NextPage<TProps> = props => {
   const { aboutUs, banner } = props
   const { t, i18n } = useTranslation()
   const router = useRouter()
+  const isLg = useResponsiveScreen({ responsive: 'lg' })
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
@@ -80,12 +83,16 @@ const HomePage: NextPage<TProps> = props => {
               </Box>
             </Box>
           </Box>
-          <Box>
-            <Gallery banner={banner} />
-          </Box>
+          {isLg ? (
+            <Box>
+              <Gallery banner={banner} />
+            </Box>
+          ) : (
+            ''
+          )}
           <div id='package'></div>
           <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>
-            <Packages packages={allPackages} />
+            <ListItemPackageHome packages={allPackages} />
             <Box
               sx={{
                 position: 'absolute',

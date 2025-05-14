@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import {useTheme, Box, Typography, Container, Grid, Button, IconButton } from '@mui/material'
-import ReactPlayer from 'react-player/lazy'
+import React, { useEffect, useRef, useState } from 'react'
+import { useTheme, Box, Typography, Grid, Button } from '@mui/material'
 import Image from 'next/image'
 
 // ** React Slider
@@ -8,20 +7,16 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import 'src/views/css/customReactSlickBanner.css'
-import { bannerHome } from 'src/app/data/bannerHome'
-import { IBannerHome } from 'src/types/bannerHome'
 import { useTranslation } from 'react-i18next'
 import { TParamsFetchAbout } from 'src/types/about'
 import { displayValueByLanguage } from 'src/utils'
 import { TBanner } from 'src/types/banner'
+import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
 
 const settings = {
   dots: false,
   arrows: false,
   infinite: true,
-  // autoplay: true,
-  // speed: 2000,
-  // autoplaySpeed: 2000,
   slidesToShow: 1,
   slidesToScroll: 1,
   fade: true
@@ -35,9 +30,12 @@ type TProps = {
 const AboutSpa = (props: TProps) => {
   // ** State
   const { aboutUs, banner } = props
+  const [expanded, setExpanded] = useState<boolean>(false)
   // ** Hooks
   const { t, i18n } = useTranslation()
   const theme = useTheme()
+
+  const isLg = useResponsiveScreen({ responsive: 'lg' })
 
   const allRefs = useRef<Array<HTMLDivElement | null>>([null, null])
 
@@ -53,9 +51,6 @@ const AboutSpa = (props: TProps) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('show')
         }
-        // else {
-        //   entry.target.classList.remove('show')
-        // }
       })
     }
 
@@ -85,13 +80,13 @@ const AboutSpa = (props: TProps) => {
       <Grid container spacing={8}>
         <Grid item xs={12} md={6}>
           <Box
-            height='745px'
             overflow='hidden'
             borderRadius='1rem'
             sx={{
               background: '#ffffffeb',
               padding: '1rem',
-              position: 'relative'
+              position: 'relative',
+              height: isLg ? '745px' : 'max-content'
             }}
           >
             <Box
@@ -152,7 +147,7 @@ const AboutSpa = (props: TProps) => {
                   }
                 }}
               >
-                <Box pb='2rem'>
+                <Box pb='1rem'>
                   <Typography
                     sx={{
                       color: '#6c4241',
@@ -170,11 +165,42 @@ const AboutSpa = (props: TProps) => {
                     {t('About_urban_spa')}
                   </Typography>
                 </Box>
-                <Box
-                  dangerouslySetInnerHTML={{
-                    __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
-                  }}
-                ></Box>
+
+                {isLg ? (
+                  <>
+                    <Box
+                      dangerouslySetInnerHTML={{
+                        __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
+                      }}
+                    ></Box>
+                  </>
+                ) : (
+                  <>
+                    <Box
+                      sx={{
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        WebkitLineClamp: expanded ? 'unset' : 5
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
+                      }}
+                    ></Box>
+                    <Box mt={1} sx={{ display: 'flex', justifyContent: 'center' }}>
+                      <Typography
+                        sx={{
+                          fontWeight: '600',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => setExpanded(prev => !prev)}
+                      >
+                        {expanded ? t('View_less') : t('View_more')}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
               </Box>
             </Box>
           </Box>

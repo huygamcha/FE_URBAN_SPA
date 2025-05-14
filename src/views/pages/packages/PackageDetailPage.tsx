@@ -36,7 +36,7 @@ type TProps = {
   packages?: TPackage
 }
 
-const PackagePage: NextPage<TProps> = props => {
+const PackageDetailPage: NextPage<TProps> = props => {
   // ** Hook
   const [packageItem, setPackageItem] = useState<TPackage>({
     _id: '',
@@ -417,4 +417,4 @@ const PackagePage: NextPage<TProps> = props => {
   )
 }
 
-export default PackagePage
+export default PackageDetailPage

@@ -4,7 +4,7 @@ import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
 
 // layouts
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
-import ListPackagePage from 'src/views/pages/packages/ListPackagePage'
+import PackagePage from 'src/views/pages/packages/PackagePage'
 
 export default async function Home() {
   return (
@@ -13,7 +13,7 @@ export default async function Home() {
       authGuard={false}
       getLayout={(page: ReactNode) => <LayoutNotApp isHiddenBanner={true}>{page}</LayoutNotApp>}
     >
-      <ListPackagePage />
+      <PackagePage />
     </AuthLayoutWrapper>
   )
 }

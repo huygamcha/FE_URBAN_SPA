@@ -25,10 +25,10 @@ import { useGetListPackages } from 'src/queries/packages'
 import ListPackageShow from './components/ListPackageShow'
 import Spinner from 'src/components/spinner'
 
-const ListPackagePage = () => {
+const PackagePage = () => {
   // ** Props
-  const { data: allPackages, isPending } = useGetListPackages(
-    { limit: -1, page: -1,},
+  const { data: allPackages, isFetching } = useGetListPackages(
+    { limit: -1, page: -1 },
     {
       select: data => data?.packages,
       refetchOnWindowFocus: false,
@@ -37,13 +37,12 @@ const ListPackagePage = () => {
     }
   )
 
-
   return (
     <>
-      {/* {isPending && <Spinner />} */}
+      {isFetching && <Spinner />}
       {allPackages?.length && <ListPackageShow packages={allPackages} />}
     </>
   )
 }
 
-export default ListPackagePage
+export default PackagePage
