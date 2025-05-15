@@ -223,24 +223,26 @@ const PackageDetailPage: NextPage<TProps> = props => {
                         key={index}
                         borderBottom={index !== packageItem?.services.length - 1 ? '1px solid #492828' : 'none'}
                       >
-                        <Typography
-                          sx={{
-                            background: theme => theme.palette.customBackground.main
-                          }}
-                          p='0.2rem 1rem'
-                          borderRadius='0.5rem'
-                          color='#fff'
-                          width='max-content'
-                          mb='0.5rem'
-                          variant='subtitle2'
-                          fontSize='0.9rem'
-                        >
-                          {displayValueByLanguage({
-                            language: i18n.language,
-                            value: item,
-                            field: 'name'
-                          })}
-                        </Typography>
+                        <Box>
+                          <Typography
+                            sx={{
+                              background: theme => theme.palette.customBackground.main
+                            }}
+                            p='0.2rem 1rem'
+                            borderRadius='0.5rem'
+                            color='#fff'
+                            width='auto'
+                            mb='0.5rem'
+                            variant='subtitle2'
+                            fontSize='0.9rem'
+                          >
+                            {displayValueByLanguage({
+                              language: i18n.language,
+                              value: item,
+                              field: 'name'
+                            })}
+                          </Typography>
+                        </Box>
 
                         <Box
                           sx={{

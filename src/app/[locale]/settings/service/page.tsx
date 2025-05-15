@@ -12,10 +12,9 @@ type TProps = {}
 const Index: NextPage<TProps> = () => {
   return (
     <AuthLayoutWrapper>
-      <ServiceListPage/>
+      <ServiceListPage />
     </AuthLayoutWrapper>
   )
 }
 // Index.permission = [PERMISSIONS.SETTING.CITY.VIEW]
 export default Index
-
