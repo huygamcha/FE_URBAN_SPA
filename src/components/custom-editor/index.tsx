@@ -193,28 +193,25 @@ const CustomEditor = (props: TProps) => {
       </InputLabel>
       <ReactDraftWysiwyg
         toolbar={{
-          // image: {
-          //   previewImage: true,
-          //   uploadCallback: (file: File) => {
-          //     console.log('««««« here »»»»»', 12312)
-
-          //     return new Promise((resolve, reject) => {
-          //       const reader = new FileReader()
-          //       reader.onloadend = () => {
-          //         resolve({
-          //           data: {
-          //             url: reader.result
-          //           }
-          //         })
-          //       }
-
-          //       reader.onerror = reason => reject(reason)
-
-          //       reader.readAsDataURL(file)
-          //     })
-          //   },
-          //   alt: { present: true, mandatory: true }
-          // }
+          options: [
+            'inline',
+            'blockType',
+            'fontSize',
+            'list',
+            'textAlign',
+            'history',
+            'emoji',
+            'image',
+            'link',
+            'embedded',
+            'colorPicker',
+            'remove'
+          ],
+          inline: { inDropdown: true },
+          list: { inDropdown: true },
+          textAlign: { inDropdown: true },
+          link: { inDropdown: true },
+          history: { inDropdown: true },
 
           image: {
             uploadCallback: uploadImageCallBack,

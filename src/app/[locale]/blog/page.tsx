@@ -20,7 +20,6 @@ const getBlogs = async () => {
 
 export default async function Index() {
   const blogs = await getBlogs()
-  console.log('««««« blogs »»»»»', blogs)
 
   return (
     <AuthLayoutWrapper
