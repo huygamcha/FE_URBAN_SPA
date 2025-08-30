@@ -73,13 +73,13 @@ export const generateMetadata = async ({ params }: { params: { slug: string; loc
   }
 }
 
-export async function generateStaticParams() {
-  const posts = await fetch(API_ENDPOINT.SETTING.BLOG.INDEX).then(res => res.json())
+// export async function generateStaticParams() {
+//   const posts = await fetch(API_ENDPOINT.SETTING.BLOG.INDEX).then(res => res.json())
 
-  return posts.data.blogs.map((post: any) => ({
-    slug: post.slug
-  }))
-}
+//   return posts.data.blogs.map((post: any) => ({
+//     slug: post.slug
+//   }))
+// }
 
 // giúp gọi blog theo slug chưa có trong lúc build
 export const dynamicParams = true
