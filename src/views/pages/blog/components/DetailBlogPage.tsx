@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { useTranslation } from 'react-i18next'
 import { displayValueByLanguage } from 'src/utils'
+import { BASE_URL } from 'src/configs/api'
 
 type TBlog = {
   _id: string
@@ -33,7 +34,7 @@ export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
   const { t, i18n } = useTranslation()
   const router = useRouter()
   const { data, isLoading, error } = useSWR(
-    `http://localhost:3001/api/v1.0/blogs/random?currentSlug=${detailBlog.slug}`,
+    `${BASE_URL}/blogs/random?currentSlug=${detailBlog.slug}`,
     fetcher
   )
 
