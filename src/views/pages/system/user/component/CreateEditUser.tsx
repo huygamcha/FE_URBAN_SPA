@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import React, { memo, useEffect, useState } from 'react'
@@ -233,7 +233,7 @@ const CreateEditUser = (props: TCreateEditUser) => {
   }, [open, idUser])
 
   useEffect(() => {
-    if(open) {
+    if (open) {
       fetchAllRoles()
       fetchAllCities()
     }
@@ -242,347 +242,322 @@ const CreateEditUser = (props: TCreateEditUser) => {
   return (
     <>
       {loading && <Spinner />}
-      <CustomModal open={open} onClose={onClose}>
-        <Box
-          sx={{
-            padding: '20px',
-            borderRadius: '15px',
-            backgroundColor: theme.palette.customColors.bodyBg
-          }}
-          minWidth={{ md: '800px', xs: '80vw' }}
-          maxWidth={{ md: '80vw', xs: '80vw' }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
-            <Typography variant='h4' sx={{ fontWeight: 600 }}>
-              {' '}
-              {idUser ? t('Edit_user') : t('Create_user')}
-            </Typography>
-            <IconButton sx={{ position: 'absolute', top: '-4px', right: '-10px' }} onClick={onClose}>
-              <Icon icon='material-symbols-light:close' fontSize={'30px'} />
-            </IconButton>
-          </Box>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
-            <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
-              <Grid container spacing={5}>
-                <Grid container item md={6} xs={12}>
-                  <Box sx={{ height: '100%', width: '100%' }}>
-                    <Grid container spacing={4}>
-                      <Grid item md={12} xs={12}>
-                        <Box
-                          sx={{
-                            width: '100%',
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 2
-                          }}
-                        >
-                          <Box sx={{ position: 'relative' }}>
-                            {avatar && (
-                              <IconButton
-                                sx={{
-                                  position: 'absolute',
-                                  bottom: -4,
-                                  right: -6,
-                                  zIndex: 2,
-                                  color: theme.palette.error.main
-                                }}
-                                edge='start'
-                                color='inherit'
-                                onClick={() => setAvatar('')}
-                              >
-                                <Icon icon='material-symbols-light:delete-outline' />
-                              </IconButton>
-                            )}
-                            {avatar ? (
-                              <Avatar src={avatar} sx={{ width: 100, height: 100 }}>
-                                <Icon icon='ph:user-thin' fontSize={70} />
-                              </Avatar>
-                            ) : (
-                              <Avatar sx={{ width: 100, height: 100 }}>
-                                <Icon icon='ph:user-thin' fontSize={70} />
-                              </Avatar>
-                            )}
-                          </Box>
-                          <WrapperFileUpload
-                            uploadFunc={handleUploadAvatar}
-                            objectAcceptFile={{
-                              'image/jpeg': ['.jpg', '.jpeg'],
-                              'image/png': ['.png']
-                            }}
-                          >
-                            <Button
-                              variant='outlined'
-                              sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
+      <CustomModal title={idUser ? t('Edit_user') : t('Create_user')} open={open} onClose={onClose}>
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
+          <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
+            <Grid container spacing={5}>
+              <Grid container item md={6} xs={12}>
+                <Box sx={{ height: '100%', width: '100%' }}>
+                  <Grid container spacing={4}>
+                    <Grid item md={12} xs={12}>
+                      <Box
+                        sx={{
+                          width: '100%',
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: 2
+                        }}
+                      >
+                        <Box sx={{ position: 'relative' }}>
+                          {avatar && (
+                            <IconButton
+                              sx={{
+                                position: 'absolute',
+                                bottom: -4,
+                                right: -6,
+                                zIndex: 2,
+                                color: theme.palette.error.main
+                              }}
+                              edge='start'
+                              color='inherit'
+                              onClick={() => setAvatar('')}
                             >
-                              <Icon icon='ph:camera-thin'></Icon>
-                              {avatar ? t('Change_avatar') : t('Upload_avatar')}
-                            </Button>
-                          </WrapperFileUpload>
-                        </Box>
-                      </Grid>
-                      <Grid item md={6} xs={12}>
-                        <Controller
-                          control={control}
-                          rules={{
-                            required: true
-                          }}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <CustomTextField
-                              required
-                              fullWidth
-                              label={t('Email')}
-                              onChange={onChange}
-                              onBlur={onBlur}
-                              value={value}
-                              placeholder={t('Enter_your_email')}
-                              error={Boolean(errors?.email)}
-                              helperText={errors?.email?.message}
-                            />
+                              <Icon icon='material-symbols-light:delete-outline' />
+                            </IconButton>
                           )}
-                          name='email'
-                        />
-                      </Grid>
-                      <Grid item md={6} xs={12}>
-                        <Controller
-                          control={control}
-                          rules={{
-                            required: true
-                          }}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <div>
-                              <label
+                          {avatar ? (
+                            <Avatar src={avatar} sx={{ width: 100, height: 100 }}>
+                              <Icon icon='ph:user-thin' fontSize={70} />
+                            </Avatar>
+                          ) : (
+                            <Avatar sx={{ width: 100, height: 100 }}>
+                              <Icon icon='ph:user-thin' fontSize={70} />
+                            </Avatar>
+                          )}
+                        </Box>
+                        <WrapperFileUpload uploadFunc={handleUploadAvatar}>
+                          <Button
+                            variant='outlined'
+                            sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
+                          >
+                            <Icon icon='ph:camera-thin'></Icon>
+                            {avatar ? t('Change_avatar') : t('Upload_avatar')}
+                          </Button>
+                        </WrapperFileUpload>
+                      </Box>
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <Controller
+                        control={control}
+                        rules={{
+                          required: true
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            required
+                            fullWidth
+                            label={t('Email')}
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder={t('Enter_your_email')}
+                            error={Boolean(errors?.email)}
+                            helperText={errors?.email?.message}
+                          />
+                        )}
+                        name='email'
+                      />
+                    </Grid>
+                    <Grid item md={6} xs={12}>
+                      <Controller
+                        control={control}
+                        rules={{
+                          required: true
+                        }}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <div>
+                            <label
+                              style={{
+                                fontSize: '13px',
+                                marginBottom: '4px',
+                                display: 'block',
+                                color: errors?.role
+                                  ? theme.palette.error.main
+                                  : `rgba(${theme.palette.customColors.main}, 0.42)`
+                              }}
+                            >
+                              {t('Role')}{' '}
+                              <span
                                 style={{
-                                  fontSize: '13px',
-                                  marginBottom: '4px',
-                                  display: 'block',
                                   color: errors?.role
                                     ? theme.palette.error.main
                                     : `rgba(${theme.palette.customColors.main}, 0.42)`
                                 }}
                               >
-                                {t('Role')}{' '}
-                                <span
-                                  style={{
-                                    color: errors?.role
-                                      ? theme.palette.error.main
-                                      : `rgba(${theme.palette.customColors.main}, 0.42)`
-                                  }}
-                                >
-                                  *
-                                </span>
-                              </label>
-                              <CustomSelect
-                                fullWidth
-                                onChange={onChange}
-                                options={optionRoles}
-                                error={Boolean(errors?.role)}
-                                onBlur={onBlur}
-                                value={value}
-                                placeholder={t('Enter_your_role')}
-                              />
-                              {errors?.role && (
-                                <FormHelperText
-                                  sx={{
-                                    color: errors?.role
-                                      ? theme.palette.error.main
-                                      : `rgba(${theme.palette.customColors.main}, 0.42)`
-                                  }}
-                                >
-                                  {errors?.role?.message}
-                                </FormHelperText>
-                              )}
-                            </div>
-                          )}
-                          name='role'
-                        />
-                      </Grid>
-                      {!idUser && (
-                        <Grid item md={6} xs={12}>
-                          <Controller
-                            control={control}
-                            rules={{
-                              required: true
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                              <CustomTextField
-                                required
-                                fullWidth
-                                label={t('Password')}
-                                onChange={onChange}
-                                onBlur={onBlur}
-                                value={value}
-                                placeholder={t('Enter_password')}
-                                error={Boolean(errors?.password)}
-                                helperText={errors?.password?.message}
-                                type={showPassword ? 'text' : 'password'}
-                                InputProps={{
-                                  endAdornment: (
-                                    <InputAdornment position='end'>
-                                      <IconButton edge='end' onClick={() => setShowPassword(!showPassword)}>
-                                        {showPassword ? (
-                                          <Icon icon='material-symbols:visibility-outline' />
-                                        ) : (
-                                          <Icon icon='ic:outline-visibility-off' />
-                                        )}
-                                      </IconButton>
-                                    </InputAdornment>
-                                  )
+                                *
+                              </span>
+                            </label>
+                            <CustomSelect
+                              fullWidth
+                              onChange={onChange}
+                              options={optionRoles}
+                              error={Boolean(errors?.role)}
+                              onBlur={onBlur}
+                              value={value}
+                              placeholder={t('Enter_your_role')}
+                            />
+                            {errors?.role && (
+                              <FormHelperText
+                                sx={{
+                                  color: errors?.role
+                                    ? theme.palette.error.main
+                                    : `rgba(${theme.palette.customColors.main}, 0.42)`
                                 }}
-                              />
+                              >
+                                {errors?.role?.message}
+                              </FormHelperText>
                             )}
-                            name='password'
-                          />
-                        </Grid>
-                      )}
-                      {idUser && (
-                        <Grid item md={6} xs={12}>
-                          <Controller
-                            control={control}
-                            render={({ field: { onChange, onBlur, value } }) => {
-                              return (
-                                <FormControlLabel
-                                  control={
-                                    <Switch
-                                      value={value}
-                                      checked={Boolean(value)}
-                                      onChange={e => {
-                                        onChange(e.target.checked ? 1 : 0)
-                                      }}
-                                    />
-                                  }
-                                  label={Boolean(value) ? t('Active') : t('Block')}
-                                />
-                              )
-                            }}
-                            name='status'
-                          />
-                        </Grid>
-                      )}
+                          </div>
+                        )}
+                        name='role'
+                      />
                     </Grid>
-                  </Box>
-                </Grid>
-                <Grid container item md={6} xs={12}>
-                  <Box>
-                    <Grid container spacing={4}>
-                      <Grid item md={12} xs={12}>
+                    {!idUser && (
+                      <Grid item md={6} xs={12}>
                         <Controller
                           control={control}
+                          rules={{
+                            required: true
+                          }}
                           render={({ field: { onChange, onBlur, value } }) => (
                             <CustomTextField
                               required
                               fullWidth
-                              label={t('Full_name')}
+                              label={t('Password')}
                               onChange={onChange}
                               onBlur={onBlur}
                               value={value}
-                              placeholder={t('Enter_your_full_name')}
-                              error={Boolean(errors?.fullName)}
-                              helperText={errors?.fullName?.message}
+                              placeholder={t('Enter_password')}
+                              error={Boolean(errors?.password)}
+                              helperText={errors?.password?.message}
+                              type={showPassword ? 'text' : 'password'}
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position='end'>
+                                    <IconButton edge='end' onClick={() => setShowPassword(!showPassword)}>
+                                      {showPassword ? (
+                                        <Icon icon='material-symbols:visibility-outline' />
+                                      ) : (
+                                        <Icon icon='ic:outline-visibility-off' />
+                                      )}
+                                    </IconButton>
+                                  </InputAdornment>
+                                )
+                              }}
                             />
                           )}
-                          name='fullName'
+                          name='password'
                         />
                       </Grid>
-                      <Grid item md={12} xs={12}>
+                    )}
+                    {idUser && (
+                      <Grid item md={6} xs={12}>
                         <Controller
                           control={control}
-                          name='address'
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <CustomTextField
+                          render={({ field: { onChange, onBlur, value } }) => {
+                            return (
+                              <FormControlLabel
+                                control={
+                                  <Switch
+                                    value={value}
+                                    checked={Boolean(value)}
+                                    onChange={e => {
+                                      onChange(e.target.checked ? 1 : 0)
+                                    }}
+                                  />
+                                }
+                                label={Boolean(value) ? t('Active') : t('Block')}
+                              />
+                            )
+                          }}
+                          name='status'
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                </Box>
+              </Grid>
+              <Grid container item md={6} xs={12}>
+                <Box>
+                  <Grid container spacing={4}>
+                    <Grid item md={12} xs={12}>
+                      <Controller
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            required
+                            fullWidth
+                            label={t('Full_name')}
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder={t('Enter_your_full_name')}
+                            error={Boolean(errors?.fullName)}
+                            helperText={errors?.fullName?.message}
+                          />
+                        )}
+                        name='fullName'
+                      />
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                      <Controller
+                        control={control}
+                        name='address'
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            fullWidth
+                            label={t('Address')}
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder={t('Enter_your_address')}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item md={12} xs={12}>
+                      <Controller
+                        name='city'
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <Box>
+                            <InputLabel
+                              sx={{
+                                fontSize: '13px',
+                                marginBottom: '4px',
+                                display: 'block',
+                                color: errors?.city
+                                  ? theme.palette.error.main
+                                  : `rgba(${theme.palette.customColors.main}, 0.42)`
+                              }}
+                            >
+                              {t('City')}
+                            </InputLabel>
+                            <CustomSelect
                               fullWidth
-                              label={t('Address')}
                               onChange={onChange}
+                              options={optionCities}
+                              error={Boolean(errors?.city)}
                               onBlur={onBlur}
                               value={value}
-                              placeholder={t('Enter_your_address')}
+                              placeholder={t('Enter_your_city')}
                             />
-                          )}
-                        />
-                      </Grid>
-                      <Grid item md={12} xs={12}>
-                        <Controller
-                          name='city'
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <Box>
-                              <InputLabel
+                            {errors?.city?.message && (
+                              <FormHelperText
                                 sx={{
-                                  fontSize: '13px',
-                                  marginBottom: '4px',
-                                  display: 'block',
                                   color: errors?.city
                                     ? theme.palette.error.main
                                     : `rgba(${theme.palette.customColors.main}, 0.42)`
                                 }}
                               >
-                                {t('City')}
-                              </InputLabel>
-                              <CustomSelect
-                                fullWidth
-                                onChange={onChange}
-                                options={optionCities}
-                                error={Boolean(errors?.city)}
-                                onBlur={onBlur}
-                                value={value}
-                                placeholder={t('Enter_your_city')}
-                              />
-                              {errors?.city?.message && (
-                                <FormHelperText
-                                  sx={{
-                                    color: errors?.city
-                                      ? theme.palette.error.main
-                                      : `rgba(${theme.palette.customColors.main}, 0.42)`
-                                  }}
-                                >
-                                  {errors?.city?.message}
-                                </FormHelperText>
-                              )}
-                            </Box>
-                          )}
-                        />
-                      </Grid>
-                      <Grid item md={12} xs={12}>
-                        <Controller
-                          control={control}
-                          render={({ field: { onChange, onBlur, value } }) => (
-                            <CustomTextField
-                              required
-                              fullWidth
-                              label={t('Phone_number')}
-                              onChange={e => {
-                                const numValue = e.target.value.replace(/\D/g, '')
-                                onChange(numValue)
-                              }}
-                              inputProps={{
-                                inputMode: 'numeric',
-                                pattern: '[0-9]*',
-                                minLength: 8
-                              }}
-                              onBlur={onBlur}
-                              value={value}
-                              placeholder={t('Enter_your_phone')}
-                              error={Boolean(errors?.phoneNumber)}
-                              helperText={errors?.phoneNumber?.message}
-                            />
-                          )}
-                          name='phoneNumber'
-                        />
-                      </Grid>
+                                {errors?.city?.message}
+                              </FormHelperText>
+                            )}
+                          </Box>
+                        )}
+                      />
                     </Grid>
-                  </Box>
-                </Grid>
+                    <Grid item md={12} xs={12}>
+                      <Controller
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                          <CustomTextField
+                            required
+                            fullWidth
+                            label={t('Phone_number')}
+                            onChange={e => {
+                              const numValue = e.target.value.replace(/\D/g, '')
+                              onChange(numValue)
+                            }}
+                            inputProps={{
+                              inputMode: 'numeric',
+                              pattern: '[0-9]*',
+                              minLength: 8
+                            }}
+                            onBlur={onBlur}
+                            value={value}
+                            placeholder={t('Enter_your_phone')}
+                            error={Boolean(errors?.phoneNumber)}
+                            helperText={errors?.phoneNumber?.message}
+                          />
+                        )}
+                        name='phoneNumber'
+                      />
+                    </Grid>
+                  </Grid>
+                </Box>
               </Grid>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                {!idUser ? t('Create') : t('Update')}
-              </Button>
-            </Box>
-          </form>
-        </Box>
+            </Grid>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+              {!idUser ? t('Create') : t('Update')}
+            </Button>
+          </Box>
+        </form>
       </CustomModal>
     </>
   )

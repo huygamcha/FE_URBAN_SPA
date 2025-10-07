@@ -7,12 +7,17 @@ interface TProps {
   multiple?: boolean
   children: React.ReactNode
   uploadFunc: (file: File[]) => void
-
-  objectAcceptFile?: Record<string, string[]>
 }
 
 const WrapperFileUploadMultiple = (props: TProps) => {
-  const { children, uploadFunc, objectAcceptFile } = props
+  const { children, uploadFunc } = props
+
+  const objectAcceptFile = {
+    'image/jpeg': ['.jpg', '.jpeg'],
+    'image/webp': ['.webp'],
+    'image/png': ['.png'],
+    'image/svg': ['.svg']
+  }
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: objectAcceptFile ? objectAcceptFile : {},

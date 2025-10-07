@@ -192,158 +192,135 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
           onClose()
           setImageCloudflare({ image: '' })
         }}
+        title={idPackage ? t('Edit_category') : t('Create_category')}
       >
-        <Box
-          sx={{
-            padding: '20px',
-            borderRadius: '15px',
-            backgroundColor: theme.palette.customColors.bodyBg
-          }}
-          minWidth={{ md: '60vw', xs: '60vw' }}
-          maxWidth={{ md: '60vw', xs: '60vw' }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
-            <Typography variant='h4' sx={{ fontWeight: 600 }}>
-              {idPackage ? t('Edit_category') : t('Create_category')}
-            </Typography>
-            <IconButton sx={{ position: 'absolute', top: '-4px', right: '-10px' }} onClick={onClose}>
-              <Icon icon='material-symbols-light:close' fontSize={'30px'} />
-            </IconButton>
-          </Box>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
-            <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
-              <Grid container spacing={4}>
-                <Grid
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column'
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
+          <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
+            <Grid container spacing={4}>
+              <Grid
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}
+                item
+                xs={6}
+              >
+                <Controller
+                  name='image'
+                  control={control}
+                  rules={{
+                    required: true
                   }}
-                  item
-                  xs={6}
-                >
-                  <Controller
-                    name='image'
-                    control={control}
-                    rules={{
-                      required: true
-                    }}
-                    render={({ field: { onChange, value } }) => (
-                      <>
-                        {/* Phần hiển thị ảnh */}
-                        {value && (
-                          <Box
-                            sx={{
-                              position: 'relative',
-                              width: 320,
-                              height: 180, // hoặc tỉ lệ 16:9 bạn muốn,
-                              marginBottom: '16px'
+                  render={({ field: { onChange, value } }) => (
+                    <>
+                      {/* Phần hiển thị ảnh */}
+                      {value && (
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            width: 320,
+                            height: 180, // hoặc tỉ lệ 16:9 bạn muốn,
+                            marginBottom: '16px'
+                          }}
+                        >
+                          <Image
+                            src={value}
+                            alt='image'
+                            fill
+                            style={{
+                              objectFit: 'contain', // giữ nguyên tỉ lệ, không vỡ
+                              borderRadius: '8px'
                             }}
-                          >
-                            <Image
-                              src={value}
-                              alt='image'
-                              fill
-                              style={{
-                                objectFit: 'contain', // giữ nguyên tỉ lệ, không vỡ
-                                borderRadius: '8px'
-                              }}
-                            />
-                          </Box>
-                        )}
-
-                        {/* Phần tải ảnh lên */}
-                        <Box display='flex' alignItems='center' justifyContent='space-between'>
-                          <WrapperFileUpload
-                            uploadFunc={async file => {
-                              const uploadedImageUrl = await handleUploadAvatar(file, 'image') // Hàm xử lý upload
-                            }}
-                            objectAcceptFile={{
-                              'image/jpeg': ['.jpg', '.jpeg'],
-                              'image/webp': ['.webp'],
-                              'image/png': ['.png'],
-                              'image/svg': ['.svg']
-                            }}
-                          >
-                            <Button
-                              variant='outlined'
-                              sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
-                            >
-                              <Icon icon='ph:camera-thin' />
-                              {value ? t('Change_image') : t('Upload_image')}
-                            </Button>
-                          </WrapperFileUpload>
-                          {value && (
-                            <IconButton
-                              onClick={() => {
-                                onChange('')
-                                setImageCloudflare(prev => ({
-                                  ...prev,
-                                  image: ''
-                                }))
-                              }} // Xóa ảnh
-                            >
-                              <Icon icon='material-symbols-light:delete-outline' />
-                            </IconButton>
-                          )}
+                          />
                         </Box>
+                      )}
 
-                        {errors?.image?.message && (
-                          <FormHelperText
-                            sx={{
-                              color: errors?.image
-                                ? theme.palette.error.main
-                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
-                              fontSize: '13px'
-                            }}
+                      {/* Phần tải ảnh lên */}
+                      <Box display='flex' alignItems='center' justifyContent='space-between'>
+                        <WrapperFileUpload
+                          uploadFunc={
+                            async file => await handleUploadAvatar(file, 'image') // Hàm xử lý upload
+                          }
+                        >
+                          <Button
+                            variant='outlined'
+                            sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
                           >
-                            {errors?.image?.message}
-                          </FormHelperText>
+                            <Icon icon='ph:camera-thin' />
+                            {value ? t('Change_image') : t('Upload_image')}
+                          </Button>
+                        </WrapperFileUpload>
+                        {value && (
+                          <IconButton
+                            onClick={() => {
+                              onChange('')
+                              setImageCloudflare(prev => ({
+                                ...prev,
+                                image: ''
+                              }))
+                            }} // Xóa ảnh
+                          >
+                            <Icon icon='material-symbols-light:delete-outline' />
+                          </IconButton>
                         )}
-                      </>
+                      </Box>
+
+                      {errors?.image?.message && (
+                        <FormHelperText
+                          sx={{
+                            color: errors?.image
+                              ? theme.palette.error.main
+                              : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                            fontSize: '13px'
+                          }}
+                        >
+                          {errors?.image?.message}
+                        </FormHelperText>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+
+              {fields.map(({ name, label }) => (
+                <Grid item md={6} xs={12} key={name}>
+                  <Controller
+                    control={control}
+                    name={name}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label={t(label)}
+                        onChange={e => {
+                          const value = e.target.value
+                          if (name === 'nameEn') {
+                            const replaced = stringToSlug(value)
+                            onChange(value)
+                            reset({
+                              ...getValues(),
+                              slug: replaced
+                            })
+                          } else onChange(value)
+                        }}
+                        onBlur={onBlur}
+                        value={value}
+                        placeholder={t(`Enter_${label}`)}
+                        error={Boolean(errors?.[`${name}`])}
+                        helperText={errors?.[`${name}`]?.message}
+                      />
                     )}
                   />
                 </Grid>
-
-                {fields.map(({ name, label }) => (
-                  <Grid item md={6} xs={12} key={name}>
-                    <Controller
-                      control={control}
-                      name={name}
-                      render={({ field: { onChange, onBlur, value } }) => (
-                        <CustomTextField
-                          required
-                          fullWidth
-                          label={t(label)}
-                          onChange={e => {
-                            const value = e.target.value
-                            if (name === 'nameEn') {
-                              const replaced = stringToSlug(value)
-                              onChange(value)
-                              reset({
-                                ...getValues(),
-                                slug: replaced
-                              })
-                            } else onChange(value)
-                          }}
-                          onBlur={onBlur}
-                          value={value}
-                          placeholder={t(`Enter_${label}`)}
-                          error={Boolean(errors?.[`${name}`])}
-                          helperText={errors?.[`${name}`]?.message}
-                        />
-                      )}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                {!idPackage ? t('Create') : t('Update')}
-              </Button>
-            </Box>
-          </form>
-        </Box>
+              ))}
+            </Grid>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+              {!idPackage ? t('Create') : t('Update')}
+            </Button>
+          </Box>
+        </form>
       </CustomModal>
     </>
   )

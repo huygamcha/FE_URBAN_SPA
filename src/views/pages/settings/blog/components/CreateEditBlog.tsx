@@ -185,9 +185,8 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
       // hiển thị ảnh để preview
       // Use FileReader to read the file and display it
       const reader = new FileReader()
-      reader.onload = (e: any) => {
-        setValue('thumbnail', e.target.result)
-      }
+      reader.onload = (e: any) => setValue('thumbnail', e.target.result)
+
       reader.readAsDataURL(pics)
       // setImageURL(null)
     } else {
@@ -271,15 +270,9 @@ const CreateEditBlog = (props: TCreateEditBlog) => {
                         {/* Phần tải ảnh lên */}
                         <Box display='flex' alignItems='center' justifyContent='space-between'>
                           <WrapperFileUpload
-                            uploadFunc={async file => {
-                              const uploadedImageUrl = await handleUploadAvatar(file, 'thumbnail') // Hàm xử lý upload
-                            }}
-                            objectAcceptFile={{
-                              'image/jpeg': ['.jpg', '.jpeg'],
-                              'image/webp': ['.webp'],
-                              'image/png': ['.png'],
-                              'image/svg': ['.svg']
-                            }}
+                            uploadFunc={
+                              async file => await handleUploadAvatar(file, 'thumbnail') // Hàm xử lý upload
+                            }
                           >
                             <Button
                               variant='outlined'

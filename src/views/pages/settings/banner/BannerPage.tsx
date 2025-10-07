@@ -27,7 +27,7 @@ import Spinner from 'src/components/spinner'
 import ConfirmationDialog from 'src/components/confirmation-dialog'
 import CustomPagination from 'src/components/custom-pagination'
 import TableHeader from 'src/components/table-header'
-import CreateEditBanner from 'src/views/pages/settings/banner/component/CreateEditBanner'
+import CreateEditBanner from 'src/views/pages/settings/banner/component/EditBanner'
 
 // ** Others
 import toast from 'react-hot-toast'

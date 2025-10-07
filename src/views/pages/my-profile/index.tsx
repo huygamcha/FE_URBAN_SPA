@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** Next
 import { NextPage } from 'next'
@@ -48,7 +48,6 @@ import toast from 'react-hot-toast'
 import Spinner from 'src/components/spinner'
 import CustomSelect from 'src/components/custom-select'
 
-
 type TProps = {}
 
 type TDefaultValue = {
@@ -69,7 +68,7 @@ const MyProfilePage: NextPage<TProps> = () => {
   const [optionCities, setOptionCities] = useState<{ label: string; value: string }[]>([])
 
   // ** Hooks
-  const { i18n,t } = useTranslation()
+  const { i18n, t } = useTranslation()
 
   // ** theme
   const theme = useTheme()
@@ -261,13 +260,7 @@ const MyProfilePage: NextPage<TProps> = () => {
                         </Avatar>
                       )}
                     </Box>
-                    <WrapperFileUpload
-                      uploadFunc={handleUploadAvatar}
-                      objectAcceptFile={{
-                        'image/jpeg': ['.jpg', '.jpeg'],
-                        'image/png': ['.png']
-                      }}
-                    >
+                    <WrapperFileUpload uploadFunc={handleUploadAvatar}>
                       <Button variant='outlined' sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Icon icon='ph:camera-thin'></Icon>
                         {avatar ? t('Change_avatar') : t('Upload_avatar')}
@@ -284,7 +277,6 @@ const MyProfilePage: NextPage<TProps> = () => {
                     render={({ field: { onChange, onBlur, value } }) => (
                       <CustomTextField
                         required
-                        
                         fullWidth
                         disabled
                         label={t('Email')}
@@ -318,7 +310,7 @@ const MyProfilePage: NextPage<TProps> = () => {
                                 : `rgba(${theme.palette.customColors.main}, 0.42)`
                             }}
                           >
-                            {t('Role')} <span >*</span>
+                            {t('Role')} <span>*</span>
                           </label>
                           <CustomSelect
                             fullWidth
@@ -368,7 +360,6 @@ const MyProfilePage: NextPage<TProps> = () => {
                     control={control}
                     render={({ field: { onChange, onBlur, value } }) => (
                       <CustomTextField
-                        
                         fullWidth
                         label={t('Full_name')}
                         onChange={onChange}
@@ -388,7 +379,6 @@ const MyProfilePage: NextPage<TProps> = () => {
                     name='address'
                     render={({ field: { onChange, onBlur, value } }) => (
                       <CustomTextField
-                        
                         fullWidth
                         label={t('Address')}
                         onChange={onChange}
@@ -447,7 +437,6 @@ const MyProfilePage: NextPage<TProps> = () => {
                     render={({ field: { onChange, onBlur, value } }) => (
                       <CustomTextField
                         required
-                        
                         fullWidth
                         label={t('Phone_number')}
                         onChange={e => {

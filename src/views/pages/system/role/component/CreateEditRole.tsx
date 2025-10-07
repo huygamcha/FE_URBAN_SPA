@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 // ** React
 import React, { memo, useEffect, useRef, useState } from 'react'
@@ -55,15 +55,11 @@ const CreateEditRole = (props: TCreateEditRole) => {
     return res.data
   }
 
-  const {
-    isPending: isLoadingCreate,
-    mutate: mutateCreateRole,
-  } = useMutation({
+  const { isPending: isLoadingCreate, mutate: mutateCreateRole } = useMutation({
     mutationFn: fetchCreateRole,
     mutationKey: [queryKeys.create_role],
-    onSuccess: (newRole) => {
+    onSuccess: newRole => {
       queryClient.setQueryData([queryKeys.role_list, sortBy, searchBy, -1, -1], (oldData: any) => {
-
         return { ...oldData, roles: [...oldData.roles, newRole] }
       })
       onClose()
@@ -71,14 +67,11 @@ const CreateEditRole = (props: TCreateEditRole) => {
     },
     onError: () => {
       toast.success(t('Create_role_error'))
-    },
+    }
   })
 
-  const {
-    isPending: isLoadingEdit,
-    mutate: mutateEditRole,
-  } = useMutationEditRole({
-    onSuccess: (newRole) => {
+  const { isPending: isLoadingEdit, mutate: mutateEditRole } = useMutationEditRole({
+    onSuccess: newRole => {
       queryClient.setQueryData([queryKeys.role_list, sortBy, searchBy, -1, -1], (oldData: any) => {
         const editedRole = oldData?.roles?.find((item: any) => item._id == newRole._id)
         if (editedRole) {
@@ -90,9 +83,9 @@ const CreateEditRole = (props: TCreateEditRole) => {
       onClose()
       toast.success(t('Update_role_success'))
     },
-    onError: (errr) => {
+    onError: errr => {
       toast.error(t('Update_role_error'))
-    },
+    }
   })
 
   const schema = yup.object().shape({
@@ -100,7 +93,7 @@ const CreateEditRole = (props: TCreateEditRole) => {
   })
 
   const defaultValues = {
-    name: '',
+    name: ''
   }
 
   const {
@@ -120,7 +113,6 @@ const CreateEditRole = (props: TCreateEditRole) => {
         mutateEditRole({ name: data?.name, id: idRole })
       } else {
         mutateCreateRole({ name: data?.name, permissions: [PERMISSIONS.DASHBOARD] })
-
       }
     }
   }
@@ -132,25 +124,20 @@ const CreateEditRole = (props: TCreateEditRole) => {
     return res.data
   }
 
-  const {
-    data: rolesDetails,
-    isFetching: isLoadingDetails,
-  } = useQuery(
-    {
-      queryKey: [queryKeys.role_detail, idRole],
-      queryFn: () => fetchDetailsRole(idRole || ''),
-      refetchOnWindowFocus: false,
-      // refetchOnReconnect: false,
-      staleTime: 5000,
-      gcTime: 10000,
-      enabled: !!idRole,
-      placeholderData: () => {
-        const roles = (queryClient.getQueryData([queryKeys.role_list, sortBy, searchBy]) as any)?.roles
+  const { data: rolesDetails, isFetching: isLoadingDetails } = useQuery({
+    queryKey: [queryKeys.role_detail, idRole],
+    queryFn: () => fetchDetailsRole(idRole || ''),
+    refetchOnWindowFocus: false,
+    // refetchOnReconnect: false,
+    staleTime: 5000,
+    gcTime: 10000,
+    enabled: !!idRole,
+    placeholderData: () => {
+      const roles = (queryClient.getQueryData([queryKeys.role_list, sortBy, searchBy]) as any)?.roles
 
-        return roles?.find((item: { _id: string }) => item._id === idRole)
-      },
-    },
-  )
+      return roles?.find((item: { _id: string }) => item._id === idRole)
+    }
+  })
 
   useEffect(() => {
     if (!open) {
@@ -172,63 +159,44 @@ const CreateEditRole = (props: TCreateEditRole) => {
   return (
     <>
       {(isLoadingCreate || isLoadingDetails || isLoadingEdit) && <Spinner />}
-      <CustomModal open={open} onClose={onClose}>
-        <Box
-          sx={{
-            padding: '20px',
-            borderRadius: '15px',
-            backgroundColor: theme.palette.customColors.bodyBg
-          }}
-          minWidth={{ md: '400px', xs: '80vw' }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
-            <Typography variant='h4' sx={{ fontWeight: 600 }}>
-              {' '}
-              {idRole ? t('Edit_role') : t('Create_role')}
-            </Typography>
-            <IconButton sx={{ position: 'absolute', top: '-4px', right: '-10px' }} onClick={onClose}>
-              <Icon icon='material-symbols-light:close' fontSize={'30px'} />
-            </IconButton>
-          </Box>
-          <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
-            <Box
-              sx={{
-                width: '100%',
-                backgroundColor: theme.palette.background.paper,
-                padding: '30px 20px',
-                borderRadius: '15px'
+      <CustomModal title={idRole ? t('Edit_role') : t('Create_role')} open={open} onClose={onClose}>
+        <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
+          <Box
+            sx={{
+              width: '100%',
+              backgroundColor: theme.palette.background.paper,
+              padding: '30px 20px',
+              borderRadius: '15px'
+            }}
+          >
+            <Controller
+              control={control}
+              rules={{
+                required: true
               }}
-            >
-              <Controller
-                control={control}
-                rules={{
-                  required: true
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <CustomTextField
-                    required
-                    fullWidth
+              render={({ field: { onChange, onBlur, value } }) => (
+                <CustomTextField
+                  required
+                  fullWidth
+                  label={t('Name_role')}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                  placeholder={t('Enter_name')}
+                  error={Boolean(errors?.name)}
+                  helperText={errors?.name?.message}
+                />
+              )}
+              name='name'
+            />
+          </Box>
 
-                    label={t('Name_role')}
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    value={value}
-                    placeholder={t('Enter_name')}
-                    error={Boolean(errors?.name)}
-                    helperText={errors?.name?.message}
-                  />
-                )}
-                name='name'
-              />
-            </Box>
-
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
-                {!idRole ? t('Create') : t('Update')}
-              </Button>
-            </Box>
-          </form>
-        </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>
+              {!idRole ? t('Create') : t('Update')}
+            </Button>
+          </Box>
+        </form>
       </CustomModal>
     </>
   )
