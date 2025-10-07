@@ -11,6 +11,10 @@ declare module '@mui/material/styles' {
       lightPaperBg: string
       tableHeaderBg: string
       borderColor: string
+      draken1: string
+      draken2: string
+      lightten2: string
+      lightten1: string
     }
 
     customBackground: {

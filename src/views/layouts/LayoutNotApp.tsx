@@ -97,7 +97,6 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false, bann
                   fontSize: '6rem',
                   textTransform: 'uppercase', // Making the text uppercase
                   pointerEvents: 'none',
-                  fontFamily: 'Playfair Display, serif', // Same font family as seen in the image
                   letterSpacing: '3px', // Add spacing to mimic the image style
                   width: '100%',
                   textAlign: 'center', // Center the text
@@ -106,7 +105,7 @@ const LayoutNotApp: NextPage<TProps> = ({ children, isHiddenBanner = false, bann
                   }
                 }}
               >
-                URBAN SPA
+                Urban Oasis Spa
               </Typography>
               <Typography
                 sx={{

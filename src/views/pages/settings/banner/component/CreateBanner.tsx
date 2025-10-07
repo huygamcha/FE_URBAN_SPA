@@ -173,8 +173,8 @@ const CreateBanner = (props: TCreateEditBanner) => {
             borderRadius: '15px',
             backgroundColor: theme.palette.customColors.bodyBg
           }}
-          minWidth={{ md: '90vw', xs: '90vw' }}
-          maxWidth={{ md: '90vw', xs: '90vw' }}
+          minWidth={{ md: '60vw', xs: '60vw' }}
+          maxWidth={{ md: '60vw', xs: '60vw' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
             <Typography variant='h4' sx={{ fontWeight: 600 }}>
@@ -185,81 +185,77 @@ const CreateBanner = (props: TCreateEditBanner) => {
             </IconButton>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
-            <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
-                  <Controller
-                    name='links'
-                    control={control}
-                    rules={{
-                      required: true
-                    }}
-                    render={({ field: { onChange, value } }) => (
-                      <>
-                        {/* Phần hiển thị ảnh */}
-                        <Grid container spacing={2}>
-                          {value?.map((item, index) => (
-                            <Grid item xs={3} key={index}>
-                              {' '}
-                              {/* Mỗi ảnh chiếm 3/12 cột */}
-                              {item && (
-                                <Box sx={{ position: 'relative' }}>
-                                  <Box>
-                                    <Image src={item} layout='responsive' width={16} height={9} alt='image' />
-                                  </Box>
-                                  <IconButton
-                                    onClick={() => {
-                                      handleDelete(index)
-                                    }} // Xóa ảnh
-                                  >
-                                    <Icon icon='material-symbols-light:delete-outline' />
-                                  </IconButton>
-                                </Box>
-                              )}
-                            </Grid>
-                          ))}
+            <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '1rem', py: 5, px: 4 }}>
+              <Controller
+                name='links'
+                control={control}
+                rules={{
+                  required: true
+                }}
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    {/* Phần hiển thị ảnh */}
+                    <Grid container spacing={2}>
+                      {value?.map((item, index) => (
+                        <Grid item xs={3} key={index}>
+                          {' '}
+                          {/* Mỗi ảnh chiếm 3/12 cột */}
+                          {item && (
+                            <Box sx={{ position: 'relative' }}>
+                              <Box>
+                                <Image src={item} layout='responsive' width={16} height={9} alt='image' />
+                              </Box>
+                              <IconButton
+                                onClick={() => {
+                                  handleDelete(index)
+                                }} // Xóa ảnh
+                              >
+                                <Icon icon='material-symbols-light:delete-outline' />
+                              </IconButton>
+                            </Box>
+                          )}
                         </Grid>
+                      ))}
+                    </Grid>
 
-                        {/* Phần tải ảnh lên */}
-                        <Box display='flex' alignItems='center' justifyContent='space-between'>
-                          <WrapperFileUploadMultiple
-                            uploadFunc={async files => {
-                              await handleUploadAvatar(files) // Hàm xử lý upload
-                            }}
-                            objectAcceptFile={{
-                              'image/jpeg': ['.jpg', '.jpeg'],
-                              'image/webp': ['.webp'],
-                              'image/png': ['.png'],
-                              'image/svg': ['.svg']
-                            }}
-                          >
-                            <Button
-                              variant='outlined'
-                              sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
-                            >
-                              <Icon icon='ph:camera-thin' />
-                              {t('Upload_banner_image')}
-                            </Button>
-                          </WrapperFileUploadMultiple>
-                        </Box>
+                    {/* Phần tải ảnh lên */}
+                    <Box display='flex' alignItems='center' justifyContent='space-between'>
+                      <WrapperFileUploadMultiple
+                        uploadFunc={async files => {
+                          await handleUploadAvatar(files) // Hàm xử lý upload
+                        }}
+                        objectAcceptFile={{
+                          'image/jpeg': ['.jpg', '.jpeg'],
+                          'image/webp': ['.webp'],
+                          'image/png': ['.png'],
+                          'image/svg': ['.svg']
+                        }}
+                      >
+                        <Button
+                          variant='outlined'
+                          sx={{ width: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}
+                        >
+                          <Icon icon='ph:camera-thin' />
+                          {t('Upload_banner_image')}
+                        </Button>
+                      </WrapperFileUploadMultiple>
+                    </Box>
 
-                        {errors?.links?.message && (
-                          <FormHelperText
-                            sx={{
-                              color: errors?.links
-                                ? theme.palette.error.main
-                                : `rgba(${theme.palette.customColors.main}, 0.42)`,
-                              fontSize: '1rem'
-                            }}
-                          >
-                            {errors?.links?.message}
-                          </FormHelperText>
-                        )}
-                      </>
+                    {errors?.links?.message && (
+                      <FormHelperText
+                        sx={{
+                          color: errors?.links
+                            ? theme.palette.error.main
+                            : `rgba(${theme.palette.customColors.main}, 0.42)`,
+                          fontSize: '1rem'
+                        }}
+                      >
+                        {errors?.links?.message}
+                      </FormHelperText>
                     )}
-                  />
-                </Grid>
-              </Grid>
+                  </>
+                )}
+              />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button type='submit' variant='contained' sx={{ mt: 3, mb: 2 }}>

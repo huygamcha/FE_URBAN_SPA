@@ -185,7 +185,7 @@
   "Create_product_type": "제품 유형 생성",
   "Name_product_type": "제품 유형 이름",
   "Enter_name_product_type": "제품 유형 이름 입력",
-  "Enter_slug": "슬러그 입력",
+  "Enter_Slug": "슬러그 입력",
   "Slug": "슬러그",
   "Create_product_success": "제품 생성 성공",
   "Update_product_success": "제품 업데이트 성공",
@@ -210,7 +210,7 @@
   "Price": "가격",
   "Enter_price": "가격 입력",
   "Enter_your_count": "수량 입력",
-  "Enter_discount": "할인 입력",
+  "Enter_discountPrice": "할인 가격 입력",
   "Discount(percent)": "할인 (퍼센트)",
   "End_date_discount": "할인 종료 날짜",
   "Start_date_discount": "할인 시작 날짜",
@@ -393,9 +393,9 @@
   "Delete_banner_error": "배너 삭제 오류",
   "Contact": "연락처",
   "Support_Ready": "저희는 언제나 지원할 준비가 되어 있습니다!",
-  "Contact_Info": "지원이 필요하거나 Urban Spa에 연락하려면 아래 정보를 통해 연락해 주세요. 감사합니다.",
+  "Contact_Info": "지원이 필요하거나 Urban Oasis Spa에 연락하려면 아래 정보를 통해 연락해 주세요. 감사합니다.",
   "Our_Location": "저희 위치",
-  "Location_Description": "Urban Spa는 하노이의 구시가지에 위치해 있습니다.",
+  "Location_Description": "Urban Oasis Spa는 하노이의 구시가지에 위치해 있습니다.",
   "Update_successfully": "업데이트 성공",
   "Title_delete_multiple_banner": "여러 배너 삭제 확인",
   "Confirm_delete_multiple_banner": "이 배너들을 삭제하시겠습니까?",
@@ -454,5 +454,6 @@
   "Promotional_price": "할인 가격",
   "Blog": "뉴스",
   "View_more": "더보기",
-  "View_less": "콤팩트"
+  "View_less": "콤팩트",
+  "discountPrice": "할인 가격"
 }

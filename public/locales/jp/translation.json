@@ -186,7 +186,7 @@
   "Create_product_type": "製品タイプの作成",
   "Name_product_type": "製品タイプ名",
   "Enter_name_product_type": "製品タイプ名を入力",
-  "Enter_slug": "スラッグを入力",
+  "Enter_Slug": "スラッグを入力",
   "Slug": "スラッグ",
   "Create_product_success": "製品の作成に成功しました",
   "Update_product_success": "製品の更新に成功しました",
@@ -211,7 +211,7 @@
   "Price": "価格",
   "Enter_price": "価格を入力",
   "Enter_your_count": "数量を入力",
-  "Enter_discount": "割引を入力",
+  "Enter_discountPrice": "割引価格を入力",
   "Discount(percent)": "割引（パーセント）",
   "End_date_discount": "割引終了日",
   "Start_date_discount": "割引開始日",
@@ -396,9 +396,9 @@
   "Delete_banner_error": "バナー削除エラー",
   "Contact": "連絡先",
   "Support_Ready": "私たちは常にサポートの準備ができています！",
-  "Contact_Info": "サポートが必要な場合やUrban Spaに連絡したい場合は、以下の情報を使用してご連絡ください。ありがとうございます。",
+  "Contact_Info": "サポートが必要な場合やUrban Oasis Spaに連絡したい場合は、以下の情報を使用してご連絡ください。ありがとうございます。",
   "Our_Location": "私たちの場所",
-  "Location_Description": "Urban Spaはハノイの旧市街にあります。",
+  "Location_Description": "Urban Oasis Spaはハノイの旧市街にあります。",
   "Update_successfully": "更新成功",
   "Title_delete_multiple_banner": "複数のバナーを削除確認",
   "Confirm_delete_multiple_banner": "これらのバナーを削除してもよろしいですか？",
@@ -454,5 +454,6 @@
   "Promotional_price": "プロモーション価格",
   "Blog": "ニュース",
   "View_more": "もっと見る",
-  "View_less": "少なくする"
+  "View_less": "少なくする",
+  "discountPrice": "割引価格"
 }

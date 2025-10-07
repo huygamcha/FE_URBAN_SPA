@@ -33,10 +33,7 @@ const fetcher = (url: string) => fetch(url).then(res => res.json())
 export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
   const { t, i18n } = useTranslation()
   const router = useRouter()
-  const { data, isLoading, error } = useSWR(
-    `${BASE_URL}/blogs/random?currentSlug=${detailBlog.slug}`,
-    fetcher
-  )
+  const { data, isLoading, error } = useSWR(`${BASE_URL}/blogs/random?currentSlug=${detailBlog.slug}`, fetcher)
 
   const relatedBlogs = data?.data || []
   const allRefs = useRef<HTMLDivElement[]>([])
@@ -108,7 +105,7 @@ export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
               </Typography>
 
               {/* Content */}
-              <Box
+              <Typography
                 sx={{
                   color: '#fff',
                   lineHeight: 1.8,
@@ -139,7 +136,7 @@ export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
           sx={{
             fontSize: '2rem',
             fontWeight: 600,
-            fontFamily: 'Playfair Display,sans-serif',
+
             animation: 'slideDownFadeIn 1s ease-in',
             opacity: 1,
             color: '#fff'
@@ -157,7 +154,7 @@ export default function DetailBlogPage({ detailBlog }: TDetailBlogPage) {
           <Typography color='error'>{t('Không thể tải các bài viết liên quan')}</Typography>
         ) : (
           <Grid container spacing={4}>
-            {relatedBlogs.map((blog :any, index:number) => {
+            {relatedBlogs.map((blog: any, index: number) => {
               const currentIndex = refIndex.current++
 
               return (

@@ -121,7 +121,7 @@ const ListItemPackageHome = (props: TProps) => {
             lineHeight: '1.2',
             textAlign: 'center',
             color: 'common.white',
-            fontFamily: 'Playfair Display,sans-serif',
+
             [theme.breakpoints.down('lg')]: {
               fontSize: '2rem'
             }
@@ -230,7 +230,6 @@ const ListItemPackageHome = (props: TProps) => {
                             alignItems: 'end',
                             textTransform: 'uppercase',
                             paddingBottom: '2rem',
-                            fontFamily: 'Playfair Display,sans-serif'
                           }}
                         >
                           {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
@@ -330,7 +329,6 @@ const ListItemPackageHome = (props: TProps) => {
                       alignItems: 'end',
                       textTransform: 'uppercase',
                       paddingBottom: '2rem',
-                      fontFamily: 'Playfair Display,sans-serif'
                     }}
                   >
                     {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}

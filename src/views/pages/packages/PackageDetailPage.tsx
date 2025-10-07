@@ -138,7 +138,7 @@ const PackageDetailPage: NextPage<TProps> = props => {
                 sx={{
                   fontSize: '2rem',
                   fontWeight: 600,
-                  fontFamily: 'Playfair Display,sans-serif',
+
                   animation: 'slideDownFadeIn 1s ease-in',
                   '@keyframes slideDownFadeIn': {
                     '0%': {
@@ -244,7 +244,7 @@ const PackageDetailPage: NextPage<TProps> = props => {
                           </Typography>
                         </Box>
 
-                        <Box
+                        <Typography
                           sx={{
                             pb: '0.5rem',
                             color: '#575757',
@@ -387,7 +387,7 @@ const PackageDetailPage: NextPage<TProps> = props => {
                     }}
                     mt='1rem'
                     display='flex'
-                    justifyContent='start'
+                    justifyContent='flex-end'
                   >
                     <Button onClick={handleBooking} variant='contained'>
                       {t('Booking_now')}

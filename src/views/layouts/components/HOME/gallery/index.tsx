@@ -70,7 +70,7 @@ const Gallery = (props: TProp) => {
             fontSize: '3rem',
             fontWeight: 'bold',
             pointerEvents: 'none',
-            fontFamily: 'Playfair Display,sans-serif',
+
             [theme.breakpoints.down('lg')]: {
               fontSize: '3rem'
             }

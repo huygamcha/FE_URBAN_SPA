@@ -14,7 +14,7 @@ const StyleCustomGrid = styled(DataGrid)<DataGridProps>(({ theme }) => ({
   },
   '.MuiDataGrid-columnHeaderTitle': {
     textTransform: 'capitalize',
-    color: theme.palette.primary.main
+    color: theme.palette.common.black
   },
   // Custom scrollbar
   '&::-webkit-scrollbar': {

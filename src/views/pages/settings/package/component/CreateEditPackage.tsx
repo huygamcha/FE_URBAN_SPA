@@ -96,21 +96,18 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
     formState: { errors },
     reset,
     setValue,
-    setError
+    setError,
+    clearErrors
   } = useForm({
     defaultValues,
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: yupResolver(schema)
   })
-
   // handle
   const onSubmit = async (data: any) => {
     setLoading(true)
     let resultImage
-    if (Object.values(imageCloudflare)[0]) {
-      resultImage = await uploadMultipleImage(imageCloudflare)
-    }
-
+    if (Object.values(imageCloudflare)[0]) resultImage = await uploadMultipleImage(imageCloudflare)
     if (!Object.keys(errors).length) {
       if (idPackage) {
         // update
@@ -154,9 +151,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
         }
         setLoading(false)
       })
-      .catch(() => {
-        setLoading(false)
-      })
+      .catch(() => setLoading(false))
   }
 
   // handleImage huygamcha
@@ -172,14 +167,12 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
       // hiển thị ảnh để preview
       // Use FileReader to read the file and display it
       const reader = new FileReader()
-      reader.onload = (e: any) => {
-        setValue(field as keyof TDefaultValue, e.target.result)
-      }
+      reader.onload = (e: any) => setValue(field as keyof TDefaultValue, e.target.result)
+      clearErrors('image')
+
       reader.readAsDataURL(pics)
       // setImageURL(null)
-    } else {
-      setError('image', { type: 'custom', message: t('Image_Size_Limit') })
-    }
+    } else setError('image', { type: 'custom', message: t('Image_Size_Limit') })
   }
 
   useEffect(() => {
@@ -206,8 +199,8 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
             borderRadius: '15px',
             backgroundColor: theme.palette.customColors.bodyBg
           }}
-          minWidth={{ md: '90vw', xs: '90vw' }}
-          maxWidth={{ md: '90vw', xs: '90vw' }}
+          minWidth={{ md: '60vw', xs: '60vw' }}
+          maxWidth={{ md: '60vw', xs: '60vw' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
             <Typography variant='h4' sx={{ fontWeight: 600 }}>
@@ -220,7 +213,14 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='off' noValidate>
             <Box sx={{ backgroundColor: theme.palette.background.paper, borderRadius: '15px', py: 5, px: 4 }}>
               <Grid container spacing={4}>
-                <Grid item xs={6}>
+                <Grid
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                  item
+                  xs={6}
+                >
                   <Controller
                     name='image'
                     control={control}
@@ -230,13 +230,26 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                     render={({ field: { onChange, value } }) => (
                       <>
                         {/* Phần hiển thị ảnh */}
-                        <Box sx={{ position: 'relative' }}>
-                          {value && (
-                            <Box>
-                              <Image src={value} layout='responsive' width={16} height={9} alt='image' />
-                            </Box>
-                          )}
-                        </Box>
+                        {value && (
+                          <Box
+                            sx={{
+                              position: 'relative',
+                              width: 320,
+                              height: 180, // hoặc tỉ lệ 16:9 bạn muốn,
+                              marginBottom: '16px'
+                            }}
+                          >
+                            <Image
+                              src={value}
+                              alt='image'
+                              fill
+                              style={{
+                                objectFit: 'contain', // giữ nguyên tỉ lệ, không vỡ
+                                borderRadius: '8px'
+                              }}
+                            />
+                          </Box>
+                        )}
 
                         {/* Phần tải ảnh lên */}
                         <Box display='flex' alignItems='center' justifyContent='space-between'>
@@ -280,7 +293,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                               color: errors?.image
                                 ? theme.palette.error.main
                                 : `rgba(${theme.palette.customColors.main}, 0.42)`,
-                              fontSize: '1rem'
+                              fontSize: '13px'
                             }}
                           >
                             {errors?.image?.message}
@@ -300,9 +313,7 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                         <CustomTextField
                           required
                           fullWidth
-                          // disabled={name === 'slug' ? true : false}
                           label={t(label)}
-                          // onChange={onChange}
                           onChange={e => {
                             const value = e.target.value
                             if (name === 'nameEn') {
@@ -312,15 +323,13 @@ const CreateEditPackage = (props: TCreateEditPackage) => {
                                 ...getValues(),
                                 slug: replaced
                               })
-                            } else {
-                              onChange(value)
-                            }
+                            } else onChange(value)
                           }}
                           onBlur={onBlur}
                           value={value}
                           placeholder={t(`Enter_${label}`)}
-                          error={Boolean(errors?.name)}
-                          helperText={errors?.name?.message}
+                          error={Boolean(errors?.[`${name}`])}
+                          helperText={errors?.[`${name}`]?.message}
                         />
                       )}
                     />

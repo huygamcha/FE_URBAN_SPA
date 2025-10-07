@@ -244,8 +244,8 @@ const CreateEditService = (props: TCreateEditService) => {
             borderRadius: '15px',
             backgroundColor: theme.palette.customColors.bodyBg
           }}
-          minWidth={{ md: '90vw', xs: '90vw' }}
-          maxWidth={{ md: '90vw', xs: '90vw' }}
+          minWidth={{ md: '60vw', xs: '60vw' }}
+          maxWidth={{ md: '60vw', xs: '60vw' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
             <Typography variant='h4' sx={{ fontWeight: 600 }}>
@@ -492,7 +492,7 @@ const CreateEditService = (props: TCreateEditService) => {
                               minLength: 1
                             }}
                             fullWidth
-                            placeholder={t('Enter_Price')}
+                            placeholder={t('Enter_price')}
                             label={t('Price')}
                             error={Boolean(errors?.options?.[index]?.price)}
                             helperText={errors?.options?.[index]?.price?.message}

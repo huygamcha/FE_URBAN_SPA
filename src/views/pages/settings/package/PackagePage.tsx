@@ -275,11 +275,9 @@ const PackageListPage: NextPage<TProps> = () => {
 
   useEffect(() => {
     if (isSuccessCreateEdit) {
-      if (!openCreateEdit.id) {
-        toast.success(t('Create_category_success'))
-      } else {
-        toast.success(t('Update_category_success'))
-      }
+      if (!openCreateEdit.id) toast.success(t('Create_category_success'))
+      else toast.success(t('Update_category_success'))
+
       handleGetListPackages()
       handleCloseCreateEdit()
       dispatch(resetInitialState())

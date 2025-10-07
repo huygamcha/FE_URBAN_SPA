@@ -90,7 +90,6 @@ const Contact = () => {
                 fontWeight: '700',
                 lineHeight: '1.2',
                 color: theme => theme.palette.common.white,
-                fontFamily: 'Playfair Display,sans-serif'
               }}
             >
               {t('Contact_Us')}

@@ -43,9 +43,6 @@ type TProps = {
 const HomePage: NextPage<TProps> = props => {
   // ** Props
   const { aboutUs, banner } = props
-  const { t, i18n } = useTranslation()
-  const router = useRouter()
-  const isLg = useResponsiveScreen({ responsive: 'lg' })
 
   // ** React query
   const { data: allPackages, isPending } = useGetListPackages(
@@ -64,7 +61,6 @@ const HomePage: NextPage<TProps> = props => {
       {/* <ControlCalendar /> */}
       {allPackages?.length && (
         <>
-          {' '}
           <div id='about'></div>
           <Box>
             <Box sx={{ padding: '5%', position: 'relative', zIndex: 1 }}>

@@ -77,7 +77,7 @@ const CustomerImages = (props: TProps) => {
             fontWeight: '700',
             lineHeight: '1.2',
             color: '#6b4241',
-            fontFamily: 'Playfair Display,sans-serif',
+
             textAlign: 'center'
           }}
         >

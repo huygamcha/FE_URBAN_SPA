@@ -154,7 +154,6 @@ const AboutSpa = (props: TProps) => {
                       color: '#6c4241',
                       marginTop: '0',
                       marginBottom: '0',
-                      fontFamily: 'Playfair Display,sans-serif',
                       fontSize: '3rem',
                       fontWeight: '700',
                       lineHeight: '1.2',
@@ -168,27 +167,31 @@ const AboutSpa = (props: TProps) => {
                 </Box>
 
                 {isLg ? (
-                  <>
-                    <Box
-                      dangerouslySetInnerHTML={{
-                        __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
-                      }}
-                    ></Box>
-                  </>
+                  <Typography
+                    sx={{
+                      fontSize: '1rem',
+                      lineHeight: 1.6
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
+                    }}
+                  ></Typography>
                 ) : (
                   <>
-                    <Box
+                    <Typography
                       sx={{
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                        WebkitLineClamp: expanded ? 'unset' : 5
+                        WebkitLineClamp: expanded ? 'unset' : 5,
+                        fontSize: '1rem',
+                        lineHeight: 1.6
                       }}
                       dangerouslySetInnerHTML={{
                         __html: displayValueByLanguage({ language: i18n.language, value: aboutUs, field: 'name' })
                       }}
-                    ></Box>
+                    ></Typography>
                     <Box
                       mt={1}
                       sx={{

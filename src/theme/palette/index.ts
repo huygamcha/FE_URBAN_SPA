@@ -44,7 +44,11 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
       trackBg: mode === 'light' ? '#F1F0F2' : '#363B54',
       avatarBg: mode === 'light' ? '#DBDADE' : '#4A5072',
       tableHeaderBg: mode === 'light' ? '#F6F6F7' : '#4A5072',
-      borderColor: `rgba(${mainColor}, 0.16)`
+      borderColor: `rgba(${mainColor}, 0.16)`,
+      draken1: '#040a16',
+      draken2: '#01040a',
+      lightten2: '#3b4660',
+      lightten1: '#1b2742'
     },
 
     customBackground: {
@@ -61,13 +65,14 @@ const DefaultPalette = (mode: Palette['mode'], skin: Skin): Palette => {
     },
 
     mode: mode,
+
     common: {
-      black: '#071021',
+      black: '#595959ff',
       white: whiteColor
     },
     primary: {
       light: '#8479F2',
-      main: '#7367F0',
+      main: '#492828',
       dark: '#655BD3',
       contrastText: whiteColor
     },

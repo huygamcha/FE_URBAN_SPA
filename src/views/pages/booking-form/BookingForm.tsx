@@ -192,9 +192,6 @@ const BookingForm = () => {
                 }}
               >
                 <Typography
-                  sx={{
-                    fontFamily: 'Playfair Display, serif' // Same font family as seen in the image
-                  }}
                   fontSize='2rem'
                   textAlign='center'
                   variant='subtitle2'
@@ -616,7 +613,7 @@ const BookingForm = () => {
                 {/* Sticky Information Section */}
                 <Box sx={{ position: 'sticky', top: 16, maxWidth: 'calc(100% - 90px)' }}>
                   <Typography variant='subtitle1' sx={{ fontWeight: 'bold' }}>
-                    Urban Spa & Massage
+                    Urban Oasis Spa & Massage
                   </Typography>
                   <Typography color='text.secondary'>
                     {t('Hotline_short')}:

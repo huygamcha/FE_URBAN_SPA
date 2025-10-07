@@ -93,7 +93,7 @@ const BlogListPage = ({ blogs }: Props) => {
               fontWeight: 700,
               textAlign: 'center',
               color: 'common.white',
-              fontFamily: 'Playfair Display,sans-serif',
+
               [theme.breakpoints.down('lg')]: {
                 fontSize: '2rem'
               }

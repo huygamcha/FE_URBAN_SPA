@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 // ** Mui
-import { Box, Grid, Typography, useTheme } from '@mui/material'
+import { Box, Grid, useTheme } from '@mui/material'
 import { GridColDef, GridRowSelectionModel, GridSortModel } from '@mui/x-data-grid'
 
 // ** Redux
@@ -40,7 +40,6 @@ import { usePermission } from 'src/hooks/usePermission'
 import { PAGE_SIZE_OPTION } from 'src/configs/gridConfig'
 
 // ** Utils
-import { formatDate } from 'src/utils/date'
 import { hexToRGBA } from 'src/utils/hex-to-rgba'
 import Image from 'next/image'
 import CreateBanner from './component/CreateBanner'
@@ -162,7 +161,6 @@ const BannerListPage: NextPage<TProps> = () => {
       renderCell: params => {
         const { row } = params
 
-        // return <Typography>{row?.image}</Typography>
         return <Image src={row?.link} layout='responsive' width={16} height={9} alt='image' />
       }
     },

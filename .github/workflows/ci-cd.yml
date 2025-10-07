@@ -1,6 +1,6 @@
 # Update to match your values: branch_name, app_name, SSH key name on GitHub from previous step if changed, server ip, username, port, and server Node pathname (using 'which pm2' on server to get path)
 
-name: Deploy Fe Urban Spa
+name: Deploy Fe Urban Oasis Spa
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout  
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js

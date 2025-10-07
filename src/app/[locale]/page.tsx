@@ -3,14 +3,12 @@ import { ReactNode } from 'react'
 import AuthLayoutWrapper from 'src/hoc/AuthLayoutWrapper'
 import { getDetailAbout } from 'src/services/about'
 import { getAllBanners } from 'src/services/banners'
-import { getAllPackages } from 'src/services/packages'
 import { TParamsFetchAbout } from 'src/types/about'
 import { TBanner } from 'src/types/banner'
-import { TPackage } from 'src/types/package'
 
 // layouts
 import LayoutNotApp from 'src/views/layouts/LayoutNotApp'
-import HomePage from 'src/views/pages/home'
+import HomePage from 'src/views/pages/home/HomePage'
 
 const getBanner = async () => {
   try {
@@ -38,7 +36,11 @@ const getAboutUs = async () => {
       nameJp: '',
       nameKo: ''
     }
-    await getDetailAbout('678f33bca37abbb25c8d15f9').then(res => {
+    // await getDetailAbout('678f33bca37abbb25c8d15f9').then(res => {
+    //   aboutUs = res?.data
+    // })
+
+    await getDetailAbout('68e0c02770a5eb03b4c3f804').then(res => {
       aboutUs = res?.data
     })
 
@@ -63,7 +65,8 @@ export const generateMetadata = async ({ params }: any): Promise<Metadata> => {
         : 'Spa cao cấp, thư giãn và làm đẹp',
     keywords: locale === 'ko' ? '베트남 현지 여행사, 호텔, 투어' : 'Spa cao cấp, thư giãn và làm đẹp',
     openGraph: {
-      title: locale === 'ko' ? 'Urban Spa, 베트남 현지 여행사' : 'Urban Spa, Spa cao cấp, thư giãn và làm đẹp',
+      title:
+        locale === 'ko' ? 'Urban Oasis Spa, 베트남 현지 여행사' : 'Urban Oasis Spa, Spa cao cấp, thư giãn và làm đẹp',
       description:
         locale === 'ko'
           ? '베트남 현지 여행사, 호텔, 투어, 항공권, 픽업 샌딩 차량, 관광지 티켓, 스파 및 마사지 예약을 전문으로 합니다. 여행의 전 과정에 상담을 지원하기도 합니다.'
@@ -79,7 +82,8 @@ export const generateMetadata = async ({ params }: any): Promise<Metadata> => {
       ]
     },
     twitter: {
-      title: locale === 'ko' ? 'Urban Spa, 베트남 현지 여행사' : 'Urban Spa, Spa cao cấp, thư giãn và làm đẹp',
+      title:
+        locale === 'ko' ? 'Urban Oasis Spa, 베트남 현지 여행사' : 'Urban Oasis Spa, Spa cao cấp, thư giãn và làm đẹp',
       description:
         locale === 'ko'
           ? '베트남 현지 여행사, 호텔, 투어, 항공권, 픽업 샌딩 차량, 관광지 티켓, 스파 및 마사지 예약을 전문으로 합니다. 여행의 전 과정에 상담을 지원하기도 합니다.'

@@ -256,18 +256,6 @@ const OrderSpaListPage: NextPage<TProps> = () => {
         return <Typography>{row.quantity}</Typography>
       }
     },
-
-    {
-      field: 'email',
-      headerName: t('email'),
-      minWidth: 200,
-      maxWidth: 200,
-      renderCell: params => {
-        const { row } = params
-
-        return <Typography>{row.email}</Typography>
-      }
-    },
     {
       field: 'totalPrice',
       headerName: t('Total_price'),

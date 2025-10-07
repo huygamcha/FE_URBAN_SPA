@@ -64,8 +64,11 @@ const Button = () => {
         {
           props: { variant: 'outlined', color: 'primary' },
           style: ({ theme }: OwnerStateThemeType) => ({
+            borderColor: theme.palette.customColors.lightten1,
+            color: theme.palette.common.black,
             '&:hover': {
-              backgroundColor: hexToRGBA(theme.palette.primary.main, 0.08)
+              backgroundColor: hexToRGBA(theme.palette.common.black, 0.08),
+              borderColor: theme.palette.customColors.lightten1
             }
           })
         },

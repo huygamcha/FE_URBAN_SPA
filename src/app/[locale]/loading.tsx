@@ -64,7 +64,7 @@ const LoadingComponent = () => {
           }}
         >
           <Image
-            src='https://spa.nacomcorp.com/_next/image?url=https%3A%2F%2Fcdn.kampa.vn%2Furban-oasis-spa-logo.png&w=256&q=75'
+            src='https://cdn.kampa.vn/urban-oasis-spa-logo.png'
             alt='Urban Oasis Spa Logo'
             width={80}
             height={80}

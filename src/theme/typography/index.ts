@@ -1,6 +1,7 @@
 const typography = {
   fontFamily: [
     // 'Gota-Regular',
+    'Noto Sans KR',
     'Montserrat',
     'Inter',
     'Playfair Display',

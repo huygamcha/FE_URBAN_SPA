@@ -53,7 +53,6 @@ const StyleWrapperEditor = styled(Box)<TStyleWrapperEditor>(({ theme, error }) =
     borderRadius: 12,
     padding: 24,
     minWidth: 320,
-    fontFamily: `'Roboto', sans-serif`,
     left: '-300px'
   },
   '.rdw-image-modal-header-option': {

@@ -153,8 +153,8 @@ const CreateEditBanner = (props: TCreateEditBanner) => {
             borderRadius: '15px',
             backgroundColor: theme.palette.customColors.bodyBg
           }}
-          minWidth={{ md: '90vw', xs: '90vw' }}
-          maxWidth={{ md: '90vw', xs: '90vw' }}
+          minWidth={{ md: '60vw', xs: '60vw' }}
+          maxWidth={{ md: '60vw', xs: '60vw' }}
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', position: 'relative', paddingBottom: '20px' }}>
             <Typography variant='h4' sx={{ fontWeight: 600 }}>
