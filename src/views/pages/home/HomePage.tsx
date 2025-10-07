@@ -28,12 +28,10 @@ import { Box } from '@mui/material'
 import Gallery from 'src/views/layouts/components/HOME/gallery'
 import AboutSpa from 'src/views/layouts/components/HOME/about'
 import Image from 'next/image'
-import Packages from 'src/views/layouts/components/HOME/packages'
 import { TParamsFetchAbout } from 'src/types/about'
 import { TBanner } from 'src/types/banner'
 import { useGetListPackages } from 'src/queries/packages'
 import ListItemPackageHome from '../packages/components/packages/ListItemPackageHome'
-import useResponsiveScreen from 'src/hooks/useDeskTopScreen'
 
 type TProps = {
   aboutUs: TParamsFetchAbout

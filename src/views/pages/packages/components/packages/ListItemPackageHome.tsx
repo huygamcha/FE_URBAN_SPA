@@ -134,7 +134,7 @@ const ListItemPackageHome = (props: TProps) => {
 
         {isLg ? (
           <Grid container spacing={4}>
-            {packages.map((item: TPackage, index: number) => (
+            {packages?.map((item: TPackage, index: number) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
                 <Box
                   onClick={() => handleDetail(item)}
@@ -229,7 +229,7 @@ const ListItemPackageHome = (props: TProps) => {
                             display: 'flex',
                             alignItems: 'end',
                             textTransform: 'uppercase',
-                            paddingBottom: '2rem',
+                            paddingBottom: '2rem'
                           }}
                         >
                           {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
@@ -328,7 +328,7 @@ const ListItemPackageHome = (props: TProps) => {
                       display: 'flex',
                       alignItems: 'end',
                       textTransform: 'uppercase',
-                      paddingBottom: '2rem',
+                      paddingBottom: '2rem'
                     }}
                   >
                     {displayValueByLanguage({ language: i18n.language, value: item, field: 'name' })}
