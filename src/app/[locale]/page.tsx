@@ -36,13 +36,13 @@ const getAboutUs = async () => {
       nameJp: '',
       nameKo: ''
     }
-    // await getDetailAbout('678f33bca37abbb25c8d15f9').then(res => {
-    //   aboutUs = res?.data
-    // })
-
-    await getDetailAbout('68e0c02770a5eb03b4c3f804').then(res => {
+    await getDetailAbout('678f33bca37abbb25c8d15f9').then(res => {
       aboutUs = res?.data
     })
+
+    // await getDetailAbout('68e0c02770a5eb03b4c3f804').then(res => {
+    //   aboutUs = res?.data
+    // })
 
     return {
       aboutUs
